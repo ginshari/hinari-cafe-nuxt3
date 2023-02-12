@@ -1,0 +1,11 @@
+@forward 'vuetify/settings' with (
+  $container-max-widths: (
+    'md': 720px,
+    'lg': 960px,
+    'xl': 1140px,
+  ),
+  $button-font-weight: 400,
+  $card-title-text-overflow: '',
+  $card-title-white-space: normal,
+  $card-title-word-break: keep-all
+);

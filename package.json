@@ -1,0 +1,26 @@
+{
+  "private": true,
+  "name": "hinari-cafe-nuxt3",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "nuxi dev",
+    "generate": "nuxi generate",
+    "preview": "nuxi preview"
+  },
+  "devDependencies": {
+    "@nuxtjs/eslint-config-typescript": "^12.0.0",
+    "@nuxtjs/google-fonts": "^3.0.0-1",
+    "eslint": "^8.33.0",
+    "eslint-config-prettier": "^8.6.0",
+    "nuxt": "^3.0.0",
+    "prettier": "^2.8.3"
+  },
+  "dependencies": {
+    "@mdi/font": "^7.1.96",
+    "fibers": "^5.0.3",
+    "sass": "^1.57.1",
+    "sass-loader": "^13.2.0",
+    "vite-plugin-vuetify": "^1.0.2",
+    "vuetify": "^3.1.2"
+  }
+}
