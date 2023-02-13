@@ -131,12 +131,8 @@ const filterdEvents = computed(() => {
     if (select.value === 'all' || select.value === currentValue.category) {
       // 年、月は直前のデータと異なる場合のみ表示する
       const previousValue = accumulator[accumulator.length - 1]
-      if (previousValue?.year !== currentValue.year) {
-        currentValue.isDisplayYear = true
-      }
-      if (currentValue.isDisplayYear || previousValue?.month !== currentValue.month) {
-        currentValue.isDisplayMonth = true
-      }
+      currentValue.isDisplayYear = previousValue?.year !== currentValue.year
+      currentValue.isDisplayMonth = currentValue.isDisplayYear || previousValue?.month !== currentValue.month
       accumulator.push(currentValue)
     }
 
