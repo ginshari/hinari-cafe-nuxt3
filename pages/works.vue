@@ -60,8 +60,8 @@
         <v-col cols="12" sm="8" />
       </v-row>
       <client-only>
-        <div v-for="(event, index) in filterdEvents" :key="event.id">
-          <v-row v-if="filterdEvents[index - 1]?.year !== event.year" no-gutters>
+        <div v-for="event in filterdEvents" :key="event.id">
+          <v-row v-if="event.isDisplayYear" no-gutters>
             <v-col cols="12" sm="4" class="text-center">
               <div
                 class="history-middle-left"
@@ -79,11 +79,7 @@
           </v-row>
           <v-row no-gutters align-content="center">
             <v-col v-if="smAndUp" cols="12" sm="4" class="text-center history-middle-left">
-              <p
-                v-if="filterdEvents[index - 1]?.month !== event.month"
-                class="py-4 py-lg-8 text-pen month"
-                v-text="event.month"
-              />
+              <p v-if="event.isDisplayMonth" class="py-4 py-lg-8 text-pen month" v-text="event.month" />
             </v-col>
             <v-col
               cols="12"
@@ -130,10 +126,22 @@ const category = ref([
 const events = works.events
 
 const filterdEvents = computed(() => {
-  if (select.value === 'all') return events
-  return events.filter((event) => {
-    return event.category === select.value
-  })
+  return events.reduce((accumulator, currentValue) => {
+    // カテゴリに合致するイベントを表示する
+    if (select.value === 'all' || select.value === currentValue.category) {
+      // 年、月は直前のデータと異なる場合のみ表示する
+      const previousValue = accumulator[accumulator.length - 1]
+      if (previousValue?.year !== currentValue.year) {
+        currentValue.isDisplayYear = true
+      }
+      if (currentValue.isDisplayYear || previousValue?.month !== currentValue.month) {
+        currentValue.isDisplayMonth = true
+      }
+      accumulator.push(currentValue)
+    }
+
+    return accumulator
+  }, [])
 })
 </script>
 
