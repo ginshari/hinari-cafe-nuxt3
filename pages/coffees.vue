@@ -1,42 +1,44 @@
 <template>
   <div>
-    <v-app-bar :elevation="2" color="#313131">
-      <v-container>
-        <v-row no-gutters align-content="center">
-          <v-col cols="8">
-            <v-text-field
-              v-model="search"
-              class="text-pen"
-              bg-color="paper"
-              prepend-inner-icon="mdi-magnify"
-              variant="flat"
-              label="コーヒーを検索"
-              single-line
-              clearable
-              hide-details
-              density="compact"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="4" class="d-flex"
-            ><v-btn
-              class="ml-auto my-auto"
-              color="paper"
-              :prepend-icon="order > 0 ? 'mdi-sort-descending' : 'mdi-sort-ascending'"
-              elevation="0"
-              @click="changeSortOrder()"
+    <client-only>
+      <v-app-bar :elevation="2" color="#313131">
+        <v-container>
+          <v-row no-gutters align-content="center">
+            <v-col cols="8">
+              <v-text-field
+                v-model="search"
+                class="text-pen"
+                bg-color="paper"
+                prepend-inner-icon="mdi-magnify"
+                variant="flat"
+                label="コーヒーを検索"
+                single-line
+                clearable
+                hide-details
+                density="compact"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="4" class="d-flex"
+              ><v-btn
+                class="ml-auto my-auto"
+                color="paper"
+                :prepend-icon="order > 0 ? 'mdi-sort-descending' : 'mdi-sort-ascending'"
+                elevation="0"
+                @click="changeSortOrder()"
+              >
+                <span class="text-paper">{{ order > 0 ? '新しい順' : '古い順' }}</span></v-btn
+              ></v-col
             >
-              <span class="text-paper">{{ order > 0 ? '新しい順' : '古い順' }}</span></v-btn
-            ></v-col
-          >
-        </v-row>
-      </v-container>
-    </v-app-bar>
+          </v-row>
+        </v-container>
+      </v-app-bar>
+    </client-only>
     <v-container>
       <v-row>
         <v-col v-for="coffee in paginatedCoffees" :key="coffee.id" cols="12" sm="6" lg="4" class="d-flex flex-column">
           <v-card class="coffee-card text-pen d-flex flex-column" elevation="0">
             <div>
-              <v-img :src="coffee.imgUrl" />
+              <v-img width="100%" :aspect-ratio="16 / 9" :src="coffee.imgUrl" />
             </div>
             <v-card-subtitle class="pt-2 coffee-card-subtitle">
               {{ coffee.pubDate }}

@@ -1,34 +1,49 @@
 <template>
   <div>
-    <v-row no-gutters>
+    <v-row no-gutters class="first-view">
       <client-only>
-        <v-col v-if="mdAndUp" cols="12" md="6" class="first-view">
+        <v-col v-if="mdAndUp" cols="12" md="6" class="d-flex flex-column justify-space-between">
           <v-sheet class="pa-lg-8 pa-4 greeting" color="paper">
             <p class="ma-0 ma-md-8 ma-lg-16 text-pen" v-text="landing.greeting" />
           </v-sheet>
-          <v-img
-            max-height="50vh"
-            max-width="50vw"
-            src="https://res.cloudinary.com/hinari-s-cafe/image/upload/f_auto,q_auto/v1647669519/logo_gcanuk.png"
-          ></v-img>
+          <div>
+            <v-img
+              class="mx-auto my-8"
+              max-width="50%"
+              :aspect-ratio="900 / 600"
+              src="https://res.cloudinary.com/hinari-s-cafe/image/upload/f_auto,q_auto/v1647669519/logo_gcanuk.png"
+            ></v-img>
+          </div>
         </v-col>
-        <v-col cols="12" md="6" class="shop-image" :class="{ 'greeting-desktop': mdAndUp }">
-          <v-img
-            v-if="!mdAndUp"
-            max-width="50vw"
-            src="https://res.cloudinary.com/hinari-s-cafe/image/upload/f_auto,q_auto/v1647669519/logo_gcanuk.png"
-          />
-          <v-sheet v-if="!mdAndUp" class="pa-sm-8 pa-4 greeting" color="paper">
-            <p class="ma-0 ma-md-8 text-pen" v-text="landing.greeting" />
-          </v-sheet>
-          <v-img
-            width="100%"
-            max-height="100vh"
-            max-width="100vw"
-            src="https://res.cloudinary.com/hinari-s-cafe/image/upload/f_auto,q_auto/v1647668956/welcome_trim_r1nxto.png"
-            transition="scroll-x-reverse-transition"
-            :class="{ 'greeting-desktop-image': mdAndUp }"
-          />
+        <v-col
+          cols="12"
+          md="6"
+          class="shop-image d-flex flex-column justify-space-between"
+          :class="{ 'greeting-desktop': mdAndUp }"
+        >
+          <div v-if="!mdAndUp">
+            <div class="d-flex">
+              <v-img
+                class="mx-auto"
+                height="20vh"
+                :aspect-ratio="900 / 600"
+                src="https://res.cloudinary.com/hinari-s-cafe/image/upload/f_auto,q_auto/v1647669519/logo_gcanuk.png"
+              />
+            </div>
+            <v-sheet class="mx-auto pa-sm-8 pa-4 greeting d-flex justify-space-around" color="paper" max-width="80vw">
+              <p class="ma-0 ma-md-8 text-pen" v-text="landing.greeting" />
+            </v-sheet>
+          </div>
+          <div>
+            <v-img
+              width="100%"
+              :height="!mdAndUp ? '50vh' : ''"
+              :aspect-ratio="720 / 836"
+              src="https://res.cloudinary.com/hinari-s-cafe/image/upload/f_auto,q_auto/v1647668956/welcome_trim_r1nxto.png"
+              transition="scroll-x-reverse-transition"
+              :class="{ 'greeting-desktop-image': mdAndUp }"
+            />
+          </div>
         </v-col>
       </client-only>
     </v-row>
@@ -43,8 +58,8 @@
         <div class="mt-16 d-block">
           <v-img
             class="mx-auto"
-            height="350px"
-            max-width="350px"
+            max-width="300px"
+            :aspect-ratio="1452 / 1854"
             transition="scroll-y-reverse-transition"
             src="https://res.cloudinary.com/hinari-s-cafe/image/upload/f_auto,q_auto/v1647668953/pot_qlhjlj.png"
           />
@@ -54,20 +69,18 @@
         </div>
         <v-row class="py-8 contents" justify="start" no-gutters>
           <v-col v-for="work in landing.works" :key="work.src" cols="12" sm="6" lg="4">
-            <v-lazy transition="scroll-y-transition">
-              <v-card class="px-16 px-sm-4 contents-card text-pen" flat>
-                <a :href="work.url" target="_blank" rel="noopener">
-                  <v-img
-                    class="contents-image mx-auto mb-4 mb-md-8"
-                    height="200px"
-                    max-width="250px"
-                    :src="work.image"
-                  />
-                </a>
-                <p class="text-center" v-text="work.title" />
-                <p class="my-4" v-text="work.detail" />
-              </v-card>
-            </v-lazy>
+            <v-card class="px-16 px-sm-4 contents-card text-pen" flat>
+              <a :href="work.url" target="_blank" rel="noopener">
+                <v-img
+                  class="contents-image mx-auto mb-4 mb-md-8"
+                  max-width="200px"
+                  :aspect-ratio="1 / 1"
+                  :src="work.image"
+                />
+              </a>
+              <p class="text-center" v-text="work.title" />
+              <p class="my-4" v-text="work.detail" />
+            </v-card>
           </v-col>
         </v-row>
         <v-row justify="center" class="text-center">
@@ -82,10 +95,9 @@
         <!-- recommends -->
         <div class="mt-16 d-block">
           <v-img
-            contain
             class="mx-auto"
-            height="350px"
-            max-width="350px"
+            max-width="300px"
+            :aspect-ratio="1241 / 1612"
             transition="scroll-y-reverse-transition"
             src="https://res.cloudinary.com/hinari-s-cafe/image/upload/f_auto,q_auto/v1647668959/count_ddswin.png"
           />
@@ -95,14 +107,12 @@
         </div>
         <v-row class="py-8 contents" justify="start" no-gutters>
           <v-col v-for="recommend in landing.recommends" :key="recommend.src" cols="12" sm="6" lg="4">
-            <v-lazy transition="scroll-y-transition">
-              <v-card class="px-16 px-sm-4 contents-card text-pen" flat>
-                <a :href="recommend.url" target="_blank" rel="noopener">
-                  <v-img contain class="my-4 contents-image" :src="recommend.image" />
-                </a>
-                <p class="my-4" v-text="recommend.detail" />
-              </v-card>
-            </v-lazy>
+            <v-card class="px-16 px-sm-4 contents-card text-pen" flat>
+              <a :href="recommend.url" target="_blank" rel="noopener">
+                <v-img class="my-4 contents-image" width="100%" :aspect-ratio="16 / 9" :src="recommend.image" />
+              </a>
+              <p class="my-4" v-text="recommend.detail" />
+            </v-card>
           </v-col>
         </v-row>
         <v-row justify="center">
@@ -124,8 +134,8 @@
         <div class="mt-16 d-block">
           <v-img
             class="mx-auto"
-            height="350px"
             max-width="350px"
+            :aspect-ratio="2894 / 2835"
             transition="scroll-y-reverse-transition"
             src="https://res.cloudinary.com/hinari-s-cafe/image/upload/f_auto,q_auto/v1647668979/complete_mpcta1.png"
           />
@@ -135,14 +145,12 @@
         </div>
         <v-row class="py-8 contents" justify="start" no-gutters>
           <v-col v-for="coffee in landing.coffees" :key="coffee.src" cols="12" sm="6" lg="4">
-            <v-lazy transition="scroll-y-transition">
-              <v-card class="px-16 px-sm-4 contents-card text-pen" flat>
-                <a :href="coffee.url" target="_blank" rel="noopener">
-                  <v-img class="my-4 contents-image" :src="coffee.image" />
-                </a>
-                <p class="mx-auto my-4" v-text="coffee.detail" />
-              </v-card>
-            </v-lazy>
+            <v-card class="px-16 px-sm-4 contents-card text-pen" flat>
+              <a :href="coffee.url" target="_blank" rel="noopener">
+                <v-img class="my-4 contents-image" width="100%" :aspect-ratio="16 / 9" :src="coffee.image" />
+              </a>
+              <p class="mx-auto my-4" v-text="coffee.detail" />
+            </v-card>
           </v-col>
         </v-row>
         <v-row justify="center">
@@ -174,7 +182,6 @@ const landing = data.value.documents[0]
 <style lang="scss" scoped>
 .first-view {
   height: 100vh;
-  position: relative;
 }
 
 .greeting {
@@ -184,7 +191,7 @@ const landing = data.value.documents[0]
   box-shadow: 20px 20px 0 rgba(49, 49, 49, 0.5) !important;
   left: 15%;
   top: 50px;
-  @media screen and (max-width: 1279px) {
+  @media screen and (max-width: 959px) {
     left: 0;
     top: 0;
   }
@@ -257,6 +264,7 @@ const landing = data.value.documents[0]
 
 .contents {
   &-card {
+    overflow: visible !important;
     background-color: transparent;
   }
   &-image {
@@ -264,7 +272,6 @@ const landing = data.value.documents[0]
       transition-duration: 0.3s;
       transform: scale(1.1);
     }
-    position: relative;
   }
   p:first-of-type {
     font-size: calc(0.5vw + 28px);
@@ -280,6 +287,7 @@ const landing = data.value.documents[0]
   &:hover {
     transition-duration: 0.3s;
     transform: scale(1.1);
+    box-shadow: 10px 10px 0 $color1;
   }
 }
 
