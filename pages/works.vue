@@ -8,6 +8,7 @@
             <p class="mb-0 pt-16 text-pen title-text">PROFILE</p>
             <v-avatar size="50%" class="my-4" color="paper"
               ><v-img
+                width="100%"
                 :aspect-ratio="1 / 1"
                 src="https://res.cloudinary.com/hinari-s-cafe/image/upload/f_auto,q_auto/v1647670479/no1_trim_smg4tj.png"
               ></v-img
