@@ -143,13 +143,12 @@ const selectSrc = computed(() => {
 })
 
 const dialogWidth = computed(() => {
-  switch (name) {
+  switch (name.value) {
     case 'xs':
       return '100vw'
     case 'sm':
-      return '100vw'
+      return '80vw'
     case 'md':
-      return '480px'
     case 'lg':
       return '720px'
     case 'xl':
