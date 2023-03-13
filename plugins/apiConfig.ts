@@ -1,7 +1,7 @@
 export default defineNuxtPlugin(() => {
   return {
     provide: {
-      apiConfig: (collection: string, filter: JSON) => {
+      apiConfig: (collection: string, pipeline: Array<JSON>) => {
         const runtimeConfig = useRuntimeConfig()
         return {
           method: 'post',
@@ -9,7 +9,7 @@ export default defineNuxtPlugin(() => {
             dataSource: 'Cluster0',
             database: 'hinari-cafe',
             collection,
-            filter,
+            pipeline,
           },
           headers: {
             'Content-Type': 'application/json',
