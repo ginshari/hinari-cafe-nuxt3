@@ -4,7 +4,7 @@
       <client-only>
         <v-col v-if="mdAndUp" cols="12" md="6" class="d-flex flex-column justify-space-between">
           <v-sheet class="pa-lg-8 pa-4 greeting" color="paper">
-            <p class="ma-0 ma-md-8 ma-lg-16 text-pen" v-text="landing.greeting" />
+            <p class="ma-0 ma-md-8 ma-lg-16 text-pen" v-text="landingPage.greeting" />
           </v-sheet>
           <div>
             <v-img
@@ -31,7 +31,7 @@
               />
             </div>
             <v-sheet class="mx-auto pa-sm-8 pa-4 greeting d-flex justify-space-around" color="paper" max-width="80vw">
-              <p class="ma-0 ma-md-8 text-pen" v-text="landing.greeting" />
+              <p class="ma-0 ma-md-8 text-pen" v-text="landingPage.greeting" />
             </v-sheet>
           </div>
           <div>
@@ -49,7 +49,7 @@
     </v-row>
     <v-row class="annotation" justify="center" no-gutters>
       <v-card class="pa-4 py-md-8 px-md-16" color="paper" max-width="80vw">
-        <p class="ma-0 ma-sm-4 ma-md-8 text-pen" v-text="landing.annotation" />
+        <p class="ma-0 ma-sm-4 ma-md-8 text-pen" v-text="landingPage.annotation" />
       </v-card>
     </v-row>
     <v-container>
@@ -68,18 +68,18 @@
           </div>
         </div>
         <v-row class="py-8 contents" justify="start" no-gutters>
-          <v-col v-for="work in landing.works" :key="work.src" cols="12" sm="6" lg="4">
+          <v-col v-for="work in works" :key="work.order" cols="12" sm="6" lg="4">
             <v-card class="px-16 px-sm-4 contents-card text-pen" flat>
               <a :href="work.url" target="_blank" rel="noopener">
                 <v-img
                   class="contents-image mx-auto mb-4 mb-md-8"
                   max-width="200px"
                   :aspect-ratio="1 / 1"
-                  :src="work.image"
+                  :src="work.imgUrl"
                 />
               </a>
-              <p class="text-center" v-text="work.title" />
-              <p class="my-4" v-text="work.detail" />
+              <p class="text-center" v-text="work.head" />
+              <p class="my-4" v-text="work.body" />
             </v-card>
           </v-col>
         </v-row>
@@ -106,12 +106,12 @@
           </div>
         </div>
         <v-row class="py-8 contents" justify="start" no-gutters>
-          <v-col v-for="recommend in landing.recommends" :key="recommend.src" cols="12" sm="6" lg="4">
+          <v-col v-for="recommend in recommends" :key="recommend.order" cols="12" sm="6" lg="4">
             <v-card class="px-16 px-sm-4 contents-card text-pen" flat>
               <a :href="recommend.url" target="_blank" rel="noopener">
-                <v-img class="my-4 contents-image" width="100%" :aspect-ratio="16 / 9" :src="recommend.image" />
+                <v-img class="my-4 contents-image" width="100%" :aspect-ratio="16 / 9" :src="recommend.imgUrl" />
               </a>
-              <p class="my-4" v-text="recommend.detail" />
+              <p class="my-4" v-text="recommend.body" />
             </v-card>
           </v-col>
         </v-row>
@@ -144,12 +144,12 @@
           </div>
         </div>
         <v-row class="py-8 contents" justify="start" no-gutters>
-          <v-col v-for="coffee in landing.coffees" :key="coffee.src" cols="12" sm="6" lg="4">
+          <v-col v-for="coffee in coffees" :key="coffee.order" cols="12" sm="6" lg="4">
             <v-card class="px-16 px-sm-4 contents-card text-pen" flat>
               <a :href="coffee.url" target="_blank" rel="noopener">
-                <v-img class="my-4 contents-image" width="100%" :aspect-ratio="16 / 9" :src="coffee.image" />
+                <v-img class="my-4 contents-image" width="100%" :aspect-ratio="16 / 9" :src="coffee.imgUrl" />
               </a>
-              <p class="mx-auto my-4" v-text="coffee.detail" />
+              <p class="mx-auto my-4" v-text="coffee.body" />
             </v-card>
           </v-col>
         </v-row>
@@ -170,13 +170,65 @@ import { useDisplay } from 'vuetify'
 const { mdAndUp } = useDisplay()
 const { $apiConfig } = useNuxtApp()
 
-const { data } = await useFetch('/action/find', $apiConfig('landing', {}))
+const { data } = await useFetch(
+  '/action/aggregate',
+  $apiConfig('landingPage', [
+    {
+      $lookup: {
+        from: 'lpItems',
+        localField: 'works.$id',
+        foreignField: '_id',
+        pipeline: [
+          {
+            $sort: {
+              order: 1,
+            },
+          },
+        ],
+        as: 'works',
+      },
+    },
+    {
+      $lookup: {
+        from: 'lpItems',
+        localField: 'recommends.$id',
+        foreignField: '_id',
+        pipeline: [
+          {
+            $sort: {
+              order: 1,
+            },
+          },
+        ],
+        as: 'recommends',
+      },
+    },
+    {
+      $lookup: {
+        from: 'lpItems',
+        localField: 'coffees.$id',
+        foreignField: '_id',
+        pipeline: [
+          {
+            $sort: {
+              order: 1,
+            },
+          },
+        ],
+        as: 'coffees',
+      },
+    },
+  ])
+)
 
 if (!data.value) {
-  throw createError({ statusCode: 404, statusMessage: 'landing: useFetch failed.' })
+  throw createError({ statusCode: 404, statusMessage: 'landingPage: useFetch failed.' })
 }
 
-const landing = data.value.documents[0]
+const landingPage = data.value.documents[0]
+const works = landingPage.works
+const recommends = landingPage.recommends
+const coffees = landingPage.coffees
 </script>
 
 <style lang="scss" scoped>

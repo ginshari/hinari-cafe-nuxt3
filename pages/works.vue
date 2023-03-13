@@ -31,9 +31,9 @@
           <div class="d-block text-pen">
             <table class="mx-auto mx-lg-0">
               <tbody>
-                <tr v-for="item in profile" :key="item.title" class="py-lg-16">
-                  <td class="text-right">{{ item.title }}</td>
-                  <td class="pl-lg-16">{{ item.body }}</td>
+                <tr v-for="profile in profiles" :key="profile.order" class="py-lg-16">
+                  <td class="text-right">{{ profile.head }}</td>
+                  <td class="pl-lg-16">{{ profile.body }}</td>
                 </tr>
               </tbody>
             </table>
@@ -61,7 +61,7 @@
         <v-col cols="12" sm="8" />
       </v-row>
       <client-only>
-        <div v-for="event in filterdEvents" :key="event.id">
+        <div v-for="event in filterdEvents" :key="event.yyyymm + event.branchNumber">
           <v-row v-if="event.isDisplayYear" no-gutters>
             <v-col cols="12" sm="4" class="text-center">
               <div
@@ -73,14 +73,14 @@
                   'ml-8': !smAndUp,
                 }"
               >
-                <p class="py-8 text-pen year">{{ event.year }}</p>
+                <p class="py-8 text-pen year">{{ event.year + '年' }}</p>
               </div>
             </v-col>
             <v-col cols="12" />
           </v-row>
           <v-row no-gutters align-content="center">
             <v-col v-if="smAndUp" cols="12" sm="4" class="text-center history-middle-left">
-              <p v-if="event.isDisplayMonth" class="py-4 py-lg-8 text-pen month" v-text="event.month" />
+              <p v-if="event.isDisplayMonth" class="py-4 py-lg-8 text-pen month" v-text="Number(event.month) + '月'" />
             </v-col>
             <v-col
               cols="12"
@@ -108,23 +108,79 @@ const { smAndUp } = useDisplay()
 
 const { $apiConfig } = useNuxtApp()
 
-const { data } = await useFetch('/action/find', $apiConfig('works', {}))
+const { data } = await useFetch(
+  '/action/aggregate',
+  $apiConfig('worksPage', [
+    {
+      $lookup: {
+        from: 'links',
+        localField: 'links.$id',
+        foreignField: '_id',
+        pipeline: [
+          {
+            $sort: {
+              order: 1,
+            },
+          },
+        ],
+        as: 'links',
+      },
+    },
+    {
+      $lookup: {
+        from: 'profiles',
+        localField: 'profiles.$id',
+        foreignField: '_id',
+        pipeline: [
+          {
+            $sort: {
+              order: 1,
+            },
+          },
+        ],
+        as: 'profiles',
+      },
+    },
+    {
+      $lookup: {
+        from: 'events',
+        localField: 'events.$id',
+        foreignField: '_id',
+        pipeline: [
+          {
+            $addFields: {
+              year: { $substr: ['$yyyymm', 0, 4] },
+              month: { $substr: ['$yyyymm', 4, 2] },
+            },
+          },
+          {
+            $sort: {
+              yyyymm: -1,
+              branchNumber: -1,
+            },
+          },
+        ],
+        as: 'events',
+      },
+    },
+  ])
+)
 
 if (!data.value) {
   throw createError({ statusCode: 404, statusMessage: 'works: useFetch failed.' })
 }
 
-const works = data.value.documents[0]
-const links = works.links
-const profile = works.profile
+const worksPage = data.value.documents[0]
+const links = worksPage.links
+const profiles = worksPage.profiles
+const events = worksPage.events
+
 const select = ref('all')
 const category = ref([
   { title: 'すべて', value: 'all' },
   { title: 'お仕事', value: 'works' },
   { title: 'トピック', value: 'topics' },
 ])
-
-const events = works.events
 
 const filterdEvents = computed(() => {
   return events.reduce((accumulator, currentValue) => {

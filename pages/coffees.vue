@@ -35,7 +35,14 @@
     </client-only>
     <v-container>
       <v-row>
-        <v-col v-for="coffee in paginatedCoffees" :key="coffee.id" cols="12" sm="6" lg="4" class="d-flex flex-column">
+        <v-col
+          v-for="coffee in paginatedCoffees"
+          :key="coffee.videoId"
+          cols="12"
+          sm="6"
+          lg="4"
+          class="d-flex flex-column"
+        >
           <v-card class="coffee-card text-pen d-flex flex-column" elevation="0">
             <div>
               <v-img width="100%" :aspect-ratio="16 / 9" :src="coffee.imgUrl" />
@@ -48,10 +55,10 @@
             </v-card-title>
             <v-card-actions class="mt-auto">
               <v-spacer />
-              <v-btn variant="outlined" @click="selectVideo(coffee.id, coffee.orderTime)">
+              <v-btn variant="outlined" @click="selectVideo(coffee.videoId, coffee.orderTime)">
                 <span>ORDER</span>
               </v-btn>
-              <v-btn variant="outlined" @click="selectVideo(coffee.id, coffee.reviewTime)">
+              <v-btn variant="outlined" @click="selectVideo(coffee.videoId, coffee.reviewTime)">
                 <span>REVIEW</span>
               </v-btn>
             </v-card-actions>
@@ -97,13 +104,26 @@ const { name } = useDisplay()
 
 const { $apiConfig } = useNuxtApp()
 
-const { data } = await useFetch('/action/find', $apiConfig('coffees', {}))
+const { data } = await useFetch(
+  '/action/aggregate',
+  $apiConfig('coffeesPage', [
+    {
+      $lookup: {
+        from: 'coffees',
+        localField: 'coffees.$id',
+        foreignField: '_id',
+        as: 'coffees',
+      },
+    },
+  ])
+)
 
 if (!data.value) {
-  throw createError({ statusCode: 404, statusMessage: 'coffees: useFetch failed.' })
+  throw createError({ statusCode: 404, statusMessage: 'coffeesPage: useFetch failed.' })
 }
 
-const coffees = data.value.documents
+const coffeesPage = data.value.documents[0]
+const coffees = coffeesPage.coffees
 
 const search = ref('')
 const page = ref(1)
