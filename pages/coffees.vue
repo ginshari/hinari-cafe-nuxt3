@@ -16,7 +16,9 @@
                 clearable
                 hide-details
                 density="compact"
-              ></v-text-field>
+                @keydown.enter="doSearch()"
+              >
+              </v-text-field>
             </v-col>
             <v-col cols="4" class="d-flex"
               ><v-btn
@@ -133,18 +135,14 @@ const dialog = ref(false)
 const selectId = ref('')
 const selectTime = ref('')
 
-const filterdCoffees = computed(() => {
-  if (!search.value) return coffees
-  return coffees.filter((coffee) => {
-    return coffee.name.toUpperCase().includes(search.value.toUpperCase())
-  })
-})
+const filterdCoffees = ref(coffees)
 
 const maxPage = computed(() => {
   return Math.ceil(filterdCoffees.value.length / itemsPerPage)
 })
 
 const sortedCoffees = computed(() => {
+  // 検索結果を並び替える
   return filterdCoffees.value.sort((a, b) => {
     if (a.pubDate > b.pubDate) return -1 * order.value
     if (a.pubDate < b.pubDate) return 1 * order.value
@@ -153,6 +151,7 @@ const sortedCoffees = computed(() => {
 })
 
 const paginatedCoffees = computed(() => {
+  // 表示するコーヒーをページ分切り出す
   const startIndex = (page.value - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
   return sortedCoffees.value.slice(startIndex, endIndex)
@@ -178,16 +177,28 @@ const dialogWidth = computed(() => {
   }
 })
 
+// 検索処理
+const doSearch = () => {
+  if (!search.value) return coffees
+  filterdCoffees.value = coffees.filter((coffee) => {
+    return coffee.name.toUpperCase().includes(search.value.toUpperCase())
+  })
+  page.value = 1
+}
+
+// 並び順変更
 const changeSortOrder = () => {
   order.value = order.value * -1
 }
 
+// ダイアログ表示する動画を選択
 const selectVideo = (id, time) => {
   selectId.value = id
   selectTime.value = String(time)
   dialog.value = true
 }
 
+// ダイアログを閉じる
 const closeDialog = () => {
   selectId.value = ''
   selectTime.value = ''
@@ -197,6 +208,7 @@ const closeDialog = () => {
 watch(
   () => page.value,
   () => {
+    // ページ遷移時にページトップにスクロールする
     window.scrollTo(0, 0)
   }
 )
