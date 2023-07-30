@@ -179,10 +179,13 @@ const dialogWidth = computed(() => {
 
 // 検索処理
 const doSearch = () => {
-  if (!search.value) return coffees
-  filterdCoffees.value = coffees.filter((coffee) => {
-    return coffee.name.toUpperCase().includes(search.value.toUpperCase())
-  })
+  if (!search.value) {
+    filterdCoffees.value = coffees
+  } else {
+    filterdCoffees.value = coffees.filter((coffee) => {
+      return coffee.name.toUpperCase().includes(search.value.toUpperCase())
+    })
+  }
   page.value = 1
 }
 
