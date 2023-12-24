@@ -124,7 +124,7 @@
                 </thead>
                 <tbody>
                   <tr v-for="item in items.filter((item) => item.inCart)" :key="item.id">
-                    <td>{{ item.name }}</td>
+                    <td class="auto-phrase">{{ item.name }}</td>
                     <td>{{ `¥${formatNumberWithCommas(item.price)}` }}</td>
                     <td>{{ item.quantity }}</td>
                   </tr>
@@ -133,7 +133,7 @@
               <p class="text-center total text-pen">{{ `合計 ： ¥${formatNumberWithCommas(total)}` }}</p>
               <p class="text-center text-red mb-8">※念のため検算をお願いします</p>
               <div class="no-print mx-auto">
-                <p>「保存する」ボタンを押すと、ブラウザに注文内容が保存されます</p>
+                <p class="auto-phrase">「保存する」ボタンを押すと、ブラウザに注文内容が保存されます</p>
                 <v-card-actions class="d-flex justify-center text-pen mt-4">
                   <v-btn size="large" variant="outlined" color="pen" @click="closeDialog()">閉じる</v-btn>
                   <v-btn size="large" variant="flat" color="pen" @click="save()">保存する</v-btn>
@@ -324,5 +324,9 @@ watch(
 
 .total {
   font-size: calc(0.5vw + 24px);
+}
+
+.auto-phrase {
+  word-break: auto-phrase;
 }
 </style>
