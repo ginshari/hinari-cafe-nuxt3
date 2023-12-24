@@ -259,6 +259,14 @@ const toggleInCart = (item) => {
 
 // バリデーション
 const validate = () => {
+  // 不正な数量は除外する
+  items.forEach((item) => {
+    if (isNaN(item.quantity) || item.quantity < 1) {
+      item.quantity = 1
+      item.inCart = false
+    }
+  })
+  // 選択なしはエラー
   if (!items.filter((item) => item.inCart).length > 0) {
     onError.value = true
     return
