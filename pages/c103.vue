@@ -56,7 +56,7 @@
                           type="number"
                           label="数量"
                           min="1"
-                          max="99"
+                          max="999"
                           density="compact"
                           variant="outlined"
                           hide-details
@@ -82,7 +82,7 @@
                         type="number"
                         label="数量"
                         min="1"
-                        :max="99"
+                        max="999"
                         density="compact"
                         variant="outlined"
                         hide-details
@@ -151,6 +151,7 @@
         <h1 class="text-red" style="font-size: 32px; font-family: sans-serif; font-style: italic">
           !ERROR! TooLargeQuantityError : 許容される数量を超えています
         </h1>
+        <p class="text-red text-right">※ジョークです</p>
         <v-img
           src="https://res.cloudinary.com/hinari-s-cafe/image/upload/c103/jgrsh6bynxhu8h5tbu2h.jpg"
           width="100vw"
