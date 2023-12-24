@@ -33,7 +33,7 @@
                       <!-- 商品詳細 -->
                       <v-col cols="12" sm="6" class="d-flex flex-column justify-space-between text-pen">
                         <div v-if="smAndUp" class="pa-0">
-                          <div class="menu-card-title mb-2">{{ item.name }}</div>
+                          <div class="menu-card-title mb-2 pr-16">{{ item.name }}</div>
                           <div class="menu-card-subtitle mb-2">{{ `¥${formatNumberWithCommas(item.price)}` }}</div>
                         </div>
                         <div v-else class="d-flex flex-column text-center ga-2">
