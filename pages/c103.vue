@@ -80,6 +80,7 @@
                             type="number"
                             label="数量"
                             min="1"
+                            step="1"
                             density="compact"
                             variant="outlined"
                             append-icon="mdi-close"
@@ -261,7 +262,7 @@ const toggleInCart = (item) => {
 const validate = () => {
   // 不正な数量は除外する
   items.forEach((item) => {
-    if (isNaN(item.quantity) || item.quantity < 1) {
+    if (!Number.isInteger(item.quantity) || item.quantity < 1) {
       item.quantity = 1
       item.inCart = false
     }
