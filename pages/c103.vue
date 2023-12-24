@@ -56,6 +56,7 @@
                           type="number"
                           label="数量"
                           min="1"
+                          max="99"
                           density="compact"
                           variant="outlined"
                           hide-details
@@ -81,6 +82,7 @@
                         type="number"
                         label="数量"
                         min="1"
+                        :max="99"
                         density="compact"
                         variant="outlined"
                         hide-details
@@ -145,6 +147,15 @@
         ><span class="text-paper">保存しました</span></v-snackbar
       >
       <v-snackbar v-model="onError" :timeout="2000" color="error">カートが空です</v-snackbar>
+      <v-dialog v-model="on5000TrillionError">
+        <h1 class="text-red" style="font-size: 32px; font-family: sans-serif; font-style: italic">
+          !ERROR! TooLargeQuantityError : 許容される数量を超えています
+        </h1>
+        <v-img
+          src="https://res.cloudinary.com/hinari-s-cafe/image/upload/c103/jgrsh6bynxhu8h5tbu2h.jpg"
+          width="100vw"
+        ></v-img>
+      </v-dialog>
     </v-container>
   </client-only>
 </template>
@@ -160,6 +171,8 @@ definePageMeta({
 // 注文ステップ
 const steps = { 0: 'MENU', 1: 'ITEM', 2: 'ORDER' }
 const step = ref(0)
+
+const MAX_TOTAL = 100000000 // 流石に1億超えたら怒る
 
 const headers = [
   { title: '品名', key: 'name' },
@@ -229,6 +242,7 @@ const items = reactive([
 const dialog = ref(false)
 const onSave = ref(false)
 const onError = ref(false)
+const on5000TrillionError = ref(false)
 
 onMounted(() => {
   // カートの中身を復元する
@@ -267,6 +281,11 @@ const validate = () => {
   // 選択なしはエラー
   if (!items.filter((item) => item.inCart).length > 0) {
     onError.value = true
+    return
+  }
+  // 合計が異常値の場合は5000兆円欲しいエラー
+  if (Number(total.value) > MAX_TOTAL) {
+    on5000TrillionError.value = true
     return
   }
   step.value = 2
