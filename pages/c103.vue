@@ -1,154 +1,152 @@
 <template>
-  <div>
-    <client-only>
-      <div class="no-print">
-        <v-container v-if="step == 0">
-          <v-img
-            max-width="1200px"
-            src="https://res.cloudinary.com/hinari-s-cafe/image/upload/f_webp/c103/cdctzfeh9d2acp0dy8og.jpg"
-            class="mx-auto"
-          ></v-img>
-          <div class="text-center my-8">
-            <v-btn variant="flat" size="x-large" rounded="lg" color="primary" @click="step = 1"
-              >オーダーシートはこちら</v-btn
-            >
-          </div>
-        </v-container>
-        <v-container v-if="step != 0">
-          <v-sheet class="mx-auto my-8 pb-16" style="max-width: 1200px" rounded="lg" color="paper">
-            <v-row justify="center">
-              <v-col cols="12" class="text-center">
-                <h1 class="text-pen sheet-title mb-16">{{ steps[step] }}</h1>
-              </v-col>
-            </v-row>
-            <v-row class="ma-4" no-gutters>
-              <v-col v-for="item in items" :key="item.id" cols="12">
-                <div v-if="step == 1 || item.inCart">
-                  <v-card flat color="transparent">
-                    <v-row>
-                      <!-- 画像 -->
-                      <v-col cols="12" sm="6" class="d-flex align-center">
-                        <v-img :src="`${imageBaseUrl}${item.id}.jpg`" height="200px"></v-img>
-                      </v-col>
-                      <!-- 商品詳細 -->
-                      <v-col cols="12" sm="6" class="d-flex flex-column justify-space-between text-pen">
-                        <div v-if="smAndUp" class="pa-0">
-                          <div class="menu-card-title mb-2 pr-16">{{ item.name }}</div>
-                          <div class="menu-card-subtitle mb-2">{{ `¥${formatNumberWithCommas(item.price)}` }}</div>
-                        </div>
-                        <div v-else class="d-flex flex-column text-center ga-2">
-                          <div class="menu-card-title mb-2">{{ item.name }}</div>
-                          <div class="menu-card-subtitle mb-2">
-                            {{ `¥${formatNumberWithCommas(item.price)}` }}
-                          </div>
-                          <div class="w-50 mx-auto ma-0" style="height: 50px">
-                            <v-btn
-                              v-if="!item.inCart"
-                              :variant="item.inCart ? 'outlined' : 'flat'"
-                              color="pen"
-                              size="large"
-                              @click="toggleInCart(item)"
-                              >カートに追加</v-btn
-                            >
-                            <v-text-field
-                              v-if="step == 1 && item.inCart"
-                              v-model="item.quantity"
-                              type="number"
-                              label="数量"
-                              min="1"
-                              density="compact"
-                              variant="outlined"
-                              :append-icon="step == 1 ? 'mdi-close' : ''"
-                              hide-details
-                              @click:append="toggleInCart(item)"
-                            ></v-text-field>
-                            <p v-if="step == 2" class="quantity">{{ `${item.quantity}個` }}</p>
-                          </div>
-                        </div>
-                        <div v-if="smAndUp" class="w-50">
-                          <v-btn
-                            v-if="!item.inCart"
-                            :variant="item.inCart ? 'outlined' : 'flat'"
-                            color="pen"
-                            size="large"
-                            @click="toggleInCart(item)"
-                            >カートに追加</v-btn
-                          >
-                          <v-text-field
-                            v-if="step == 1 && item.inCart"
-                            v-model="item.quantity"
-                            type="number"
-                            label="数量"
-                            min="1"
-                            step="1"
-                            density="compact"
-                            variant="outlined"
-                            append-icon="mdi-close"
-                            hide-details
-                            @click:append="toggleInCart(item)"
-                          ></v-text-field>
-                          <p v-if="step == 2" class="quantity">{{ `${item.quantity}個` }}</p>
-                        </div>
-                      </v-col>
-                    </v-row>
-                  </v-card>
-                  <v-divider class="my-16"></v-divider>
-                </div>
-              </v-col>
-              <v-col cols="12" class="text-center">
-                <div v-if="step == 1">
-                  <v-btn size="large" variant="outlined" color="primary" width="150px" class="mr-2" @click="step = 0"
-                    >メニューに戻る</v-btn
-                  >
-                  <v-btn size="large" variant="flat" color="primary" width="150px" @click="validate()">確認する</v-btn>
-                </div>
-                <div v-if="step == 2">
-                  <div class="mx-auto mb-8 total text-pen">{{ `合計 ： ¥${formatNumberWithCommas(total)}` }}</div>
-                  <v-btn size="large" variant="outlined" color="primary" width="150px" class="mr-2" @click="step = 1"
-                    >修正する</v-btn
-                  >
-                  <v-btn size="large" variant="flat" color="primary" width="150px" @click="dialog = true"
-                    >確定する</v-btn
-                  >
-                </div>
-              </v-col>
-            </v-row>
-          </v-sheet>
-          <v-dialog v-model="dialog" fullscreen>
-            <v-card class="pa-8" color="paper text-pen">
-              <v-table class="text-pen bg-transparent rounded-lg mx-auto">
-                <thead>
-                  <tr>
-                    <th v-for="head in headers" :key="head.key">{{ head.title }}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="item in items.filter((item) => item.inCart)" :key="item.id">
-                    <td class="auto-phrase">{{ item.name }}</td>
-                    <td>{{ `¥${formatNumberWithCommas(item.price)}` }}</td>
-                    <td>{{ item.quantity }}</td>
-                  </tr>
-                </tbody>
-              </v-table>
-              <p class="text-center total text-pen">{{ `合計 ： ¥${formatNumberWithCommas(total)}` }}</p>
-              <p class="text-center text-red mb-8">※念のため検算をお願いします</p>
-              <div class="no-print mx-auto">
-                <p class="auto-phrase">「保存する」ボタンを押すと、ブラウザに注文内容が保存されます</p>
-                <v-card-actions class="d-flex justify-center text-pen mt-4">
-                  <v-btn size="large" variant="outlined" color="pen" @click="closeDialog()">閉じる</v-btn>
-                  <v-btn size="large" variant="flat" color="pen" @click="save()">保存する</v-btn>
-                </v-card-actions>
-              </div>
-            </v-card>
-          </v-dialog>
-          <v-snackbar v-model="onSave" :timeout="2000" color="success" location="top"
-            ><span class="text-paper">保存しました</span></v-snackbar
-          >
-          <v-snackbar v-model="onError" :timeout="2000" color="error">カートが空です</v-snackbar>
-        </v-container>
+  <client-only>
+    <!-- メニュー -->
+    <v-container v-if="step == 0">
+      <v-img
+        max-width="1200px"
+        src="https://res.cloudinary.com/hinari-s-cafe/image/upload/f_webp/c103/cdctzfeh9d2acp0dy8og.jpg"
+        class="mx-auto"
+      ></v-img>
+      <div class="text-center my-8">
+        <v-btn variant="flat" size="x-large" rounded="lg" color="primary" @click="step = 1"
+          >オーダーシートはこちら</v-btn
+        >
       </div>
-    </client-only>
-  </div>
+    </v-container>
+    <!-- 注文/確認 -->
+    <v-container v-if="step != 0">
+      <v-sheet class="mx-auto my-8 pb-16" style="max-width: 1200px" rounded="lg" color="paper">
+        <v-row justify="center">
+          <v-col cols="12" class="text-center">
+            <h1 class="text-pen sheet-title mb-16">{{ steps[step] }}</h1>
+          </v-col>
+        </v-row>
+        <v-row class="ma-4" no-gutters>
+          <v-col v-for="item in items" :key="item.id" cols="12">
+            <div v-if="step == 1 || item.inCart">
+              <v-card flat color="transparent">
+                <v-row>
+                  <!-- 画像 -->
+                  <v-col cols="12" sm="6" class="d-flex align-center">
+                    <v-img :src="`${imageBaseUrl}${item.id}.jpg`" height="200px"></v-img>
+                  </v-col>
+                  <!-- 商品詳細 -->
+                  <v-col cols="12" sm="6" class="d-flex flex-column justify-space-between text-pen">
+                    <div v-if="smAndUp" class="pa-0">
+                      <div class="menu-card-title mb-2 pr-16">{{ item.name }}</div>
+                      <div class="menu-card-subtitle mb-2">{{ `¥${formatNumberWithCommas(item.price)}` }}</div>
+                    </div>
+                    <div v-else class="d-flex flex-column text-center ga-2">
+                      <div class="menu-card-title mb-2">{{ item.name }}</div>
+                      <div class="menu-card-subtitle mb-2">
+                        {{ `¥${formatNumberWithCommas(item.price)}` }}
+                      </div>
+                      <div class="w-50 mx-auto ma-0" style="height: 50px">
+                        <v-btn
+                          v-if="!item.inCart"
+                          :variant="item.inCart ? 'outlined' : 'flat'"
+                          color="pen"
+                          size="large"
+                          @click="toggleInCart(item)"
+                          >カートに追加</v-btn
+                        >
+                        <v-text-field
+                          v-if="step == 1 && item.inCart"
+                          v-model="item.quantity"
+                          type="number"
+                          label="数量"
+                          min="1"
+                          density="compact"
+                          variant="outlined"
+                          hide-details
+                          clearable
+                          class="mx-auto"
+                          @click:clear="toggleInCart(item)"
+                        ></v-text-field>
+                        <p v-if="step == 2" class="quantity">{{ `${item.quantity}個` }}</p>
+                      </div>
+                    </div>
+                    <div v-if="smAndUp" class="w-50">
+                      <v-btn
+                        v-if="!item.inCart"
+                        :variant="item.inCart ? 'outlined' : 'flat'"
+                        color="pen"
+                        size="large"
+                        @click="toggleInCart(item)"
+                        >カートに追加</v-btn
+                      >
+                      <v-text-field
+                        v-if="step == 1 && item.inCart"
+                        v-model="item.quantity"
+                        type="number"
+                        label="数量"
+                        min="1"
+                        density="compact"
+                        variant="outlined"
+                        hide-details
+                        clearable
+                        class="mx-auto"
+                        @click:clear="toggleInCart(item)"
+                      ></v-text-field>
+                      <p v-if="step == 2" class="quantity">{{ `${item.quantity}個` }}</p>
+                    </div>
+                  </v-col>
+                </v-row>
+              </v-card>
+              <v-divider class="my-16"></v-divider>
+            </div>
+          </v-col>
+          <v-col cols="12" class="text-center">
+            <div v-if="step == 1">
+              <v-btn size="large" variant="outlined" color="primary" width="150px" class="mr-2" @click="step = 0"
+                >メニューに戻る</v-btn
+              >
+              <v-btn size="large" variant="flat" color="primary" width="150px" @click="validate()">確認する</v-btn>
+            </div>
+            <div v-if="step == 2">
+              <div class="mx-auto mb-8 total text-pen">{{ `合計 ： ¥${formatNumberWithCommas(total)}` }}</div>
+              <v-btn size="large" variant="outlined" color="primary" width="150px" class="mr-2" @click="step = 1"
+                >修正する</v-btn
+              >
+              <v-btn size="large" variant="flat" color="primary" width="150px" @click="dialog = true">確定する</v-btn>
+            </div>
+          </v-col>
+        </v-row>
+      </v-sheet>
+      <!-- 注文書 -->
+      <v-dialog v-model="dialog" fullscreen>
+        <v-card class="pa-8" color="paper text-pen">
+          <v-table class="text-pen bg-transparent rounded-lg mx-auto">
+            <thead>
+              <tr>
+                <th v-for="head in headers" :key="head.key">{{ head.title }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in items.filter((item) => item.inCart)" :key="item.id">
+                <td class="auto-phrase">{{ item.name }}</td>
+                <td>{{ `¥${formatNumberWithCommas(item.price)}` }}</td>
+                <td>{{ item.quantity }}</td>
+              </tr>
+            </tbody>
+          </v-table>
+          <p class="text-center total text-pen">{{ `合計 ： ¥${formatNumberWithCommas(total)}` }}</p>
+          <p class="text-center text-red mb-8">※念のため検算をお願いします</p>
+          <div class="mx-auto">
+            <p class="auto-phrase">「保存する」ボタンを押すと、ブラウザに注文内容が保存されます</p>
+            <v-card-actions class="d-flex justify-center text-pen mt-4">
+              <v-btn size="large" variant="outlined" color="pen" @click="closeDialog()">閉じる</v-btn>
+              <v-btn size="large" variant="flat" color="pen" @click="save()">保存する</v-btn>
+            </v-card-actions>
+          </div>
+        </v-card>
+      </v-dialog>
+      <v-snackbar v-model="onSave" :timeout="2000" color="success" location="top"
+        ><span class="text-paper">保存しました</span></v-snackbar
+      >
+      <v-snackbar v-model="onError" :timeout="2000" color="error">カートが空です</v-snackbar>
+    </v-container>
+  </client-only>
 </template>
 <script setup>
 import { useDisplay } from 'vuetify'
@@ -181,7 +179,6 @@ const items = reactive([
     id: 'jlnlfpioytv2b5sujrne',
     name: 'アクリルスタンド 喫茶理原店長ver.',
     price: 3500,
-    imageUrl: `${imageBaseUrl}/c_pad,h_200,w_200/f_webp/c103/jlnlfpioytv2b5sujrne.jpg`,
     quantity: 1,
     inCart: false,
   },
@@ -262,7 +259,7 @@ const toggleInCart = (item) => {
 const validate = () => {
   // 不正な数量は除外する
   items.forEach((item) => {
-    if (!Number.isInteger(item.quantity) || item.quantity < 1) {
+    if (!Number.isInteger(Number(item.quantity)) || item.quantity < 1) {
       item.quantity = 1
       item.inCart = false
     }
