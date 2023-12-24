@@ -259,7 +259,7 @@ const toggleInCart = (item) => {
 const validate = () => {
   // 不正な数量は除外する
   items.forEach((item) => {
-    if (!Number.isInteger(Number(item.quantity)) || item.quantity < 1) {
+    if (!Number.isInteger(Number(item.quantity)) || Number(item.quantity) < 1) {
       item.quantity = 1
       item.inCart = false
     }
@@ -274,7 +274,7 @@ const validate = () => {
 
 // 合計金額
 const total = computed(() => {
-  return items.filter((item) => item.inCart).reduce((a, b) => a + b.price * b.quantity, 0)
+  return items.filter((item) => item.inCart).reduce((a, b) => a + Number(b.price) * Number(b.quantity), 0)
 })
 
 // 保存する
