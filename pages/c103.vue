@@ -140,7 +140,7 @@
               </div>
             </v-card>
           </v-dialog>
-          <v-snackbar v-model="onSave" :timeout="2000" color="success"
+          <v-snackbar v-model="onSave" :timeout="2000" color="success" location="top"
             ><span class="text-paper">保存しました</span></v-snackbar
           >
           <v-snackbar v-model="onError" :timeout="2000" color="error">カートが空です</v-snackbar>
