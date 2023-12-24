@@ -144,7 +144,7 @@
           <v-snackbar v-model="onSave" :timeout="2000" color="success"
             ><span class="text-paper">保存しました</span></v-snackbar
           >
-          <v-snackbar v-model="onError" :timeout="2000" color="error">カートの中が空です</v-snackbar>
+          <v-snackbar v-model="onError" :timeout="2000" color="error">カートが空です</v-snackbar>
         </v-container>
       </div>
     </client-only>
