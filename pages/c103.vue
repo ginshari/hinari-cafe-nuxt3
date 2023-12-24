@@ -25,12 +25,12 @@
                   <v-card flat color="transparent">
                     <v-row>
                       <!-- 画像 -->
-                      <v-col cols="12" md="6" class="d-flex align-center">
+                      <v-col cols="12" sm="6" class="d-flex align-center">
                         <v-img :src="`${imageBaseUrl}${item.id}.jpg`" height="200px"></v-img>
                       </v-col>
                       <!-- 商品詳細 -->
-                      <v-col cols="12" md="6" class="d-flex flex-column justify-space-between text-pen pr-8">
-                        <div v-if="mdAndUp" class="pa-0">
+                      <v-col cols="12" sm="6" class="d-flex flex-column justify-space-between text-pen">
+                        <div v-if="smAndUp" class="pa-0">
                           <div class="menu-card-title mb-2">{{ item.name }}</div>
                           <div class="menu-card-subtitle mb-2">{{ `¥${formatNumberWithCommas(item.price)}` }}</div>
                         </div>
@@ -63,7 +63,7 @@
                             <p v-if="step == 2" class="quantity">{{ `${item.quantity}個` }}</p>
                           </div>
                         </div>
-                        <div v-if="mdAndUp" class="w-50">
+                        <div v-if="smAndUp" class="w-50">
                           <v-btn
                             v-if="!item.inCart"
                             :variant="item.inCart ? 'outlined' : 'flat'"
@@ -80,7 +80,7 @@
                             min="1"
                             density="compact"
                             variant="outlined"
-                            :append-icon="step == 1 ? 'mdi-close' : ''"
+                            append-icon="mdi-close"
                             hide-details
                             @click:append="toggleInCart(item)"
                           ></v-text-field>
@@ -111,7 +111,7 @@
               </v-col>
             </v-row>
           </v-sheet>
-          <v-dialog v-model="dialog" max-width="700px" rounded="lg" fullscreen>
+          <v-dialog v-model="dialog" fullscreen>
             <v-card class="pa-8" color="paper text-pen">
               <v-table class="text-pen bg-transparent rounded-lg">
                 <thead>
@@ -129,7 +129,7 @@
               </v-table>
               <p class="text-center total text-pen">{{ `合計 ： ¥${formatNumberWithCommas(total)}` }}</p>
               <p class="text-center text-red mb-8">※念のため検算をお願いします</p>
-              <div class="no-print px-4">
+              <div class="no-print mx-auto">
                 <ul>
                   <li>「保存する」ボタンを押すと、ブラウザに注文内容が保存されます</li>
                   <li>「印刷する」ボタンを押すと、注文内容がブラウザの機能により印刷されます</li>
@@ -153,7 +153,7 @@
 <script setup>
 import { useDisplay } from 'vuetify'
 
-const { mdAndUp } = useDisplay()
+const { smAndUp } = useDisplay()
 
 definePageMeta({
   layout: 'simple',
