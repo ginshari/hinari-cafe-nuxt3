@@ -4,7 +4,9 @@
       <div class="no-print">
         <v-container v-if="step == 0">
           <v-img
+            max-width="1200px"
             src="https://res.cloudinary.com/hinari-s-cafe/image/upload/f_webp/c103/cdctzfeh9d2acp0dy8og.jpg"
+            class="mx-auto"
           ></v-img>
           <div class="text-center my-8">
             <v-btn variant="flat" size="x-large" rounded="lg" color="primary" @click="step = 1"
@@ -113,7 +115,7 @@
           </v-sheet>
           <v-dialog v-model="dialog" fullscreen>
             <v-card class="pa-8" color="paper text-pen">
-              <v-table class="text-pen bg-transparent rounded-lg">
+              <v-table class="text-pen bg-transparent rounded-lg mx-auto">
                 <thead>
                   <tr>
                     <th v-for="head in headers" :key="head.key">{{ head.title }}</th>
@@ -130,13 +132,10 @@
               <p class="text-center total text-pen">{{ `合計 ： ¥${formatNumberWithCommas(total)}` }}</p>
               <p class="text-center text-red mb-8">※念のため検算をお願いします</p>
               <div class="no-print mx-auto">
-                <ul>
-                  <li>「保存する」ボタンを押すと、ブラウザに注文内容が保存されます</li>
-                  <li>「印刷する」ボタンを押すと、注文内容がブラウザの機能により印刷されます</li>
-                </ul>
+                <p>「保存する」ボタンを押すと、ブラウザに注文内容が保存されます</p>
                 <v-card-actions class="d-flex justify-center text-pen mt-4">
-                  <v-btn size="large" variant="outlined" @click="save()">保存する</v-btn>
-                  <v-btn size="large" variant="flat" color="pen" @click="print()">印刷する</v-btn>
+                  <v-btn size="large" variant="outlined" color="pen" @click="closeDialog()">閉じる</v-btn>
+                  <v-btn size="large" variant="flat" color="pen" @click="save()">保存する</v-btn>
                 </v-card-actions>
               </div>
             </v-card>
@@ -277,15 +276,6 @@ const save = () => {
   const cart = items.filter((item) => item.inCart).map((item) => ({ id: item.id, quantity: item.quantity }))
   localStorage.setItem('cart', JSON.stringify(cart))
   onSave.value = true
-  closeDialog()
-}
-
-// 印刷する
-const print = () => {
-  nextTick(() => {
-    window.print()
-    closeDialog()
-  })
 }
 
 // ダイアログを閉じる
@@ -325,11 +315,5 @@ watch(
 
 .total {
   font-size: calc(0.5vw + 24px);
-}
-
-@media print {
-  .no-print {
-    display: none;
-  }
 }
 </style>
