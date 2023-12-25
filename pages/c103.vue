@@ -62,6 +62,7 @@
                           hide-details
                           clearable
                           class="mx-auto"
+                          @blur="fixQuantity(item)"
                           @click:clear="toggleInCart(item)"
                         ></v-text-field>
                         <p v-if="step == 2" class="quantity">{{ `${item.quantity}個` }}</p>
@@ -82,7 +83,7 @@
                         type="number"
                         label="数量"
                         min="1"
-                        max="999"
+                        :max="String(MAX_QUANTITY)"
                         density="compact"
                         variant="outlined"
                         hide-details
@@ -134,11 +135,15 @@
           </v-table>
           <p class="text-center total text-pen">{{ `合計 ： ¥${formatNumberWithCommas(total)}` }}</p>
           <p class="text-center text-red mb-8">※念のため検算をお願いします</p>
-          <div class="mx-auto">
-            <p class="auto-phrase">「保存する」ボタンを押すと、ブラウザに注文内容が保存されます</p>
+          <div class="mx-auto no-print">
+            <ul class="auto-phrase">
+              <li>「保存する」ボタンを押すと、ブラウザに注文内容が保存されます</li>
+              <li>「印刷する」ボタンを押すと、ブラウザの機能により注文内容が印刷されます</li>
+            </ul>
             <v-card-actions class="d-flex justify-center text-pen mt-4">
-              <v-btn size="large" variant="outlined" color="pen" @click="closeDialog()">閉じる</v-btn>
-              <v-btn size="large" variant="flat" color="pen" @click="save()">保存する</v-btn>
+              <v-btn size="large" variant="outlined" color="primary" @click="closeDialog()">閉じる</v-btn>
+              <v-btn size="large" variant="flat" color="primary" @click="save()">保存する</v-btn>
+              <v-btn size="large" variant="flat" color="pen" @click="print()">印刷する</v-btn>
             </v-card-actions>
           </div>
         </v-card>
@@ -146,17 +151,7 @@
       <v-snackbar v-model="onSave" :timeout="2000" color="success" location="top"
         ><span class="text-paper">保存しました</span></v-snackbar
       >
-      <v-snackbar v-model="onError" :timeout="2000" color="error">カートが空です</v-snackbar>
-      <v-dialog v-model="on5000TrillionError">
-        <h1 class="text-red" style="font-size: 32px; font-family: sans-serif; font-style: italic">
-          !ERROR! TooLargeQuantityError : 許容される数量を超えています
-        </h1>
-        <p class="text-red text-right">※ジョークです</p>
-        <v-img
-          src="https://res.cloudinary.com/hinari-s-cafe/image/upload/c103/jgrsh6bynxhu8h5tbu2h.jpg"
-          width="100vw"
-        ></v-img>
-      </v-dialog>
+      <v-snackbar v-model="onError" :timeout="2000" color="error">{{ errorMessage }}</v-snackbar>
     </v-container>
   </client-only>
 </template>
@@ -173,7 +168,9 @@ definePageMeta({
 const steps = { 0: 'MENU', 1: 'ITEM', 2: 'ORDER' }
 const step = ref(0)
 
-const MAX_TOTAL = 100000000 // 流石に1億超えたら怒る
+const MAX_DIGITS = 3 // 数量の最大桁数
+const MAX_QUANTITY = Number('9'.repeat(MAX_DIGITS)) // 数量の最大値
+const MIN_QUANTITY = 1 // 数量の最小値
 
 const headers = [
   { title: '品名', key: 'name' },
@@ -207,7 +204,6 @@ const items = reactive([
     id: 'uawq67j1ow3ac7tbs3wq',
     name: 'ホテルルームキー',
     price: 1500,
-    imageId: 'uawq67j1ow3ac7tbs3wq',
     quantity: 1,
     inCart: false,
   },
@@ -243,7 +239,7 @@ const items = reactive([
 const dialog = ref(false)
 const onSave = ref(false)
 const onError = ref(false)
-const on5000TrillionError = ref(false)
+const errorMessage = ref('')
 
 onMounted(() => {
   // カートの中身を復元する
@@ -273,23 +269,39 @@ const toggleInCart = (item) => {
 // バリデーション
 const validate = () => {
   // 不正な数量は除外する
-  items.forEach((item) => {
-    if (!Number.isInteger(Number(item.quantity)) || Number(item.quantity) < 1) {
-      item.quantity = 1
-      item.inCart = false
+  for (const item of items) {
+    if (item.inCart && isInvalidQuantity(item)) {
+      onError.value = true
+      errorMessage.value = '数量が不正です'
+      return
     }
-  })
+  }
   // 選択なしはエラー
   if (!items.filter((item) => item.inCart).length > 0) {
     onError.value = true
-    return
-  }
-  // 合計が異常値の場合は5000兆円欲しいエラー
-  if (Number(total.value) > MAX_TOTAL) {
-    on5000TrillionError.value = true
+    errorMessage.value = 'カートが空です'
     return
   }
   step.value = 2
+}
+
+// 数量はMIN~MAX以内の正の整数値でなければInvalid
+const isInvalidQuantity = (item) => {
+  const quantity = Number(item.quantity)
+  return isNaN(quantity) || !Number.isInteger(quantity) || quantity < MIN_QUANTITY || MAX_QUANTITY < quantity
+}
+
+// 数量を正常値に変換する
+const fixQuantity = (item) => {
+  if (!isNaN(Number(item.quantity))) {
+    // 数値であれば正の整数値に丸める
+    const positiveInteger = item.quantity < MIN_QUANTITY ? MIN_QUANTITY : Math.round(item.quantity)
+    // 桁数を切り詰める
+    item.quantity = Number(String(positiveInteger).slice(0, MAX_DIGITS))
+  } else {
+    // 数値でなければ1にする
+    item.quantity = 1
+  }
 }
 
 // 合計金額
@@ -302,6 +314,11 @@ const save = () => {
   const cart = items.filter((item) => item.inCart).map((item) => ({ id: item.id, quantity: item.quantity }))
   localStorage.setItem('cart', JSON.stringify(cart))
   onSave.value = true
+}
+
+// 印刷する
+const print = () => {
+  window.print()
 }
 
 // ダイアログを閉じる
@@ -345,5 +362,11 @@ watch(
 
 .auto-phrase {
   word-break: auto-phrase;
+}
+
+@media print {
+  .no-print {
+    display: none;
+  }
 }
 </style>
