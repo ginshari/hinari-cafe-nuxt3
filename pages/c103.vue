@@ -89,6 +89,7 @@
                         hide-details
                         clearable
                         class="mx-auto"
+                        @blur="fixQuantity(item)"
                         @click:clear="toggleInCart(item)"
                       ></v-text-field>
                       <p v-if="step == 2" class="quantity">{{ `${item.quantity}個` }}</p>
@@ -139,6 +140,7 @@
             <ul class="auto-phrase">
               <li>「保存する」ボタンを押すと、ブラウザに注文内容が保存されます</li>
               <li>「印刷する」ボタンを押すと、ブラウザの機能により注文内容が印刷されます</li>
+              <li>「印刷する」ボタンがうまく動作しない場合は、スクリーンショットをご利用ください</li>
             </ul>
             <v-card-actions class="d-flex justify-center text-pen mt-4">
               <v-btn size="large" variant="outlined" color="primary" @click="closeDialog()">閉じる</v-btn>
@@ -296,8 +298,8 @@ const fixQuantity = (item) => {
   if (!isNaN(Number(item.quantity))) {
     // 数値であれば正の整数値に丸める
     const positiveInteger = item.quantity < MIN_QUANTITY ? MIN_QUANTITY : Math.round(item.quantity)
-    // 桁数を切り詰める
-    item.quantity = Number(String(positiveInteger).slice(0, MAX_DIGITS))
+    // 最大値より大きい場合は最大値にする
+    item.quantity = MAX_QUANTITY < positiveInteger ? MAX_QUANTITY : positiveInteger
   } else {
     // 数値でなければ1にする
     item.quantity = 1
