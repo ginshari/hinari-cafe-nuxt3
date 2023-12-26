@@ -119,8 +119,8 @@
       </v-sheet>
       <!-- 注文書 -->
       <v-dialog v-model="dialog" fullscreen>
-        <v-card class="pa-8" color="paper text-pen">
-          <v-table class="text-pen bg-transparent rounded-lg mx-auto">
+        <v-card class="pa-8">
+          <v-table class="mx-auto rounded-lg text-pen">
             <thead>
               <tr>
                 <th v-for="head in headers" :key="head.key">{{ head.title }}</th>
@@ -135,9 +135,10 @@
             </tbody>
           </v-table>
           <p class="text-center total text-pen">{{ `合計 ： ¥${formatNumberWithCommas(total)}` }}</p>
-          <p class="text-center text-red mb-8">※念のため検算をお願いします</p>
-          <div class="mx-auto no-print">
-            <ul class="auto-phrase">
+          <p class="mb-8 text-center text-red">※念のため検算をお願いします</p>
+          <!-- 説明文とボタンは印刷時に非表示にする -->
+          <div class="mx-auto pa-4 no-print">
+            <ul class="auto-phrase text-pen">
               <li>「保存する」ボタンを押すと、ブラウザに注文内容が保存されます</li>
               <li>「印刷する」ボタンを押すと、ブラウザの機能により注文内容が印刷されます</li>
               <li>「印刷する」ボタンがうまく動作しない場合は、スクリーンショットをご利用ください</li>
@@ -180,64 +181,52 @@ const headers = [
   { title: '数量', key: 'quantity' },
 ]
 const imageBaseUrl = 'https://res.cloudinary.com/hinari-s-cafe/image/upload/c_pad,h_200,w_200/f_webp/c103/'
-const items = reactive([
-  {
-    id: 'loikvfiknvsupknhepus',
-    name: '理原ブレンド',
-    price: 3000,
-    quantity: 1,
-    inCart: false,
-  },
-  {
-    id: 'jlnlfpioytv2b5sujrne',
-    name: 'アクリルスタンド 喫茶理原店長ver.',
-    price: 3500,
-    quantity: 1,
-    inCart: false,
-  },
-  {
-    id: 'ugrjn4flym5xthkybqao',
-    name: '木製キーホルダー 喫茶理原店長ver.',
-    price: 2000,
-    quantity: 1,
-    inCart: false,
-  },
-  {
-    id: 'uawq67j1ow3ac7tbs3wq',
-    name: 'ホテルルームキー',
-    price: 1500,
-    quantity: 1,
-    inCart: false,
-  },
-  {
-    id: 'lethjfkuefepis73tgcx',
-    name: 'カップホルダー',
-    price: 1500,
-    quantity: 1,
-    inCart: false,
-  },
-  {
-    id: 'dtrx2xaujytnd6fqzdgd',
-    name: 'ポストカードセット 3枚入り',
-    price: 500,
-    quantity: 1,
-    inCart: false,
-  },
-  {
-    id: 'cqwfk2hdahghivt49739',
-    name: 'ランダムチェキ 全5種',
-    price: 1000,
-    quantity: 1,
-    inCart: false,
-  },
-  {
-    id: 'cyv3p0utymipswn6pns6',
-    name: '喫茶店占い',
-    price: 100,
-    quantity: 1,
-    inCart: false,
-  },
-])
+const items = reactive(
+  [
+    {
+      id: 'loikvfiknvsupknhepus',
+      name: '理原ブレンド',
+      price: 3000,
+    },
+    {
+      id: 'jlnlfpioytv2b5sujrne',
+      name: 'アクリルスタンド 喫茶理原店長ver.',
+      price: 3500,
+    },
+    {
+      id: 'ugrjn4flym5xthkybqao',
+      name: '木製キーホルダー 喫茶理原店長ver.',
+      price: 2000,
+    },
+    {
+      id: 'uawq67j1ow3ac7tbs3wq',
+      name: 'ホテルルームキー',
+      price: 1500,
+    },
+    {
+      id: 'lethjfkuefepis73tgcx',
+      name: 'カップホルダー',
+      price: 1500,
+    },
+    {
+      id: 'dtrx2xaujytnd6fqzdgd',
+      name: 'ポストカードセット 3枚入り',
+      price: 500,
+    },
+    {
+      id: 'cqwfk2hdahghivt49739',
+      name: 'ランダムチェキ 全5種',
+      price: 1000,
+    },
+    {
+      id: 'cyv3p0utymipswn6pns6',
+      name: '喫茶店占い',
+      price: 100,
+    },
+  ].map((item) => {
+    return { ...item, quantity: MIN_QUANTITY, inCart: false }
+  })
+)
 const dialog = ref(false)
 const onSave = ref(false)
 const onError = ref(false)
