@@ -28,15 +28,50 @@
           </div>
         </v-col>
         <v-col cols="12" sm="8" class="my-auto px-8 profile-right" align-self="center">
-          <div class="d-block text-pen">
+          <div class="d-block text-pen mt-sm-16 py-8">
             <table class="mx-auto mx-lg-0">
               <tbody>
                 <tr v-for="profile in profiles" :key="profile.order" class="py-lg-16">
                   <td class="text-right">{{ profile.head }}</td>
-                  <td class="pl-lg-16">{{ profile.body }}</td>
+                  <td class="pl-lg-16" style="word-break: auto-phrase">{{ profile.body }}</td>
                 </tr>
               </tbody>
             </table>
+          </div>
+        </v-col>
+      </v-row>
+      <!-- gallery -->
+      <v-row align-content="center" no-gutters>
+        <v-col cols="12" sm="4" class="text-center profile-left">
+          <div class="py-8">
+            <p class="text-pen title-text">GALLERY</p>
+          </div>
+        </v-col>
+        <v-col cols="12" sm="8" class="my-auto mt-sm-16 pa-8 profile-right" align-self="center">
+          <div class="mx-auto" style="max-width: 800px">
+            <v-carousel v-model="selectedGallery" class="mx-auto" continuous>
+              <template #prev="{ props }">
+                <v-btn icon="mdi-chevron-left" color="pen" @click="props.onClick"></v-btn>
+              </template>
+              <template #next="{ props }">
+                <v-btn icon="mdi-chevron-right" color="pen" @click="props.onClick"></v-btn>
+              </template>
+              <v-carousel-item
+                v-for="item in gallery"
+                :key="item.imageName"
+                :src="generateGalleryUrl(item.imageName, 'c_fit,f_auto,q_auto,w_500')"
+              />
+            </v-carousel>
+            <v-btn
+              variant="flat"
+              color="pen"
+              size="large"
+              :rounded="0"
+              block
+              :href="generateGalleryUrl(gallery[selectedGallery].imageName)"
+              target="_blank"
+              >VIEW FULL</v-btn
+            >
           </div>
         </v-col>
       </v-row>
@@ -182,6 +217,20 @@ const category = ref([
   { title: 'トピック', value: 'topics' },
 ])
 
+const selectedGallery = ref(0)
+const generateGalleryUrl = (imageName, params) => {
+  const slashedParams = params ? `/${params}` : ''
+  return `https://res.cloudinary.com/hinari-s-cafe/image/upload${slashedParams}/v1707753283/3menzu/${imageName}`
+}
+const gallery = ref([
+  { imageName: 'front_v5y59q.png' },
+  { imageName: 'side_m2ni76.png' },
+  { imageName: 'back_qsxatn.png' },
+  { imageName: 'glove_pl8zt8.png' },
+  { imageName: 'shoes_tamlse.png' },
+  { imageName: 'sole_hyynpz.png' },
+])
+
 const filterdEvents = computed(() => {
   return events.reduce((accumulator, currentValue) => {
     // カテゴリに合致するイベントを表示する
@@ -204,9 +253,10 @@ const filterdEvents = computed(() => {
 }
 
 .title-text {
-  font-size: calc(0.5vw + 32px);
+  font-size: calc(0.5vw + 28px);
   text-decoration: underline;
   text-decoration-skip-ink: none;
+  white-space: nowrap;
 }
 
 .profile-left {
