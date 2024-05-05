@@ -240,9 +240,10 @@ const coffees = landingPage.coffees
   position: relative;
   z-index: 100;
   border-radius: 5vw;
-  box-shadow: 20px 20px 0 rgba(49, 49, 49, 0.5) !important;
+  box-shadow: 20px 20px 0 rgb(49 49 49 / 0.5) !important;
   left: 15%;
   top: 50px;
+
   @media screen and (max-width: 959px) {
     left: 0;
     top: 0;
@@ -270,13 +271,13 @@ const coffees = landingPage.coffees
   padding-top: 5vh;
   padding-bottom: 5vh;
   background-size: auto auto;
-  background-color: rgba(255, 204, 248, 1);
+  background-color: rgb(255 204 248 / 1);
   background-image: repeating-linear-gradient(
     135deg,
     transparent,
     transparent 100px,
-    rgba(228, 184, 230, 1) 100px,
-    rgba(228, 184, 230, 1) 140px
+    rgb(228 184 230 / 1) 100px,
+    rgb(228 184 230 / 1) 140px
   );
 
   .v-card {
@@ -284,7 +285,7 @@ const coffees = landingPage.coffees
     line-height: 2em;
     border-radius: 5vw;
     white-space: pre-wrap;
-    box-shadow: 15px 15px 0 rgba(49, 49, 49, 0.5) !important;
+    box-shadow: 15px 15px 0 rgb(49 49 49 / 0.5) !important;
     margin-top: 100px;
     margin-bottom: 100px;
     @media screen and (max-width: 959px) {
