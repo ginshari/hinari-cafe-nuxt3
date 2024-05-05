@@ -240,7 +240,7 @@ const coffees = landingPage.coffees
   position: relative;
   z-index: 100;
   border-radius: 5vw;
-  box-shadow: 20px 20px 0 rgb(49 49 49 / 50%) !important;
+  box-shadow: 20px 20px 0 rgb(49 49 49 / 0.5) !important;
   left: 15%;
   top: 50px;
 
