@@ -259,6 +259,40 @@ const filterdEvents = computed(() => {
   white-space: nowrap;
 }
 
+.history-top-left {
+  background-color: #a8f3ff;
+}
+
+.history-middle {
+  &-left {
+    background-color: #a8f3ff;
+    .year {
+      font-size: calc(0.5vw + 20px);
+    }
+    .month {
+      font-size: calc(0.5vw + 12px);
+    }
+    &-mobile {
+      background-color: var(--v-paper-base);
+    }
+  }
+
+  &-right {
+    a {
+      font-size: calc(0.5vw + 12px);
+      text-decoration: none;
+      &:visited,
+      &:hover {
+        text-decoration: underline;
+        text-decoration-skip-ink: none;
+      }
+    }
+    &-mobile p::before {
+      content: '・';
+    }
+  }
+}
+
 .profile-left {
   background-color: #a8f3ff;
   .name {
@@ -290,40 +324,6 @@ const filterdEvents = computed(() => {
       &:first-child {
         white-space: nowrap;
       }
-    }
-  }
-}
-
-.history-top-left {
-  background-color: #a8f3ff;
-}
-
-.history-middle {
-  &-left {
-    background-color: #a8f3ff;
-    .year {
-      font-size: calc(0.5vw + 20px);
-    }
-    .month {
-      font-size: calc(0.5vw + 12px);
-    }
-    &-mobile {
-      background-color: var(--v-paper-base);
-    }
-  }
-
-  &-right {
-    a {
-      font-size: calc(0.5vw + 12px);
-      text-decoration: none;
-      &:visited,
-      &:hover {
-        text-decoration: underline;
-        text-decoration-skip-ink: none;
-      }
-    }
-    &-mobile p::before {
-      content: '・';
     }
   }
 }
