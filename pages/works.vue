@@ -27,7 +27,7 @@
             </div>
           </div>
         </v-col>
-        <v-col cols="12" sm="8" class="my-auto px-8 profile-right" align-self="center">
+        <v-col cols="12" sm="8" class="my-auto px-8" align-self="center">
           <div class="d-block text-pen mt-sm-16 py-8">
             <table class="mx-auto mx-lg-0">
               <tbody>
@@ -42,9 +42,17 @@
       </v-row>
       <!-- gallery -->
       <v-row align-content="center" no-gutters>
-        <v-col cols="12" sm="4" class="text-center profile-left">
-          <div class="py-8">
+        <v-col cols="12" sm="4" class="text-center gallery-left">
+          <div class="pt-8">
             <p class="text-pen title-text">GALLERY</p>
+          </div>
+          <div class="px-2 py-4 description">
+            <p class="text-pen">ファンアート等にご利用ください！</p>
+            <p class="text-primary">
+              <a href="https://www.youtube.com/live/3hJttokBN4E?t=5391s" target="_blank" rel="noopener"
+                >Skeb依頼可能です！</a
+              >
+            </p>
           </div>
         </v-col>
         <v-col cols="12" sm="8" class="my-auto mt-sm-16 pa-8 profile-right" align-self="center">
@@ -324,6 +332,22 @@ const filterdEvents = computed(() => {
       &:first-child {
         white-space: nowrap;
       }
+    }
+  }
+}
+
+.gallery-left {
+  background-color: #a8f3ff;
+  .description {
+    font-size: calc(0.5vw + 12px);
+    word-break: auto-phrase;
+  }
+  a {
+    text-decoration: underline;
+    text-decoration-skip-ink: none;
+    &:visited,
+    &:hover {
+      color: inherit;
     }
   }
 }

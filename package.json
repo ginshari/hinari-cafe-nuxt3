@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "hinari-cafe-nuxt3",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "scripts": {
     "lint-css": "stylelint \"**/*.vue\" \"**/*.css\" \"**/*.scss\"",
     "dev": "nuxi dev",
