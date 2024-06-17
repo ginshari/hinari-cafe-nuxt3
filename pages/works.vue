@@ -47,7 +47,7 @@
             <p class="text-pen title-text">GALLERY</p>
           </div>
           <div class="px-2 py-4 description">
-            <p class="text-pen">ファンアート等にご利用ください！</p>
+            <p class="text-pen">ファンアート等にご活用ください！</p>
             <p class="text-primary">
               <a href="https://www.youtube.com/live/3hJttokBN4E?t=5391s" target="_blank" rel="noopener"
                 >Skeb依頼可能です！</a
