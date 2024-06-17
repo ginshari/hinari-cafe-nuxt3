@@ -27,7 +27,7 @@
             </div>
           </div>
         </v-col>
-        <v-col cols="12" sm="8" class="my-auto px-8" align-self="center">
+        <v-col cols="12" sm="8" class="my-auto px-8 profile-right" align-self="center">
           <div class="d-block text-pen mt-sm-16 py-8">
             <table class="mx-auto mx-lg-0">
               <tbody>
