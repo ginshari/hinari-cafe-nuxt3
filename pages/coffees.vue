@@ -158,7 +158,7 @@ const paginatedCoffees = computed(() => {
 })
 
 const selectSrc = computed(() => {
-  return 'https://www.youtube.com/embed/' + selectId.value + '?autoplay=1&start=' + selectTime.value
+  return 'https://www.youtube-nocookie.com/embed/' + selectId.value + '?autoplay=1&start=' + selectTime.value
 })
 
 const dialogWidth = computed(() => {
