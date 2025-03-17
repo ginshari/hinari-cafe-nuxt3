@@ -5,9 +5,6 @@
         <v-col v-if="mdAndUp" cols="12" md="6" class="d-flex flex-column justify-space-between">
           <v-sheet class="pa-lg-8 pa-4 greeting" color="paper">
             <p class="ma-0 ma-md-8 ma-lg-16 text-pen" v-text="landingPage.greeting" />
-            <p class="ma-0 ma-md-8 ma-lg-16 text-primary">
-              <a href="http://cotorido.com/clp/kotohara-hinari-cafe/" target="_blank">コラボカフェの情報はこちら！！</a>
-            </p>
           </v-sheet>
           <div>
             <v-img
@@ -33,13 +30,8 @@
                 src="https://res.cloudinary.com/hinari-s-cafe/image/upload/f_auto,q_auto/v1647669519/logo_gcanuk.png"
               />
             </div>
-            <v-sheet class="mx-auto pa-sm-8 pa-4 greeting" color="paper" max-width="80vw">
+            <v-sheet class="mx-auto pa-sm-8 pa-4 greeting d-flex justify-space-around" color="paper" max-width="80vw">
               <p class="ma-0 ma-md-8 text-pen" v-text="landingPage.greeting" />
-              <p class="ma-0 ma-md-8 text-primary">
-                <a href="http://cotorido.com/clp/kotohara-hinari-cafe/" target="_blank"
-                  >コラボカフェの情報はこちら！！</a
-                >
-              </p>
             </v-sheet>
           </div>
           <div>
