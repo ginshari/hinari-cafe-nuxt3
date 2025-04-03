@@ -4,6 +4,7 @@
       <client-only>
         <v-col v-if="mdAndUp" cols="12" md="6" class="d-flex flex-column justify-space-between">
           <v-sheet class="pa-lg-8 pa-4 greeting" color="paper">
+            <p class="ma-0 ma-md-8 ma-lg-16 text-pen" v-text="landingPage.greeting" />
             <p class="ma-0 ma-md-8 ma-lg-16 text-primary">
               <a href="https://amtf.go.jp/ja/#stage" target="_blank">大阪・関西万博で歌います！！</a>
             </p>
