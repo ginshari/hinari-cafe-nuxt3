@@ -30,8 +30,11 @@
                 src="https://res.cloudinary.com/hinari-s-cafe/image/upload/f_auto,q_auto/v1647669519/logo_gcanuk.png"
               />
             </div>
-            <v-sheet class="mx-auto pa-sm-8 pa-4 greeting d-flex justify-space-around" color="paper" max-width="80vw">
+            <v-sheet class="mx-auto pa-sm-8 pa-4 greeting" color="paper" max-width="80vw">
               <p class="ma-0 ma-md-8 text-pen" v-text="landingPage.greeting" />
+              <p class="ma-0 ma-md-8 text-primary">
+                <a href="https://amtf.go.jp/ja/#stage" target="_blank">大阪・関西万博で歌います！！</a>
+              </p>
             </v-sheet>
           </div>
           <div>
