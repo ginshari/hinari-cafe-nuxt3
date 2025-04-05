@@ -13,7 +13,7 @@
     "@nuxtjs/google-fonts": "^3.0.0-1",
     "eslint": "^8.33.0",
     "eslint-config-prettier": "^8.6.0",
-    "nuxt": "^3.11.2",
+    "nuxt": "^3.16.0",
     "postcss-html": "^1.6.0",
     "prettier": "^2.8.3",
     "stylelint-config-recommended-scss": "^14.0.0",
