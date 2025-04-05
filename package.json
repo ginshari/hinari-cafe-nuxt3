@@ -13,7 +13,7 @@
     "@nuxtjs/google-fonts": "^3.0.0-1",
     "eslint": "^8.33.0",
     "eslint-config-prettier": "^8.6.0",
-    "nuxt": "^3.11.2",
+    "nuxt": "^3.16.2",
     "postcss-html": "^1.6.0",
     "prettier": "^2.8.3",
     "stylelint-config-recommended-scss": "^14.0.0",
@@ -24,7 +24,7 @@
     "@mdi/font": "^7.1.96",
     "sass": "^1.57.1",
     "sass-loader": "^13.2.0",
-    "vite-plugin-vuetify": "^1.0.2",
+    "vite-plugin-vuetify": "^2.1.1",
     "vuetify": "3.6.x"
   }
 }
