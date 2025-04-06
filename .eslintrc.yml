@@ -1,2 +1,2 @@
 root: true
-extends: ['@nuxtjs/eslint-config-typescript', 'prettier']
+extends: ['plugin:vue/base', 'plugin:vuetify/base', '@nuxtjs/eslint-config-typescript', 'prettier']
