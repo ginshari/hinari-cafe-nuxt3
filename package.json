@@ -27,5 +27,10 @@
     "sass-loader": "^13.2.0",
     "vite-plugin-vuetify": "^2.1.1",
     "vuetify": "~3.8.0"
+  },
+  "overrides": {
+    "vite": {
+      "rollup": "npm:@rollup/wasm-node"
+    }
   }
 }
