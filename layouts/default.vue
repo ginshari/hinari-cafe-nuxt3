@@ -21,7 +21,7 @@ export default {
   data() {
     return {
       color: '#261f87',
-      author: 'pictures:@hinari_kotohara\nauthor:@nanasu_n',
+      author: 'pictures:@hinari_kotohara\nauthor:@hinaricafe_TO',
     }
   },
 }
