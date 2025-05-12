@@ -5,9 +5,6 @@
         <v-col v-if="mdAndUp" cols="12" md="6" class="d-flex flex-column justify-space-between">
           <v-sheet class="pa-lg-8 pa-4 greeting" color="paper">
             <p class="ma-0 ma-md-8 ma-lg-16 text-pen" v-text="landingPage.greeting" />
-            <p class="ma-0 ma-md-8 ma-lg-16 text-primary">
-              <a href="https://www.youtube.com/watch?v=eHJoqLcGZAw" target="_blank">3Dソロライブ開催します！！</a>
-            </p>
           </v-sheet>
           <div>
             <v-img
@@ -35,9 +32,6 @@
             </div>
             <v-sheet class="mx-auto pa-sm-8 pa-4 greeting" color="paper" max-width="80vw">
               <p class="ma-0 ma-md-8 text-pen" v-text="landingPage.greeting" />
-              <p class="ma-0 ma-md-8 text-primary">
-                <a href="https://www.youtube.com/watch?v=eHJoqLcGZAw" target="_blank">3Dソロライブ開催します！！</a>
-              </p>
             </v-sheet>
           </div>
           <div>
