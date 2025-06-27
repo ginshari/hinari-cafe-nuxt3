@@ -57,7 +57,7 @@
         </v-col>
         <v-col cols="12" sm="8" class="my-auto mt-sm-16 pa-8 profile-right" align-self="center">
           <div class="mx-auto" style="max-width: 800px">
-            <v-carousel v-model="selectedGallery" class="mx-auto" continuous>
+            <v-carousel v-model="selectedGallery" class="mx-auto" height="auto" continuous>
               <template #prev="{ props }">
                 <v-btn icon="mdi-chevron-left" color="pen" @click="props.onClick"></v-btn>
               </template>
@@ -230,14 +230,7 @@ const generateGalleryUrl = (imageName, params) => {
   const slashedParams = params ? `/${params}` : ''
   return `https://res.cloudinary.com/hinari-s-cafe/image/upload${slashedParams}/v1707753283/3menzu/${imageName}`
 }
-const gallery = ref([
-  { imageName: 'front_v5y59q.png' },
-  { imageName: 'side_m2ni76.png' },
-  { imageName: 'back_qsxatn.png' },
-  { imageName: 'glove_pl8zt8.png' },
-  { imageName: 'shoes_tamlse.png' },
-  { imageName: 'sole_hyynpz.png' },
-])
+const gallery = ref([{ imageName: 'normal.png' }, { imageName: 'mizugi.png' }, { imageName: 'idol.png' }])
 
 const filterdEvents = computed(() => {
   return events.reduce((accumulator, currentValue) => {
