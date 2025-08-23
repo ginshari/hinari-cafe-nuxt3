@@ -4,7 +4,14 @@
       <client-only>
         <v-col v-if="mdAndUp" cols="12" md="6" class="d-flex flex-column justify-space-between">
           <v-sheet class="pa-lg-8 pa-4 greeting" color="paper">
-            <p class="ma-0 ma-md-8 ma-lg-16 text-pen" v-text="landingPage.greeting" />
+            <div class="ma-0 ma-md-8 text-pen">
+              <p v-text="landingPage.greeting" />
+              <p class="mt-4" style="font-size: calc(1vw + 12px)">
+                <a href="https://yosetti.com/mainyosegakis/invite?id=3030130&sc=Xx9rl" target="_blank" rel="noopener">
+                  お誕生日寄せ書き企画開催中！
+                </a>
+              </p>
+            </div>
           </v-sheet>
           <div>
             <v-img
@@ -31,7 +38,14 @@
               />
             </div>
             <v-sheet class="mx-auto pa-sm-8 pa-4 greeting" color="paper" max-width="80vw">
-              <p class="ma-0 ma-md-8 text-pen" v-text="landingPage.greeting" />
+              <div class="ma-0 ma-md-8 text-pen">
+                <p v-text="landingPage.greeting" />
+                <p class="mt-2" style="font-size: calc(1vw + 12px)">
+                  <a href="https://yosetti.com/mainyosegakis/invite?id=3030130&sc=Xx9rl" target="_blank" rel="noopener">
+                    お誕生日寄せ書き企画開催中！
+                  </a>
+                </p>
+              </div>
             </v-sheet>
           </div>
           <div>
