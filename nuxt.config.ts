@@ -20,7 +20,7 @@ export default defineNuxtConfig({
             "Hinari's CafeはVTuber理原ひなりさんの非公式ファンサイトです。オススメ動画の紹介のほか、今までのコーヒー配信を銘柄から逆引き検索できる機能を実装しております。",
         },
         { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:site', content: '@nanasu_n' },
+        { name: 'twitter:site', content: '@hinaricafe_TO' },
         { property: 'og:url', content: 'https://hinaricafe.net/' },
         {
           property: 'og:title',
@@ -36,10 +36,13 @@ export default defineNuxtConfig({
       link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     },
   },
+
   build: {
     transpile: ['vuetify'],
   },
+
   css: ['vuetify/lib/styles/main.sass', '@mdi/font/css/materialdesignicons.min.css', '@/assets/main.scss'],
+
   hooks: {
     'vite:extendConfig': (config) => {
       config.plugins!.push(
@@ -49,6 +52,7 @@ export default defineNuxtConfig({
       )
     },
   },
+
   modules: [
     [
       '@nuxtjs/google-fonts',
@@ -59,20 +63,25 @@ export default defineNuxtConfig({
       },
     ],
   ],
+
   router: {
     options: {
       strict: false,
     },
   },
+
   runtimeConfig: {
     apiKey: '',
     public: {
       apiBase: '',
     },
   },
+
   vite: {
     define: {
       'process.env.DEBUG': false,
     },
   },
+
+  compatibilityDate: '2025-06-27',
 })
