@@ -7,7 +7,7 @@
             <div class="ma-0 ma-md-8 text-pen">
               <p v-text="landingPage.greeting" />
               <p class="mt-4" style="font-size: calc(1vw + 12px)">
-                <a href="https://yosetti.com/mainyosegakis/invite?id=3030130&sc=Xx9rl" target="_blank" rel="noopener">
+                <a href="https://yosetti.com/mainyosegakis/invite?id=3037997&sc=567lP" target="_blank" rel="noopener">
                   お誕生日寄せ書き企画開催中！
                 </a>
               </p>
@@ -41,7 +41,7 @@
               <div class="ma-0 ma-md-8 text-pen">
                 <p v-text="landingPage.greeting" />
                 <p class="mt-2" style="font-size: calc(1vw + 12px)">
-                  <a href="https://yosetti.com/mainyosegakis/invite?id=3030130&sc=Xx9rl" target="_blank" rel="noopener">
+                  <a href="https://yosetti.com/mainyosegakis/invite?id=3037997&sc=567lP" target="_blank" rel="noopener">
                     お誕生日寄せ書き企画開催中！
                   </a>
                 </p>
