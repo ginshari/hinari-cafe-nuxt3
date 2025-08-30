@@ -134,7 +134,15 @@
               }"
             >
               <p class="px-8 px-lg-16 py-4 py-lg-8 text-pen">
-                <a class="text-pen" :href="event.url" target="_blank" rel="noopener" v-text="event.name" />
+                <a
+                  v-if="event.url"
+                  class="text-pen"
+                  :href="event.url"
+                  target="_blank"
+                  rel="noopener"
+                  v-text="event.name"
+                />
+                <span v-else v-text="event.name" />
               </p>
             </v-col>
           </v-row>
@@ -279,8 +287,8 @@ const filterdEvents = computed(() => {
   }
 
   &-right {
+    font-size: calc(0.5vw + 12px);
     a {
-      font-size: calc(0.5vw + 12px);
       text-decoration: none;
       &:visited,
       &:hover {
