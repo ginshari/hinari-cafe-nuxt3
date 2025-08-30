@@ -6,11 +6,6 @@
           <v-sheet class="pa-lg-8 pa-4 greeting" color="paper">
             <div class="ma-0 ma-md-8 text-pen">
               <p v-text="landingPage.greeting" />
-              <p class="mt-4" style="font-size: calc(1vw + 12px)">
-                <a href="https://yosetti.com/mainyosegakis/invite?id=3037997&sc=567lP" target="_blank" rel="noopener">
-                  お誕生日寄せ書き企画開催中！
-                </a>
-              </p>
             </div>
           </v-sheet>
           <div>
@@ -40,11 +35,6 @@
             <v-sheet class="mx-auto pa-sm-8 pa-4 greeting" color="paper" max-width="80vw">
               <div class="ma-0 ma-md-8 text-pen">
                 <p v-text="landingPage.greeting" />
-                <p class="mt-2" style="font-size: calc(1vw + 12px)">
-                  <a href="https://yosetti.com/mainyosegakis/invite?id=3037997&sc=567lP" target="_blank" rel="noopener">
-                    お誕生日寄せ書き企画開催中！
-                  </a>
-                </p>
               </div>
             </v-sheet>
           </div>
