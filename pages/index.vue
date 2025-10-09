@@ -170,13 +170,13 @@
 </template>
 <script setup>
 import { useDisplay } from 'vuetify'
+import { useApiFetch } from '~/composables/useApiFetch'
 
 const { mdAndUp } = useDisplay()
-const { $apiConfig } = useNuxtApp()
 
-const { data } = await useFetch(
-  '/action/aggregate',
-  $apiConfig('landingPage', [
+const documents = await useApiFetch(
+  'landingPage',
+  [
     {
       $lookup: {
         from: 'lpItems',
@@ -222,14 +222,11 @@ const { data } = await useFetch(
         as: 'coffees',
       },
     },
-  ])
+  ],
+  'landingPage',
 )
 
-if (!data.value) {
-  throw createError({ statusCode: 404, statusMessage: 'landingPage: useFetch failed.' })
-}
-
-const landingPage = data.value.documents[0]
+const landingPage = documents[0]
 const works = landingPage.works
 const recommends = landingPage.recommends
 const coffees = landingPage.coffees

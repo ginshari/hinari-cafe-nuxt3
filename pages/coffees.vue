@@ -101,14 +101,13 @@
 </template>
 <script setup>
 import { useDisplay } from 'vuetify'
+import { useApiFetch } from '~/composables/useApiFetch'
 
 const { name } = useDisplay()
 
-const { $apiConfig } = useNuxtApp()
-
-const { data } = await useFetch(
-  '/action/aggregate',
-  $apiConfig('coffeesPage', [
+const documents = await useApiFetch(
+  'coffeesPage',
+  [
     {
       $lookup: {
         from: 'coffees',
@@ -117,14 +116,11 @@ const { data } = await useFetch(
         as: 'coffees',
       },
     },
-  ])
+  ],
+  'coffeesPage',
 )
 
-if (!data.value) {
-  throw createError({ statusCode: 404, statusMessage: 'coffeesPage: useFetch failed.' })
-}
-
-const coffeesPage = data.value.documents[0]
+const coffeesPage = documents[0]
 const coffees = coffeesPage.coffees
 
 const search = ref('')
@@ -213,7 +209,7 @@ watch(
   () => {
     // ページ遷移時にページトップにスクロールする
     window.scrollTo(0, 0)
-  }
+  },
 )
 </script>
 <style lang="scss" scoped>
