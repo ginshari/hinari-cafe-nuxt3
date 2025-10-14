@@ -1,11 +1,12 @@
 # hinari-cafe-nuxt3
+
 VTuber理原ひなりさんの非公式ファンサイトです
 
 ## Architecture
 
-| Main Framework | UI Framework | DataBase | Deployment |
-| --- | --- | --- | ---|
-| Nuxt3 | Vuetify3 | MongoDB Atlas | Cloudflare Pages |
+| Main Framework | UI Framework | DataBase      | Deployment       |
+| -------------- | ------------ | ------------- | ---------------- |
+| Nuxt3          | Vuetify3     | MongoDB Atlas | Cloudflare Pages |
 
 ## Setup
 
@@ -18,8 +19,7 @@ npm install
 Create .env file:
 
 ```
-NUXT_API_KEY=YOUR_ATLAS_API_KEY
-NUXT_PUBLIC_API_BASE=YOUR_ATLAS_API_BASE
+NUXT_MONGODB_URI=YOUR_MONGODB_URI
 ```
 
 ## Development Server

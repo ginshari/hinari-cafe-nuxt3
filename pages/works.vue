@@ -57,19 +57,24 @@
         </v-col>
         <v-col cols="12" sm="8" class="my-auto mt-sm-16 pa-8 profile-right" align-self="center">
           <div class="mx-auto" style="max-width: 800px">
-            <v-carousel v-model="selectedGallery" class="mx-auto" height="auto" continuous>
-              <template #prev="{ props }">
-                <v-btn icon="mdi-chevron-left" color="pen" @click="props.onClick"></v-btn>
-              </template>
-              <template #next="{ props }">
-                <v-btn icon="mdi-chevron-right" color="pen" @click="props.onClick"></v-btn>
-              </template>
-              <v-carousel-item
-                v-for="item in gallery"
-                :key="item.imageName"
-                :src="generateGalleryUrl(item.imageName, 'c_fit,f_auto,q_auto,w_500')"
-              />
-            </v-carousel>
+            <v-skeleton-loader :loading="galleryLoading" type="image" height="450">
+              <v-carousel v-model="selectedGallery" class="mx-auto" height="450" continuous>
+                <template #prev="{ props }">
+                  <v-btn icon="mdi-chevron-left" color="pen" @click="props.onClick"></v-btn>
+                </template>
+                <template #next="{ props }">
+                  <v-btn icon="mdi-chevron-right" color="pen" @click="props.onClick"></v-btn>
+                </template>
+                <v-carousel-item v-for="item in gallery" :key="item.imageName">
+                  <v-img
+                    :src="generateGalleryUrl(item.imageName, 'c_fit,f_auto,q_auto,w_500')"
+                    height="100%"
+                    cover
+                    @load="onGalleryImageLoad"
+                  />
+                </v-carousel-item>
+              </v-carousel>
+            </v-skeleton-loader>
             <v-btn
               variant="flat"
               color="pen"
@@ -154,14 +159,13 @@
 
 <script setup>
 import { useDisplay } from 'vuetify'
+import { useApiFetch } from '~/composables/useApiFetch'
 
 const { smAndUp } = useDisplay()
 
-const { $apiConfig } = useNuxtApp()
-
-const { data } = await useFetch(
-  '/action/aggregate',
-  $apiConfig('worksPage', [
+const documents = await useApiFetch(
+  'worksPage',
+  [
     {
       $lookup: {
         from: 'links',
@@ -214,14 +218,11 @@ const { data } = await useFetch(
         as: 'events',
       },
     },
-  ])
+  ],
+  'worksPage',
 )
 
-if (!data.value) {
-  throw createError({ statusCode: 404, statusMessage: 'works: useFetch failed.' })
-}
-
-const worksPage = data.value.documents[0]
+const worksPage = documents[0]
 const links = worksPage.links
 const profiles = worksPage.profiles
 const events = worksPage.events
@@ -239,6 +240,10 @@ const generateGalleryUrl = (imageName, params) => {
   return `https://res.cloudinary.com/hinari-s-cafe/image/upload${slashedParams}/v1707753283/3menzu/${imageName}`
 }
 const gallery = ref([{ imageName: 'normal.png' }, { imageName: 'mizugi.png' }, { imageName: 'idol.png' }])
+const galleryLoading = ref(true)
+const onGalleryImageLoad = () => {
+  galleryLoading.value = false
+}
 
 const filterdEvents = computed(() => {
   return events.reduce((accumulator, currentValue) => {

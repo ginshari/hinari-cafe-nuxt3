@@ -48,7 +48,7 @@ export default defineNuxtConfig({
       config.plugins!.push(
         vuetify({
           styles: { configFile: resolve('./settings.scss') },
-        })
+        }),
       )
     },
   },
@@ -71,7 +71,7 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    apiKey: '',
+    mongodbUri: '',
     public: {
       apiBase: '',
     },
