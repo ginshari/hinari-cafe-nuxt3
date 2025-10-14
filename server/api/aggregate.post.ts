@@ -2,20 +2,6 @@ import { MongoClient } from 'mongodb'
 
 const config = useRuntimeConfig()
 
-// MongoDB Clientのインスタンスをキャッシュする
-let client: MongoClient | null = null
-
-async function getMongoClient(): Promise<MongoClient> {
-  if (!client) {
-    if (!config.mongodbUri) {
-      throw new Error('MongoDB URI is not configured. Please set MONGODB_URI in your .env file.')
-    }
-    client = new MongoClient(config.mongodbUri)
-    await client.connect()
-  }
-  return client
-}
-
 export default defineEventHandler(async (event) => {
   const { collection, pipeline } = await readBody(event)
 
@@ -26,9 +12,20 @@ export default defineEventHandler(async (event) => {
     })
   }
 
+  if (!config.mongodbUri) {
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'MongoDB URI is not configured. Please set MONGODB_URI in your .env file.',
+    })
+  }
+
+  // MongoDB接続を作成
+  const client = new MongoClient(config.mongodbUri)
+
   try {
-    const mongoClient = await getMongoClient()
-    const db = mongoClient.db('hinari-cafe')
+    await client.connect()
+
+    const db = client.db('hinari-cafe')
     const result = await db.collection(collection).aggregate(pipeline).toArray()
 
     // MongoDBのObjectIdをJSONシリアライズ可能な文字列に変換する
@@ -41,5 +38,7 @@ export default defineEventHandler(async (event) => {
       statusCode: 500,
       statusMessage: `Failed to execute aggregation: ${e.message}`,
     })
+  } finally {
+    await client.close()
   }
 })
