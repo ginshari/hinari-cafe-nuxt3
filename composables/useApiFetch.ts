@@ -21,6 +21,13 @@ export const useApiFetch = async (collection: string, pipeline: any[], key: stri
     ...apiConfig,
     method: 'POST', // 型を 'POST' リテラル型として明示
     key, // キャッシュを有効にするためのユニークキー
+    server: true, // サーバー側でのみ実行
+    lazy: false, // SSG時に必ずデータを取得
+    getCachedData: (key) => {
+      // クライアントサイドではキャッシュされたデータを使用
+      const data = useNuxtApp().payload.data[key] || useNuxtApp().static.data[key]
+      return data
+    },
   }
 
   // useFetchにジェネリクスで型を指定

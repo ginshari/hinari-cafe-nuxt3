@@ -57,24 +57,22 @@
         </v-col>
         <v-col cols="12" sm="8" class="my-auto mt-sm-16 pa-8 profile-right" align-self="center">
           <div class="mx-auto" style="max-width: 800px">
-            <v-skeleton-loader :loading="galleryLoading" type="image" height="450">
-              <v-carousel v-model="selectedGallery" class="mx-auto" height="450" continuous>
-                <template #prev="{ props }">
-                  <v-btn icon="mdi-chevron-left" color="pen" @click="props.onClick"></v-btn>
-                </template>
-                <template #next="{ props }">
-                  <v-btn icon="mdi-chevron-right" color="pen" @click="props.onClick"></v-btn>
-                </template>
-                <v-carousel-item v-for="item in gallery" :key="item.imageName">
-                  <v-img
-                    :src="generateGalleryUrl(item.imageName, 'c_fit,f_auto,q_auto,w_500')"
-                    height="100%"
-                    cover
-                    @load="onGalleryImageLoad"
-                  />
-                </v-carousel-item>
-              </v-carousel>
-            </v-skeleton-loader>
+            <v-carousel v-model="selectedGallery" class="mx-auto gallery-carousel" height="450" continuous>
+              <template #prev="{ props }">
+                <v-btn icon="mdi-chevron-left" color="pen" @click="props.onClick"></v-btn>
+              </template>
+              <template #next="{ props }">
+                <v-btn icon="mdi-chevron-right" color="pen" @click="props.onClick"></v-btn>
+              </template>
+              <v-carousel-item v-for="item in gallery" :key="item.imageName">
+                <v-img
+                  :src="generateGalleryUrl(item.imageName, 'c_fit,f_auto,q_auto,w_800')"
+                  height="450"
+                  :aspect-ratio="0"
+                  contain
+                />
+              </v-carousel-item>
+            </v-carousel>
             <v-btn
               variant="flat"
               color="pen"
@@ -240,10 +238,6 @@ const generateGalleryUrl = (imageName, params) => {
   return `https://res.cloudinary.com/hinari-s-cafe/image/upload${slashedParams}/v1707753283/3menzu/${imageName}`
 }
 const gallery = ref([{ imageName: 'normal.png' }, { imageName: 'mizugi.png' }, { imageName: 'idol.png' }])
-const galleryLoading = ref(true)
-const onGalleryImageLoad = () => {
-  galleryLoading.value = false
-}
 
 const filterdEvents = computed(() => {
   return events.reduce((accumulator, currentValue) => {
@@ -354,6 +348,24 @@ const filterdEvents = computed(() => {
     &:visited,
     &:hover {
       color: inherit;
+    }
+  }
+}
+
+.gallery-carousel {
+  @media (max-width: 599px) {
+    height: 250px !important;
+
+    :deep(.v-img) {
+      height: 250px !important;
+    }
+  }
+
+  @media (min-width: 600px) and (max-width: 959px) {
+    height: 350px !important;
+
+    :deep(.v-img) {
+      height: 350px !important;
     }
   }
 }
