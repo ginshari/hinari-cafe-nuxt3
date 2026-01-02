@@ -33,7 +33,11 @@ export default defineNuxtConfig({
         },
         { property: 'og:image', content: 'https://hinaricafe.net/ogp.jpg' },
       ],
-      link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous' },
+      ],
     },
   },
 
@@ -52,6 +56,7 @@ export default defineNuxtConfig({
       crawlLinks: true,
       routes: ['/'],
     },
+    compressPublicAssets: true, // 静的アセットの圧縮を有効化
   },
 
   hooks: {
@@ -68,6 +73,8 @@ export default defineNuxtConfig({
     [
       '@nuxtjs/google-fonts',
       {
+        download: false,
+        useStylesheet: true,
         families: {
           'Mochiy+Pop+One': true,
         },
@@ -91,6 +98,14 @@ export default defineNuxtConfig({
   vite: {
     define: {
       'process.env.DEBUG': false,
+    },
+    build: {
+      cssCodeSplit: false, // CSSを1つのファイルにまとめる
+      rollupOptions: {
+        output: {
+          manualChunks: undefined, // 自動チャンク分割を無効化
+        },
+      },
     },
   },
 
