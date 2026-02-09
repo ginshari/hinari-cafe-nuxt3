@@ -13,7 +13,7 @@
               class="mx-auto my-8"
               max-width="50%"
               :aspect-ratio="900 / 600"
-              src="https://res.cloudinary.com/hinari-s-cafe/image/upload/f_auto,q_auto/v1647669519/logo_gcanuk.png"
+              :src="useCloudinary().getImageUrl('v1647669519/logo_gcanuk.png')"
             ></v-img>
           </div>
         </v-col>
@@ -29,7 +29,7 @@
                 class="mx-auto"
                 height="20vh"
                 :aspect-ratio="900 / 600"
-                src="https://res.cloudinary.com/hinari-s-cafe/image/upload/f_auto,q_auto/v1647669519/logo_gcanuk.png"
+                :src="useCloudinary().getImageUrl('v1647669519/logo_gcanuk.png')"
               />
             </div>
             <v-sheet class="mx-auto pa-sm-8 pa-4 greeting" color="paper" max-width="80vw">
@@ -43,7 +43,7 @@
               width="100%"
               :height="!mdAndUp ? '50vh' : ''"
               :aspect-ratio="720 / 836"
-              src="https://res.cloudinary.com/hinari-s-cafe/image/upload/f_auto,q_auto/v1647668956/welcome_trim_r1nxto.png"
+              :src="useCloudinary().getImageUrl('v1647668956/welcome_trim_r1nxto.png')"
               transition="scroll-x-reverse-transition"
               :class="{ 'greeting-desktop-image': mdAndUp }"
             />
@@ -56,116 +56,118 @@
         <p class="ma-0 ma-sm-4 ma-md-8 text-pen" v-text="landingPage.annotation" />
       </v-card>
     </v-row>
-    <v-container>
-      <div>
-        <!-- works -->
-        <div class="mt-16 d-block">
-          <v-img
-            class="mx-auto"
-            max-width="300px"
-            :aspect-ratio="1452 / 1854"
-            transition="scroll-y-reverse-transition"
-            src="https://res.cloudinary.com/hinari-s-cafe/image/upload/f_auto,q_auto/v1647668953/pot_qlhjlj.png"
-          />
-          <div class="mx-auto mb-8 py-4 text-center rounded-pill text-pen subtitle-works">
-            <span>お仕事</span>
+    <div class="index-wrapper">
+      <v-container>
+        <div>
+          <!-- works -->
+          <div class="mt-16 d-block">
+            <v-img
+              class="mx-auto"
+              max-width="300px"
+              :aspect-ratio="1452 / 1854"
+              transition="scroll-y-reverse-transition"
+              :src="useCloudinary().getImageUrl('v1647668953/pot_qlhjlj.png')"
+            />
+            <div class="mx-auto mb-8 py-4 text-center rounded-pill text-pen subtitle-works">
+              <span>お仕事</span>
+            </div>
           </div>
-        </div>
-        <v-row class="py-8 contents" justify="start" no-gutters>
-          <v-col v-for="work in works" :key="work.order" cols="12" sm="6" lg="4">
-            <v-card class="px-16 px-sm-4 contents-card text-pen" flat>
-              <a :href="work.url" target="_blank" rel="noopener">
-                <v-img
-                  class="contents-image mx-auto mb-4 mb-md-8"
-                  max-width="200px"
-                  :aspect-ratio="1 / 1"
-                  :src="work.imgUrl"
-                />
-              </a>
-              <p class="text-center" v-text="work.head" />
-              <p class="my-4" v-text="work.body" />
-            </v-card>
-          </v-col>
-        </v-row>
-        <v-row justify="center" class="text-center">
-          <v-col cols="6" sm="4">
-            <v-btn class="mb-16 btn-works text-pen rounded-pill" height="60px" color="#a8f3ff" to="/works" block
-              >もっと詳しく見る</v-btn
-            ></v-col
-          >
-        </v-row>
-      </div>
-      <div>
-        <!-- recommends -->
-        <div class="mt-16 d-block">
-          <v-img
-            class="mx-auto"
-            max-width="300px"
-            :aspect-ratio="1241 / 1612"
-            transition="scroll-y-reverse-transition"
-            src="https://res.cloudinary.com/hinari-s-cafe/image/upload/f_auto,q_auto/v1647668959/count_ddswin.png"
-          />
-          <div class="mx-auto mb-8 py-4 text-center rounded-pill text-pen subtitle-recommends">
-            <span>オススメ動画</span>
-          </div>
-        </div>
-        <v-row class="py-8 contents" justify="start" no-gutters>
-          <v-col v-for="recommend in recommends" :key="recommend.order" cols="12" sm="6" lg="4">
-            <v-card class="px-16 px-sm-4 contents-card text-pen" flat>
-              <a :href="recommend.url" target="_blank" rel="noopener">
-                <v-img class="my-4 contents-image" width="100%" :aspect-ratio="16 / 9" :src="recommend.imgUrl" />
-              </a>
-              <p class="my-4" v-text="recommend.body" />
-            </v-card>
-          </v-col>
-        </v-row>
-        <v-row justify="center">
-          <v-col cols="6" sm="4">
-            <v-btn
-              class="mb-16 btn-recommends text-pen rounded-pill"
-              height="60px"
-              color="#ffccf0"
-              href="https://www.youtube.com/channel/UCZF1cUKuWlvo_wn--s-21kw/playlists"
-              target="_blank"
-              block
-              >もっと詳しく見る</v-btn
-            ></v-col
-          >
-        </v-row>
-      </div>
-      <div>
-        <!-- coffees -->
-        <div class="mt-16 d-block">
-          <v-img
-            class="mx-auto"
-            max-width="350px"
-            :aspect-ratio="2894 / 2835"
-            transition="scroll-y-reverse-transition"
-            src="https://res.cloudinary.com/hinari-s-cafe/image/upload/f_auto,q_auto/v1647668979/complete_mpcta1.png"
-          />
-          <div class="mx-auto mt-n6 mb-16 mb-md-8 py-4 text-center rounded-pill text-pen subtitle-coffees">
-            <span>コーヒー配信</span>
-          </div>
-        </div>
-        <v-row class="py-8 contents" justify="start" no-gutters>
-          <v-col v-for="coffee in coffees" :key="coffee.order" cols="12" sm="6" lg="4">
-            <v-card class="px-16 px-sm-4 contents-card text-pen" flat>
-              <a :href="coffee.url" target="_blank" rel="noopener">
-                <v-img class="my-4 contents-image" width="100%" :aspect-ratio="16 / 9" :src="coffee.imgUrl" />
-              </a>
-              <p class="mx-auto my-4" v-text="coffee.body" />
-            </v-card>
-          </v-col>
-        </v-row>
-        <v-row justify="center">
-          <v-col cols="6" sm="4">
-            <v-btn class="mb-16 btn-coffees text-pen rounded-pill" height="60px" color="#7fff7f" to="/coffees" block
-              >もっと詳しく見る</v-btn
+          <v-row class="py-8 contents" justify="start" no-gutters>
+            <v-col v-for="work in works" :key="work.order" cols="12" sm="6" lg="4">
+              <v-card class="px-16 px-sm-4 contents-card text-pen" flat>
+                <a :href="work.url" target="_blank" rel="noopener">
+                  <v-img
+                    class="contents-image mx-auto mb-4 mb-md-8"
+                    max-width="200px"
+                    :aspect-ratio="1 / 1"
+                    :src="work.imgUrl"
+                  />
+                </a>
+                <p class="text-center" v-text="work.head" />
+                <p class="my-4" v-text="work.body" />
+              </v-card>
+            </v-col>
+          </v-row>
+          <v-row justify="center" class="text-center">
+            <v-col cols="6" sm="4">
+              <v-btn class="mb-16 btn-works text-pen rounded-pill" height="60px" color="#a8f3ff" to="/works" block
+                >もっと詳しく見る</v-btn
+              ></v-col
             >
-          </v-col>
-        </v-row>
-      </div>
-    </v-container>
+          </v-row>
+        </div>
+        <div>
+          <!-- recommends -->
+          <div class="mt-16 d-block">
+            <v-img
+              class="mx-auto"
+              max-width="300px"
+              :aspect-ratio="1241 / 1612"
+              transition="scroll-y-reverse-transition"
+              :src="useCloudinary().getImageUrl('v1647668959/count_ddswin.png')"
+            />
+            <div class="mx-auto mb-8 py-4 text-center rounded-pill text-pen subtitle-recommends">
+              <span>オススメ動画</span>
+            </div>
+          </div>
+          <v-row class="py-8 contents" justify="start" no-gutters>
+            <v-col v-for="recommend in recommends" :key="recommend.order" cols="12" sm="6" lg="4">
+              <v-card class="px-16 px-sm-4 contents-card text-pen" flat>
+                <a :href="recommend.url" target="_blank" rel="noopener">
+                  <v-img class="my-4 contents-image" width="100%" :aspect-ratio="16 / 9" :src="recommend.imgUrl" />
+                </a>
+                <p class="my-4" v-text="recommend.body" />
+              </v-card>
+            </v-col>
+          </v-row>
+          <v-row justify="center">
+            <v-col cols="6" sm="4">
+              <v-btn
+                class="mb-16 btn-recommends text-pen rounded-pill"
+                height="60px"
+                color="#ffccf0"
+                href="https://www.youtube.com/channel/UCZF1cUKuWlvo_wn--s-21kw/playlists"
+                target="_blank"
+                block
+                >もっと詳しく見る</v-btn
+              ></v-col
+            >
+          </v-row>
+        </div>
+        <div>
+          <!-- coffees -->
+          <div class="mt-16 d-block">
+            <v-img
+              class="mx-auto"
+              max-width="350px"
+              :aspect-ratio="2894 / 2835"
+              transition="scroll-y-reverse-transition"
+              :src="useCloudinary().getImageUrl('v1647668979/complete_mpcta1.png')"
+            />
+            <div class="mx-auto mt-n6 mb-16 mb-md-8 py-4 text-center rounded-pill text-pen subtitle-coffees">
+              <span>コーヒー配信</span>
+            </div>
+          </div>
+          <v-row class="py-8 contents" justify="start" no-gutters>
+            <v-col v-for="coffee in coffees" :key="coffee.order" cols="12" sm="6" lg="4">
+              <v-card class="px-16 px-sm-4 contents-card text-pen" flat>
+                <a :href="coffee.url" target="_blank" rel="noopener">
+                  <v-img class="my-4 contents-image" width="100%" :aspect-ratio="16 / 9" :src="coffee.imgUrl" />
+                </a>
+                <p class="mx-auto my-4" v-text="coffee.body" />
+              </v-card>
+            </v-col>
+          </v-row>
+          <v-row justify="center">
+            <v-col cols="6" sm="4">
+              <v-btn class="mb-16 btn-coffees text-pen rounded-pill" height="60px" color="#7fff7f" to="/coffees" block
+                >もっと詳しく見る</v-btn
+              >
+            </v-col>
+          </v-row>
+        </div>
+      </v-container>
+    </div>
   </div>
 </template>
 <script setup>
@@ -298,8 +300,16 @@ const coffees = landingPage.coffees
 
 @mixin subtitle($color1, $color2) {
   font-size: calc(0.5vw + 36px);
+  max-width: 1200px;
   background-color: $color1;
   box-shadow: 15px 15px 0 $color2;
+}
+
+.index-wrapper {
+  @media (min-width: 1920px) {
+    max-width: 1920px;
+    margin: 0 auto;
+  }
 }
 
 .subtitle {

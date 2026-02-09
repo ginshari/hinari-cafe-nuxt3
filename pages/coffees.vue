@@ -2,7 +2,7 @@
   <div>
     <client-only>
       <v-app-bar :elevation="2" color="#313131">
-        <v-container>
+        <v-container class="appbar-container">
           <v-row no-gutters align-content="center">
             <v-col cols="8">
               <v-text-field
@@ -35,49 +35,52 @@
         </v-container>
       </v-app-bar>
     </client-only>
-    <v-container>
-      <v-row>
-        <v-col
-          v-for="coffee in paginatedCoffees"
-          :key="coffee.videoId"
-          cols="12"
-          sm="6"
-          lg="4"
-          class="d-flex flex-column"
-        >
-          <v-card class="coffee-card text-pen d-flex flex-column" elevation="0">
-            <div>
-              <v-img width="100%" :aspect-ratio="16 / 9" :src="coffee.imgUrl" />
-            </div>
-            <v-card-subtitle class="pt-2 coffee-card-subtitle">
-              {{ coffee.pubDate }}
-            </v-card-subtitle>
-            <v-card-title class="mb-4 coffee-card-title">
-              {{ coffee.name }}
-            </v-card-title>
-            <v-card-actions class="mt-auto">
-              <v-spacer />
-              <v-btn variant="outlined" @click="selectVideo(coffee.videoId, coffee.orderTime)">
-                <span>ORDER</span>
-              </v-btn>
-              <v-btn variant="outlined" @click="selectVideo(coffee.videoId, coffee.reviewTime)">
-                <span>REVIEW</span>
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-col>
-      </v-row>
-      <div class="my-8 text-center">
-        <v-pagination
-          v-model="page"
-          :length="maxPage"
-          :total-visible="4"
-          color="paper"
-          variant="flat"
-          size="small"
-        ></v-pagination>
-      </div> </v-container
-    ><client-only>
+    <div class="coffees-wrapper">
+      <v-container>
+        <v-row>
+          <v-col
+            v-for="coffee in paginatedCoffees"
+            :key="coffee.videoId"
+            cols="12"
+            sm="6"
+            lg="4"
+            class="d-flex flex-column"
+          >
+            <v-card class="coffee-card text-pen d-flex flex-column" elevation="0">
+              <div>
+                <v-img width="100%" :aspect-ratio="16 / 9" :src="coffee.imgUrl" />
+              </div>
+              <v-card-subtitle class="pt-2 coffee-card-subtitle">
+                {{ coffee.pubDate }}
+              </v-card-subtitle>
+              <v-card-title class="mb-4 coffee-card-title">
+                {{ coffee.name }}
+              </v-card-title>
+              <v-card-actions class="mt-auto">
+                <v-spacer />
+                <v-btn variant="outlined" @click="selectVideo(coffee.videoId, coffee.orderTime)">
+                  <span>ORDER</span>
+                </v-btn>
+                <v-btn variant="outlined" @click="selectVideo(coffee.videoId, coffee.reviewTime)">
+                  <span>REVIEW</span>
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+        </v-row>
+        <div class="my-8 text-center">
+          <v-pagination
+            v-model="page"
+            :length="maxPage"
+            :total-visible="4"
+            color="paper"
+            variant="flat"
+            size="small"
+          ></v-pagination>
+        </div>
+      </v-container>
+    </div>
+    <client-only>
       <v-dialog v-model="dialog" persistent :width="dialogWidth">
         <v-card>
           <div class="embed-video">
@@ -213,6 +216,19 @@ watch(
 )
 </script>
 <style lang="scss" scoped>
+.appbar-container {
+  @media (min-width: 2560px) {
+    max-width: 1920px;
+  }
+}
+
+.coffees-wrapper {
+  @media (min-width: 1920px) {
+    max-width: 1920px;
+    margin: 0 auto;
+  }
+}
+
 .coffee-card {
   flex-grow: 1;
   &-title {
