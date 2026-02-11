@@ -13,7 +13,7 @@
               class="mx-auto my-8"
               max-width="50%"
               :aspect-ratio="900 / 600"
-              :src="useCloudinary().getImageUrl('v1647669519/logo_gcanuk.png')"
+              :src="useCloudinary().getImageUrl('v1647669519/logo_gcanuk.png', 'c_scale,w_1000,f_auto,q_auto')"
             ></v-img>
           </div>
         </v-col>
@@ -29,7 +29,7 @@
                 class="mx-auto"
                 height="20vh"
                 :aspect-ratio="900 / 600"
-                :src="useCloudinary().getImageUrl('v1647669519/logo_gcanuk.png')"
+                :src="useCloudinary().getImageUrl('v1647669519/logo_gcanuk.png', 'c_scale,w_600,f_auto,q_auto')"
               />
             </div>
             <v-sheet class="mx-auto pa-sm-8 pa-4 greeting" color="paper" max-width="80vw">
@@ -43,7 +43,7 @@
               width="100%"
               :height="!mdAndUp ? '50vh' : ''"
               :aspect-ratio="720 / 836"
-              :src="useCloudinary().getImageUrl('v1647668956/welcome_trim_r1nxto.png')"
+              :src="welcomeImageUrl"
               transition="scroll-x-reverse-transition"
               :class="{ 'greeting-desktop-image': mdAndUp }"
             />
@@ -66,7 +66,7 @@
               max-width="300px"
               :aspect-ratio="1452 / 1854"
               transition="scroll-y-reverse-transition"
-              :src="useCloudinary().getImageUrl('v1647668953/pot_qlhjlj.png')"
+              :src="useCloudinary().getImageUrl('v1647668953/pot_qlhjlj.png', 'c_scale,w_600,f_auto,q_auto')"
             />
             <div class="mx-auto mb-8 py-4 text-center rounded-pill text-pen subtitle-works">
               <span>お仕事</span>
@@ -104,7 +104,7 @@
               max-width="300px"
               :aspect-ratio="1241 / 1612"
               transition="scroll-y-reverse-transition"
-              :src="useCloudinary().getImageUrl('v1647668959/count_ddswin.png')"
+              :src="useCloudinary().getImageUrl('v1647668959/count_ddswin.png', 'c_scale,w_600,f_auto,q_auto')"
             />
             <div class="mx-auto mb-8 py-4 text-center rounded-pill text-pen subtitle-recommends">
               <span>オススメ動画</span>
@@ -142,7 +142,7 @@
               max-width="350px"
               :aspect-ratio="2894 / 2835"
               transition="scroll-y-reverse-transition"
-              :src="useCloudinary().getImageUrl('v1647668979/complete_mpcta1.png')"
+              :src="useCloudinary().getImageUrl('v1647668979/complete_mpcta1.png', 'c_scale,w_700,f_auto,q_auto')"
             />
             <div class="mx-auto mt-n6 mb-16 mb-md-8 py-4 text-center rounded-pill text-pen subtitle-coffees">
               <span>コーヒー配信</span>
@@ -175,6 +175,22 @@ import { useDisplay } from 'vuetify'
 import { useApiFetch } from '~/composables/useApiFetch'
 
 const { mdAndUp } = useDisplay()
+
+// Welcome画像を3種からランダム選択
+const welcomeImages = [
+  'index/index_welcome_v2_a_owyqrq.png',
+  'index/index_welcome_v2_b_gxpshm.png',
+  'index/index_welcome_v2_c_tj8xq0.png',
+]
+const { getImageUrl } = useCloudinary()
+const welcomeImageUrl = ref('')
+
+onMounted(() => {
+  welcomeImageUrl.value = getImageUrl(
+    welcomeImages[Math.floor(Math.random() * welcomeImages.length)],
+    'c_scale,w_1000,f_auto,q_auto',
+  )
+})
 
 const documents = await useApiFetch(
   'landingPage',

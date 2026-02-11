@@ -11,7 +11,7 @@
                 ><v-img
                   width="100%"
                   :aspect-ratio="1 / 1"
-                  :src="useCloudinary().getImageUrl('v1647670479/no1_trim_smg4tj.png')"
+                  :src="useCloudinary().getImageUrl('works/works_icon_v2_w82sts.png', 'c_fill,w_400,h_400,f_auto,q_auto')"
                 ></v-img
               ></v-avatar>
               <p class="text-pen name">理原ひなり</p>
