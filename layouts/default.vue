@@ -8,6 +8,7 @@
         <div class="my-4 pages">
           <nuxt-link to="/works">お仕事履歴</nuxt-link>
           <nuxt-link to="/coffees">コーヒーレビュー</nuxt-link>
+          <nuxt-link to="/calendar">カレンダー</nuxt-link>
           <nuxt-link to="/">TOP</nuxt-link>
         </div>
         <div>
@@ -42,6 +43,7 @@ export default {
   margin-left: 10px;
   margin-right: 10px;
   text-decoration-skip-ink: none;
+  white-space: nowrap;
 }
 .imprint {
   color: #f4f5f7;
