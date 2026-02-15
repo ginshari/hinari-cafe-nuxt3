@@ -73,7 +73,6 @@
 
           <v-window-item value="lyrics">
             <article class="wall-card wall-lyrics">
-              <p class="wall-title">{{ lyrics.title }}</p>
               <p class="lyrics-description text-pen">
                 <a :href="lyrics.url" target="_blank" rel="noopener" class="lyrics-song-link">
                   おかえりなさいませ、ご主人さま、お嬢さま！
