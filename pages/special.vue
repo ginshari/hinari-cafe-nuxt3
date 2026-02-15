@@ -73,6 +73,12 @@
 
           <v-window-item value="lyrics">
             <article class="wall-card wall-lyrics">
+              <p class="wall-title">{{ lyrics.title }}</p>
+              <p class="lyrics-description text-pen">
+                <a :href="lyrics.url" target="_blank" rel="noopener" class="lyrics-song-link">
+                  おかえりなさいませ、ご主人さま、お嬢さま！
+                </a>
+              </p>
               <div class="wall-media-container">
                 <div v-if="!imageLoaded.lyrics" class="lyrics-skeleton">
                   <v-skeleton-loader type="image" height="62vh"></v-skeleton-loader>
@@ -143,7 +149,12 @@
         </article>
 
         <article class="wall-card wall-lyrics">
-          <p class="wall-title" v-text="lyrics.title" />
+          <p class="wall-title">{{ lyrics.title }}</p>
+          <p class="lyrics-description text-pen">
+            <a :href="lyrics.url" target="_blank" rel="noopener" class="lyrics-song-link">
+              おかえりなさいませ、ご主人さま、お嬢さま！
+            </a>
+          </p>
           <div class="wall-media-container">
             <div v-if="!imageLoaded.lyrics" class="lyrics-skeleton">
               <v-skeleton-loader type="image" height="62vh"></v-skeleton-loader>
@@ -210,6 +221,7 @@ const generateGalleryUrl = (imageName, params) => {
 const lyrics = {
   title: '歌詞カード',
   imageName: 'special/special_lyric_1_ed7uop.jpg',
+  url: 'https://linkco.re/yQGnmYdX',
 }
 </script>
 
@@ -303,6 +315,22 @@ const lyrics = {
   font-size: 1.2rem;
   margin: 0 0 12px;
   color: #3c3c32;
+}
+
+.lyrics-song-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  transition: opacity 0.2s ease;
+}
+
+.lyrics-song-link:hover {
+  opacity: 0.7;
+}
+
+.lyrics-description {
+  margin: 0 0 12px;
+  font-size: 0.95rem;
 }
 
 .gallery-description {
