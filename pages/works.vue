@@ -43,52 +43,6 @@
             </div>
           </v-col>
         </v-row>
-        <!-- gallery -->
-        <v-row align-content="center" no-gutters>
-          <v-col cols="12" sm="4" class="text-center gallery-left">
-            <div class="pt-8">
-              <p class="text-pen title-text">GALLERY</p>
-            </div>
-            <div class="px-2 py-4 description">
-              <p class="text-pen">ファンアート等にご活用ください！</p>
-              <p class="text-primary">
-                <a href="https://www.youtube.com/live/3hJttokBN4E?t=5391s" target="_blank" rel="noopener"
-                  >Skeb依頼可能です！</a
-                >
-              </p>
-            </div>
-          </v-col>
-          <v-col cols="12" sm="8" class="my-auto mt-sm-16 pa-8 profile-right" align-self="center">
-            <div class="mx-auto" style="max-width: 800px">
-              <v-carousel v-model="selectedGallery" class="mx-auto gallery-carousel" height="450" continuous>
-                <template #prev="{ props }">
-                  <v-btn icon="mdi-chevron-left" color="pen" @click="props.onClick"></v-btn>
-                </template>
-                <template #next="{ props }">
-                  <v-btn icon="mdi-chevron-right" color="pen" @click="props.onClick"></v-btn>
-                </template>
-                <v-carousel-item v-for="item in gallery" :key="item.imageName">
-                  <v-img
-                    :src="generateGalleryUrl(item.imageName, 'c_fit,f_auto,q_auto,w_800')"
-                    height="450"
-                    :aspect-ratio="0"
-                    contain
-                  />
-                </v-carousel-item>
-              </v-carousel>
-              <v-btn
-                variant="flat"
-                color="pen"
-                size="large"
-                :rounded="0"
-                block
-                :href="generateGalleryUrl(gallery[selectedGallery].imageName)"
-                target="_blank"
-                >VIEW FULL</v-btn
-              >
-            </div>
-          </v-col>
-        </v-row>
         <!-- history -->
         <v-row no-gutters>
           <v-col cols="12" sm="4" class="pt-0 text-center">

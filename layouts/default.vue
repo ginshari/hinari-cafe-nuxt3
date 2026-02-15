@@ -6,10 +6,11 @@
     <v-footer color="#313131" class="text-center">
       <v-container>
         <div class="my-4 pages">
-          <nuxt-link to="/works">お仕事履歴</nuxt-link>
-          <nuxt-link to="/coffees">コーヒーレビュー</nuxt-link>
-          <nuxt-link to="/calendar">カレンダー</nuxt-link>
-          <nuxt-link to="/">TOP</nuxt-link>
+          <nuxt-link v-if="!isCurrentRoute('/')" to="/">TOP</nuxt-link>
+          <nuxt-link v-if="!isCurrentRoute('/works')" to="/works">お仕事履歴</nuxt-link>
+          <nuxt-link v-if="!isCurrentRoute('/coffees')" to="/coffees">コーヒーレビュー</nuxt-link>
+          <nuxt-link v-if="!isCurrentRoute('/calendar')" to="/calendar">カレンダー</nuxt-link>
+          <nuxt-link v-if="!isCurrentRoute('/special')" to="/special">スペシャル</nuxt-link>
         </div>
         <div>
           <p class="imprint" v-text="author" /></div
@@ -24,6 +25,11 @@ export default {
       color: '#261f87',
       author: 'pictures:@hinari_kotohara\nauthor:@hinaricafe_TO',
     }
+  },
+  methods: {
+    isCurrentRoute(path) {
+      return this.$route?.path === path
+    },
   },
 }
 </script>
