@@ -25,7 +25,7 @@
                   >などご活用ください！
                 </p>
               </div>
-              <v-carousel v-model="selectedGallery" height="600" hide-delimiters show-arrows="hover">
+              <v-carousel v-model="selectedGallery" height="600" hide-delimiters show-arrows="hover" continuous>
                 <template #prev="{ props }">
                   <v-btn
                     icon="mdi-chevron-left"
@@ -52,7 +52,7 @@
                     <div v-show="imageLoaded[item.imageName]" class="gallery-item-carousel">
                       <img
                         :src="generateGalleryUrl(item.imageName, 'c_fit,f_auto,q_auto,w_1200')"
-                        :alt="item.imageName"
+                        :alt="item.alt"
                         @load="onImageLoad(item.imageName)"
                       />
                       <v-btn
@@ -119,16 +119,25 @@
           </div>
           <div class="gallery-grid">
             <div v-for="item in gallery" :key="item.imageName" class="gallery-item">
-              <img :src="generateGalleryUrl(item.imageName, 'c_fit,f_auto,q_auto,w_600')" :alt="item.imageName" />
-              <v-btn
-                class="overlay-btn"
-                variant="outlined"
-                color="pen"
-                :href="generateGalleryUrl(item.imageName)"
-                target="_blank"
-              >
-                <span>拡大表示</span>
-              </v-btn>
+              <div v-if="!imageLoaded[item.imageName]" class="mobile-gallery-skeleton">
+                <v-skeleton-loader type="image" aspect-ratio="1"></v-skeleton-loader>
+              </div>
+              <div v-show="imageLoaded[item.imageName]" class="mobile-gallery-image">
+                <img
+                  :src="generateGalleryUrl(item.imageName, 'c_fit,f_auto,q_auto,w_600')"
+                  :alt="item.alt"
+                  @load="onImageLoad(item.imageName)"
+                />
+                <v-btn
+                  class="overlay-btn"
+                  variant="outlined"
+                  color="pen"
+                  :href="generateGalleryUrl(item.imageName)"
+                  target="_blank"
+                >
+                  <span>拡大表示</span>
+                </v-btn>
+              </div>
             </div>
           </div>
         </article>
@@ -189,7 +198,11 @@ const onImageLoad = (imageName) => {
 
 const { getImageUrl } = useCloudinary()
 
-const gallery = ref([{ imageName: 'normal.png' }, { imageName: 'mizugi.png' }, { imageName: 'idol.png' }])
+const gallery = ref([
+  { imageName: 'normal.png', alt: '三面図 - 通常衣装' },
+  { imageName: 'mizugi.png', alt: '三面図 - 水着' },
+  { imageName: 'idol.png', alt: '三面図 - アイドル衣装' },
+])
 const generateGalleryUrl = (imageName, params) => {
   return getImageUrl(`v1707753283/3menzu/${imageName}`, params || 'f_auto,q_auto')
 }
@@ -353,6 +366,15 @@ const lyrics = {
 }
 
 .gallery-item {
+  position: relative;
+}
+
+.mobile-gallery-skeleton {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.mobile-gallery-image {
   position: relative;
 }
 
