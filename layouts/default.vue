@@ -6,11 +6,7 @@
     <v-footer color="#313131" class="text-center">
       <v-container>
         <div class="my-4 pages">
-          <nuxt-link v-if="!isCurrentRoute('/')" to="/">TOP</nuxt-link>
-          <nuxt-link v-if="!isCurrentRoute('/works')" to="/works">お仕事履歴</nuxt-link>
-          <nuxt-link v-if="!isCurrentRoute('/coffees')" to="/coffees">コーヒーレビュー</nuxt-link>
-          <nuxt-link v-if="!isCurrentRoute('/calendar')" to="/calendar">カレンダー</nuxt-link>
-          <nuxt-link v-if="!isCurrentRoute('/special')" to="/special">スペシャル</nuxt-link>
+          <nuxt-link v-for="link in visibleLinks" :key="link.path" :to="link.path">{{ link.label }}</nuxt-link>
         </div>
         <div>
           <p class="imprint" v-text="author" /></div
@@ -18,20 +14,19 @@
     </v-footer>
   </v-app>
 </template>
-<script>
-export default {
-  data() {
-    return {
-      color: '#261f87',
-      author: 'pictures:@hinari_kotohara\nauthor:@hinaricafe_TO',
-    }
-  },
-  methods: {
-    isCurrentRoute(path) {
-      return this.$route?.path === path
-    },
-  },
-}
+<script setup>
+const route = useRoute()
+const author = 'pictures:@hinari_kotohara\nauthor:@hinaricafe_TO'
+
+const allLinks = [
+  { path: '/', label: 'TOP' },
+  { path: '/works', label: 'お仕事履歴' },
+  { path: '/coffees', label: 'コーヒーレビュー' },
+  { path: '/calendar', label: 'カレンダー' },
+  { path: '/special', label: 'スペシャル' },
+]
+
+const visibleLinks = computed(() => allLinks.filter((link) => link.path !== route.path))
 </script>
 <style scoped>
 .v-main {
