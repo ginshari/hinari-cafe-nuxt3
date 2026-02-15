@@ -83,13 +83,13 @@
                   <v-skeleton-loader type="image" height="62vh"></v-skeleton-loader>
                 </div>
                 <div v-show="imageLoaded.lyrics">
-                  <a :href="getImageUrl(lyrics.imageName, '')" target="_blank" rel="noopener" class="wall-media">
+                  <div class="wall-media">
                     <img
                       :src="getImageUrl(lyrics.imageName, 'c_fit,f_auto,q_auto,w_900')"
                       :alt="lyrics.title"
                       @load="onImageLoad('lyrics')"
                     />
-                  </a>
+                  </div>
                   <v-btn
                     class="overlay-btn"
                     variant="outlined"
@@ -159,13 +159,13 @@
               <v-skeleton-loader type="image" height="62vh"></v-skeleton-loader>
             </div>
             <div v-show="imageLoaded.lyrics">
-              <a :href="getImageUrl(lyrics.imageName, '')" target="_blank" rel="noopener" class="wall-media">
+              <div class="wall-media">
                 <img
                   :src="getImageUrl(lyrics.imageName, 'c_fit,f_auto,q_auto,w_900')"
                   :alt="lyrics.title"
                   @load="onImageLoad('lyrics')"
                 />
-              </a>
+              </div>
               <v-btn
                 class="overlay-btn"
                 variant="outlined"
