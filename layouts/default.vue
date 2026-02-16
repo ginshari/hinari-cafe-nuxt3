@@ -20,10 +20,10 @@ const author = 'pictures:@hinari_kotohara\nauthor:@hinaricafe_TO'
 
 const allLinks = [
   { path: '/', label: 'TOP' },
-  { path: '/works', label: 'お仕事履歴' },
-  { path: '/coffees', label: 'コーヒーレビュー' },
-  { path: '/calendar', label: 'カレンダー' },
-  { path: '/special', label: 'スペシャル' },
+  { path: '/works/', label: 'お仕事履歴' },
+  { path: '/coffees/', label: 'コーヒーレビュー' },
+  { path: '/calendar/', label: 'カレンダー' },
+  { path: '/special/', label: 'スペシャル' },
 ]
 
 const visibleLinks = computed(() => allLinks.filter((link) => link.path !== route.path))
