@@ -19,7 +19,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-vuetify": "^2.5.3",
     "nuxt": "^3.16.2",
-    "postcss-html": "^1.8.0",
+    "postcss-html": "^1.8.1",
     "prettier": "^3.6.2",
     "rollup": "^4.39.0",
     "stylelint-config-recommended-scss": "^16.0.0",
