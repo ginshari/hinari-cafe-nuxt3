@@ -194,13 +194,6 @@ const category = ref([
   { title: 'トピック', value: 'topics' },
 ])
 
-const selectedGallery = ref(0)
-const { getImageUrl } = useCloudinary()
-const generateGalleryUrl = (imageName, params) => {
-  return getImageUrl(`v1707753283/3menzu/${imageName}`, params || 'f_auto,q_auto')
-}
-const gallery = ref([{ imageName: 'normal.png' }, { imageName: 'mizugi.png' }, { imageName: 'idol.png' }])
-
 const filterdEvents = computed(() => {
   return events.reduce((accumulator, currentValue) => {
     // カテゴリに合致するイベントを表示する
