@@ -142,7 +142,7 @@ const maxPage = computed(() => {
 
 const sortedCoffees = computed(() => {
   // 検索結果を並び替える
-  return filterdCoffees.value.sort((a, b) => {
+  return [...filterdCoffees.value].sort((a, b) => {
     if (a.pubDate > b.pubDate) return -1 * order.value
     if (a.pubDate < b.pubDate) return 1 * order.value
     return 0
