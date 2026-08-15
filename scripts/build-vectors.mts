@@ -52,10 +52,6 @@ function die(msg: string): never {
 
 const ACCOUNT = process.env.CLOUDFLARE_ACCOUNT_ID
 const TOKEN = process.env.CLOUDFLARE_API_TOKEN
-// DEBUG: ビルド環境で何が見えているか確認するための一時出力
-console.error('[build-vectors][debug] keys:', Object.keys(process.env).filter((k) => k.includes('CLOUDFLARE')).join(',') || '(CLOUDFLARE を含むキーが存在しない)')
-console.error('[build-vectors][debug] CF_PAGES:', process.env.CF_PAGES)
-console.error('[build-vectors][debug] ACCOUNT:', ACCOUNT ? 'set' : 'unset', 'TOKEN:', TOKEN ? 'set' : 'unset')
 if (!ACCOUNT || !TOKEN) die('CLOUDFLARE_ACCOUNT_ID / CLOUDFLARE_API_TOKEN が未設定です')
 if (!fs.existsSync(PAYLOAD)) die(`${PAYLOAD} がありません。先に npm run generate を実行してください`)
 
