@@ -1,4 +1,7 @@
 {
   // https://nuxt.com/docs/guide/concepts/typescript
+  // Nuxt が生成する tsconfig は types を空にするため @types/node は自動で入らない。
+  // scripts/ の Node API は各ファイル先頭の /// <reference types="node" /> で参照する
+  // (アプリ全体に node のグローバルを公開しないため)。
   "extends": "./.nuxt/tsconfig.json"
 }

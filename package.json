@@ -1,11 +1,12 @@
 {
   "private": true,
   "name": "hinari-cafe-nuxt3",
-  "version": "1.5.4",
+  "version": "1.6.0",
   "scripts": {
     "lint-css": "stylelint \"**/*.vue\" \"**/*.css\" \"**/*.scss\"",
     "dev": "nuxi dev",
     "generate": "nuxi generate",
+    "build:vectors": "tsx scripts/build-vectors.mts",
     "preview": "nuxi preview",
     "atlas:allow": "tsx scripts/atlas-ip.ts allow",
     "atlas:remove": "tsx scripts/atlas-ip.ts remove"
@@ -13,6 +14,7 @@
   "devDependencies": {
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
     "@nuxtjs/google-fonts": "^3.0.0-1",
+    "@types/node": "^26.2.0",
     "digest-fetch": "^3.1.1",
     "dotenv": "^17.2.3",
     "eslint": "^8.33.0",

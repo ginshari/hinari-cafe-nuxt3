@@ -1,2 +1,13 @@
 root: true
 extends: ['plugin:vue/base', 'plugin:vuetify/base', '@nuxtjs/eslint-config-typescript', 'prettier']
+
+overrides:
+  # ビルド・監査スクリプトは進捗や診断を console に出すのが目的のため
+  - files: ['scripts/*.{ts,mts,mjs}']
+    rules:
+      no-console: off
+  # Cloudflare Functions はエラー時のログ出力に console.error を使うため許可
+  # (console.log などはそのまま残るので、デバッグ出力の混入は引き続き防げる)
+  - files: ['functions/**/*.ts']
+    rules:
+      no-console: ['error', { allow: ['error'] }]

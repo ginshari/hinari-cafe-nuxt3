@@ -100,6 +100,10 @@
         </v-card>
       </v-dialog>
     </client-only>
+
+    <client-only>
+      <CoffeeChat :coffees="coffees" :width="dialogWidth" @select-video="selectVideo" />
+    </client-only>
   </div>
 </template>
 <script setup>
@@ -181,9 +185,7 @@ const doSearch = () => {
   if (!search.value) {
     filterdCoffees.value = coffees
   } else {
-    filterdCoffees.value = coffees.filter((coffee) => {
-      return coffee.name.toUpperCase().includes(search.value.toUpperCase())
-    })
+    filterdCoffees.value = coffees.filter((coffee) => nameMatches(coffee, search.value))
   }
   page.value = 1
 }
