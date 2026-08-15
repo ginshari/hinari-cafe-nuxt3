@@ -20,7 +20,13 @@ import * as devalue from 'devalue'
 
 const MODEL = '@cf/pfnet/plamo-embedding-1b'
 const BATCH = 25
-const OUT_DIR = '.output/public'
+
+// nuxi generate の出力先は nitro preset によって変わる
+//   ローカル(preset: static)      → .output/public
+//   Cloudflare Pages(cloudflare_pages) → dist
+// そのため生成済みのディレクトリを優先して解決する
+const CANDIDATES = ['dist', '.output/public']
+const OUT_DIR = CANDIDATES.find((dir) => fs.existsSync(path.join(dir, 'coffees/_payload.json'))) ?? CANDIDATES[0]
 const PAYLOAD = path.join(OUT_DIR, 'coffees/_payload.json')
 const BIN = path.join(OUT_DIR, 'coffee-vectors.bin')
 const META = path.join(OUT_DIR, 'coffee-vectors.json')
