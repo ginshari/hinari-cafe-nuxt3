@@ -1,3 +1,6 @@
+// Nuxt の tsconfig は types を空にするため、このファイル内でのみ node 型を参照する
+/// <reference types="node" />
+
 /**
  * MongoDB Atlas IP Access List Management Scripts
  *
