@@ -40,6 +40,7 @@
   "overrides": {
     "vite": {
       "rollup": "npm:@rollup/wasm-node"
-    }
+    },
+    "minimatch@9.0.3": "^9.0.7"
   }
 }
