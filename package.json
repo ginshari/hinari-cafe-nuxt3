@@ -35,11 +35,12 @@
     "sass": "^1.57.1",
     "sass-loader": "^16.0.5",
     "vite-plugin-vuetify": "^2.1.2",
-    "vuetify": "~3.8.0"
+    "vuetify": "~3.11.6"
   },
   "overrides": {
     "vite": {
       "rollup": "npm:@rollup/wasm-node"
-    }
+    },
+    "minimatch@9.0.3": "^9.0.7"
   }
 }
