@@ -172,7 +172,7 @@
 </template>
 <script setup>
 import { useDisplay } from 'vuetify'
-import { useApiFetch } from '~/composables/useApiFetch'
+import { usePageData } from '~/composables/usePageData'
 
 const { mdAndUp } = useDisplay()
 
@@ -192,57 +192,7 @@ onMounted(() => {
   )
 })
 
-const documents = await useApiFetch(
-  'landingPage',
-  [
-    {
-      $lookup: {
-        from: 'lpItems',
-        localField: 'works.$id',
-        foreignField: '_id',
-        pipeline: [
-          {
-            $sort: {
-              order: 1,
-            },
-          },
-        ],
-        as: 'works',
-      },
-    },
-    {
-      $lookup: {
-        from: 'lpItems',
-        localField: 'recommends.$id',
-        foreignField: '_id',
-        pipeline: [
-          {
-            $sort: {
-              order: 1,
-            },
-          },
-        ],
-        as: 'recommends',
-      },
-    },
-    {
-      $lookup: {
-        from: 'lpItems',
-        localField: 'coffees.$id',
-        foreignField: '_id',
-        pipeline: [
-          {
-            $sort: {
-              order: 1,
-            },
-          },
-        ],
-        as: 'coffees',
-      },
-    },
-  ],
-  'landingPage',
-)
+const documents = await usePageData('/api/landing', 'landingPage')
 
 const landingPage = documents[0]
 const works = landingPage.works

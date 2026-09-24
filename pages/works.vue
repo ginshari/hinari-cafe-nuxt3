@@ -119,68 +119,11 @@
 
 <script setup>
 import { useDisplay } from 'vuetify'
-import { useApiFetch } from '~/composables/useApiFetch'
+import { usePageData } from '~/composables/usePageData'
 
 const { smAndUp } = useDisplay()
 
-const documents = await useApiFetch(
-  'worksPage',
-  [
-    {
-      $lookup: {
-        from: 'links',
-        localField: 'links.$id',
-        foreignField: '_id',
-        pipeline: [
-          {
-            $sort: {
-              order: 1,
-            },
-          },
-        ],
-        as: 'links',
-      },
-    },
-    {
-      $lookup: {
-        from: 'profiles',
-        localField: 'profiles.$id',
-        foreignField: '_id',
-        pipeline: [
-          {
-            $sort: {
-              order: 1,
-            },
-          },
-        ],
-        as: 'profiles',
-      },
-    },
-    {
-      $lookup: {
-        from: 'events',
-        localField: 'events.$id',
-        foreignField: '_id',
-        pipeline: [
-          {
-            $addFields: {
-              year: { $substr: ['$yyyymm', 0, 4] },
-              month: { $substr: ['$yyyymm', 4, 2] },
-            },
-          },
-          {
-            $sort: {
-              yyyymm: -1,
-              branchNumber: -1,
-            },
-          },
-        ],
-        as: 'events',
-      },
-    },
-  ],
-  'worksPage',
-)
+const documents = await usePageData('/api/works', 'worksPage')
 
 const worksPage = documents[0]
 const links = worksPage.links

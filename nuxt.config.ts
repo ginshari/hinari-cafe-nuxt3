@@ -55,8 +55,18 @@ export default defineNuxtConfig({
     prerender: {
       crawlLinks: true,
       routes: ['/'],
+      // /api/landing・/api/works・/api/coffees をファイルとして書き出さない。
+      // 書き出すと D1 の全データが公開される。
+      ignore: ['/api/'],
     },
     compressPublicAssets: true, // 静的アセットの圧縮を有効化
+    // ビルド中に作る payload の一時データをメモリだけに置く。Windows では
+    // ファイルへの書き込みが EPERM で失敗してビルドが止まるため (nuxt/nuxt#35590)。
+    storage: {
+      'internal:nuxt:prerender': {
+        driver: 'memory',
+      },
+    },
   },
 
   hooks: {
@@ -89,11 +99,17 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    mongodbUri: '',
     public: {
       apiBase: '',
     },
   },
+
+  // 管理画面を本番のビルドから除く。layouts と middleware は、使われていなくても
+  // Nuxt がディレクトリ内の全ファイルを読み込むため、ファイル単位で指定する。
+  ignore:
+    process.env.NODE_ENV === 'production'
+      ? ['pages/admin/**', 'server/api/admin/**', 'layouts/admin.vue', 'middleware/admin.ts']
+      : [],
 
   vite: {
     define: {
