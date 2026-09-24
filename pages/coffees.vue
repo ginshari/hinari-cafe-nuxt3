@@ -108,24 +108,11 @@
 </template>
 <script setup>
 import { useDisplay } from 'vuetify'
-import { useApiFetch } from '~/composables/useApiFetch'
+import { usePageData } from '~/composables/usePageData'
 
 const { name } = useDisplay()
 
-const documents = await useApiFetch(
-  'coffeesPage',
-  [
-    {
-      $lookup: {
-        from: 'coffees',
-        localField: 'coffees.$id',
-        foreignField: '_id',
-        as: 'coffees',
-      },
-    },
-  ],
-  'coffeesPage',
-)
+const documents = await usePageData('/api/coffees', 'coffeesPage')
 
 const coffeesPage = documents[0]
 const coffees = coffeesPage.coffees
