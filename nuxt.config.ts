@@ -55,8 +55,20 @@ export default defineNuxtConfig({
     prerender: {
       crawlLinks: true,
       routes: ['/'],
+      // 固定クエリ (/api/landing|works|coffees) はビルド時に読むだけで、
+      // 静的ファイルとして出力しない (出力すると D1 の全件が公開 JSON になる)。
+      ignore: ['/api/'],
     },
     compressPublicAssets: true, // 静的アセットの圧縮を有効化
+    // プリレンダ中のペイロードキャッシュをメモリのみにする。
+    // ディスク書き込み(atomicWrite の rename)が Windows で EPERM になり
+    // プリレンダが 500 で失敗するため(既知問題 nuxt/nuxt#35590 の回避)。
+    // サイト規模は LRU(max 1000)に収まり、ディスクフォールバックは使われない。
+    storage: {
+      'internal:nuxt:prerender': {
+        driver: 'memory',
+      },
+    },
   },
 
   hooks: {
@@ -89,11 +101,18 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    mongodbUri: '',
     public: {
       apiBase: '',
     },
   },
+
+  // 管理画面は production ビルドから物理的に除外する。
+  // import.meta.dev ガードと二重に効かせる。layouts / middleware は参照が無くても
+  // Nuxt がディレクトリ走査で登録するため、個別に列挙する必要がある。
+  ignore:
+    process.env.NODE_ENV === 'production'
+      ? ['pages/admin/**', 'server/api/admin/**', 'layouts/admin.vue', 'middleware/admin.ts']
+      : [],
 
   vite: {
     define: {
