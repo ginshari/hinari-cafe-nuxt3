@@ -3,6 +3,7 @@
   "name": "hinari-cafe-nuxt3",
   "version": "2.1.0",
   "scripts": {
+    "lint": "eslint .",
     "lint-css": "stylelint \"**/*.vue\" \"**/*.css\" \"**/*.scss\"",
     "dev": "nuxi dev",
     "generate": "nuxi generate",
@@ -10,12 +11,12 @@
     "preview": "nuxi preview"
   },
   "devDependencies": {
-    "@nuxtjs/eslint-config-typescript": "^12.0.0",
+    "@nuxt/eslint-config": "^1.17.0",
     "@nuxtjs/google-fonts": "^3.0.0-1",
     "@types/node": "^26.2.0",
     "digest-fetch": "^3.1.1",
     "dotenv": "^17.2.3",
-    "eslint": "^8.33.0",
+    "eslint": "^10.13.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-vuetify": "^2.5.3",
     "nuxt": "^4.6.3",
@@ -27,6 +28,7 @@
     "stylelint-config-standard-scss": "^13.1.0",
     "stylelint-config-standard-vue": "^1.0.0",
     "tsx": "^4.21.0",
+    "typescript": "~5.9.3",
     "vite": "^8.3.5"
   },
   "dependencies": {

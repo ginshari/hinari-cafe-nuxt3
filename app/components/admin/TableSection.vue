@@ -20,14 +20,14 @@
 </template>
 
 <script setup lang="ts">
-import type { AdminHeader } from '~/composables/useAdminTable'
+import type { AdminHeader, AdminRow } from '~/composables/useAdminTable'
 
 defineProps<{
   table: string
   title: string
   headers: AdminHeader[]
   editPath: string
-  filter?: (item: Record<string, any>) => boolean
-  label?: (item: Record<string, any>) => string
+  filter?: (item: AdminRow) => boolean
+  label?: (item: AdminRow) => string
 }>()
 </script>

@@ -54,4 +54,4 @@ export const rules = {
 // SQLite の trim() は半角空白しか削らないため、CHECK (name = trim(name)) だけでは
 // 全角空白と連続空白を防げない。
 export const normalizeName = (raw: string): string =>
-  raw.replace(/　/g, ' ').replace(/ {2,}/g, ' ').trim()
+  raw.replace(/\u3000/g, ' ').replace(/ {2,}/g, ' ').trim()

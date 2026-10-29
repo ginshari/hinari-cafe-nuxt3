@@ -69,7 +69,7 @@ const fetchVideo = async () => {
   videoError.value = null
   try {
     Object.assign(form, await $fetch<Record<string, string>>('/api/admin/youtube', { query: { videoId } }))
-  } catch (e: any) {
+  } catch (e) {
     videoError.value = apiErrorMessage(e)
   } finally {
     videoLoading.value = false

@@ -21,13 +21,15 @@
       :title="category"
       edit-path="/admin/landing/lpitems/edit"
       :headers="lpitemsHeaders"
-      :filter="(item: Record<string, any>) => item.category === category"
+      :filter="(item: AdminRow) => item.category === category"
       :label="(item) => `${item.category} / ${item.order} (${item.head})`"
     />
   </div>
 </template>
 
 <script setup lang="ts">
+import type { AdminRow } from '~/composables/useAdminTable'
+
 const form = reactive({ greeting: '', annotation: '' })
 const error = ref<string | null>(null)
 
@@ -41,8 +43,8 @@ const lpitemsHeaders = [
 
 onMounted(async () => {
   try {
-    Object.assign(form, await $fetch<Record<string, any>>('/api/admin/landingPage/1'))
-  } catch (e: any) {
+    Object.assign(form, await $fetch<AdminRow>('/api/admin/landingPage/1'))
+  } catch (e) {
     error.value = apiErrorMessage(e)
   }
 })

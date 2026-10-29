@@ -37,7 +37,7 @@ async function d1Query(sql: string, params: unknown[] = []): Promise<D1RawResult
   })
   const data = await res.json().catch(() => ({}))
   if (!res.ok || data.success !== true) {
-    const msg = data.errors?.map((e: any) => e.message).join('; ') ?? `HTTP ${res.status}`
+    const msg = data.errors?.map((e: { message: string }) => e.message).join('; ') ?? `HTTP ${res.status}`
     // CHECK / UNIQUE 制約違反は入力の問題なので 409 にする
     const status = /constraint/i.test(msg) ? 409 : 502
     throw createError({ statusCode: status, statusMessage: `D1 query failed: ${msg}` })
@@ -51,7 +51,7 @@ async function d1Query(sql: string, params: unknown[] = []): Promise<D1RawResult
 }
 
 /** SELECT の行配列を返す */
-export async function d1Rows(sql: string, params: unknown[] = []): Promise<Record<string, any>[]> {
+export async function d1Rows(sql: string, params: unknown[] = []): Promise<Record<string, unknown>[]> {
   return (await d1Query(sql, params)).results
 }
 

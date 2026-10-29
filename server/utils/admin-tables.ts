@@ -105,7 +105,7 @@ export interface ValidatedInput {
 }
 
 /** 入力オブジェクトをバリデーションしてカラム順のバインド値を返す */
-export function validateInput(def: AdminTable, input: Record<string, any>): ValidatedInput {
+export function validateInput(def: AdminTable, input: Record<string, unknown>): ValidatedInput {
   const values: (string | number | null)[] = []
 
   for (const c of def.columns) {

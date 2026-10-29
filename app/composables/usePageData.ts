@@ -1,7 +1,7 @@
 import { useFetch, createError } from '#app'
 
 interface ApiResponse {
-  documents: any[]
+  documents: Record<string, unknown>[]
 }
 
 /**
