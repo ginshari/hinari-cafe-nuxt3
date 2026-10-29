@@ -41,6 +41,9 @@ export default defineNuxtConfig({
     },
   },
 
+  // 起動に 6 秒ほどかかり dev が重くなるため切る。使うときは true に戻す。
+  devtools: { enabled: false },
+
   build: {
     transpile: ['vuetify'],
   },

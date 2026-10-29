@@ -1,80 +1,20 @@
-// コーヒーの意味検索エンドポイント (Cloudflare Pages Functions)
+// コーヒーの意味検索で、質問文を埋め込んでベクトルを返すエンドポイント (Cloudflare Pages Functions)
 //
 //   POST /api/search  { "query": "酸味が控えめ" }
-//   → { "results": [{ "videoId": "...", "score": 0.79 }, ...], "top": 0.79 }
+//   → { "model": "@cf/pfnet/plamo-embedding-1b", "embedding": [0.012, -0.034, ...] }
 //
-// 返すのは videoId とスコアだけ。本文はクライアントが保持済みのため再送しない。
+// レビューコメントとの類似度の計算はブラウザで行う (utils/vectorSearch.js)。
+// ここで 344件 × 2048次元の計算をすると、Workers Free の CPU 時間 (1回 10ms) を超えるため。
 // AIには文章を生成させず質問文をベクトルに変換させるのみなので、出力に事実でない文章が混ざることがない。
 
 const MODEL = '@cf/pfnet/plamo-embedding-1b'
 const MAX_QUERY_LEN = 100
-const MIN_SCORE = 0.6 // これ未満は「該当なし」扱いとする
-const TOP_N = 5
 
 // この Env は Worker に設定したバインディングの型をまとめたもの。
 // バインディングは Worker から外部サービスを使うための接続設定で、
-// ここでは Workers AI と 静的アセットのバインディングを宣言している。
+// ここでは Workers AI のバインディングを宣言している。
 interface Env {
   AI: { run: (model: string, input: { text: string[] }) => Promise<{ data: number[][] }> }
-  ASSETS: { fetch: (input: string) => Promise<Response> }
-}
-
-interface Meta {
-  model: string
-  dims: number
-  count: number
-  generatedAt: string
-  ids: string[]
-  norms: number[]
-}
-
-// Worker インスタンス単位でメタデータとベクトルデータをキャッシュする
-let metaCache: Meta | null = null
-let vectorCache: Int8Array | null = null
-
-async function loadMeta(env: Env, origin: string): Promise<Meta> {
-  if (metaCache) return metaCache
-  const res = await env.ASSETS.fetch(`${origin}/coffee-vectors.json`)
-  if (!res.ok) throw new Error(`メタデータの取得に失敗: ${res.status}`)
-  const meta = (await res.json()) as Meta
-  // ノルムの不整合時はビルドを失敗させる。
-  if (!meta.norms || meta.norms.length !== meta.count) {
-    throw new Error(`ノルムの件数が不正 (期待値 ${meta.count})`)
-  }
-  metaCache = meta
-  return metaCache
-}
-
-async function loadVectors(env: Env, origin: string, meta: Meta): Promise<Int8Array> {
-  if (vectorCache) return vectorCache
-  const res = await env.ASSETS.fetch(`${origin}/coffee-vectors.bin`)
-  if (!res.ok) throw new Error(`ベクトルデータの取得に失敗: ${res.status}`)
-  const vectors = new Int8Array(await res.arrayBuffer())
-
-  const expected = meta.count * meta.dims
-  if (vectors.length !== expected) {
-    // ベクトルデータとメタデータの不整合時はビルドを失敗させる
-    throw new Error(`ベクトルデータのサイズが不正: ${vectors.length} (期待値 ${expected})`)
-  }
-  vectorCache = vectors
-  return vectors
-}
-
-// コサイン類似度によるベクトル検索を行う
-function search(query: number[], meta: Meta, vectors: Int8Array) {
-  let queryNorm = 0
-  for (let j = 0; j < meta.dims; j++) queryNorm += query[j] * query[j]
-  queryNorm = Math.sqrt(queryNorm)
-
-  const scored: { index: number; score: number }[] = new Array(meta.count)
-  for (let i = 0; i < meta.count; i++) {
-    let dot = 0
-    const offset = i * meta.dims
-    for (let j = 0; j < meta.dims; j++) dot += query[j] * vectors[offset + j]
-    scored[i] = { index: i, score: dot / (queryNorm * meta.norms[i]) }
-  }
-  scored.sort((a, b) => b.score - a.score)
-  return scored.slice(0, TOP_N)
 }
 
 // Workers AI のエラーを分類する
@@ -97,8 +37,6 @@ const json = (body: unknown, status = 200) =>
     status,
     headers: { 'content-type': 'application/json; charset=utf-8' },
   })
-
-const round = (n: number) => Number(n.toFixed(4))
 
 // キャッシュキーには生の入力文を使わずハッシュを使う
 // ユーザー入力値の保持を避けるため
@@ -133,12 +71,10 @@ export async function onRequestPost(context: {
   if (query.length > MAX_QUERY_LEN) return json({ error: 'too_long' }, 400)
 
   try {
-    // メタデータを先に読んでキャッシュ有無の判定に利用する
-    const meta = await loadMeta(env, origin)
-
-    // 同クエリは推論をスキップしてキャッシュから返答する
+    // 同じ質問文は推論をスキップしてキャッシュから返答する。
+    // ベクトルはモデルと質問文だけで決まるので、キーにはこの2つを使う。
     const cacheKey = new Request(
-      `${origin}/api/search?v=${encodeURIComponent(meta.generatedAt)}&q=${await hashQuery(query)}`,
+      `${origin}/api/search?m=${encodeURIComponent(MODEL)}&q=${await hashQuery(query)}`,
     )
     const cache = (caches as unknown as { default: Cache }).default
 
@@ -157,18 +93,8 @@ export async function onRequestPost(context: {
       throw e
     }
 
-    const vectors = await loadVectors(env, origin, meta)
-    const top = search(embedding, meta, vectors)
-
-    const topScore = round(top[0].score)
-    const body = {
-      // 類似度が低い場合は結果を返さず「該当なし」とする
-      results: topScore < MIN_SCORE ? [] : top.map((t) => ({ videoId: meta.ids[t.index], score: round(t.score) })),
-      top: topScore,
-    }
-
-    const res = json(body)
-    // ベクトルデータの版をキーに含めているため長めに保持してよい
+    const res = json({ model: MODEL, embedding })
+    // 同じ質問文とモデルからは同じベクトルが返るので長めに保持してよい
     res.headers.set('cache-control', 'public, max-age=86400')
     // 応答を待たせないよう、キャッシュ書き込みはバックグラウンドで行う
     context.waitUntil(cache.put(cacheKey, res.clone()))
