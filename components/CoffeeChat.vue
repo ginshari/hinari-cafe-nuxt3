@@ -151,6 +151,12 @@ const loading = ref(false)
 const logEl = ref(null)
 const messages = ref([{ role: 'assistant', text: TEXT.intro }])
 
+// チャットを開いた時点でベクトルのファイル (約690KB) を読み始め、最初の検索で待たせない。
+// 失敗しても検索時に読み直すので、ここではエラーを無視する。
+watch(open, (v) => {
+  if (v) loadCoffeeVectors().catch(() => {})
+})
+
 const coffeeById = computed(() => new Map(props.coffees.map((c) => [c.videoId, c])))
 
 // 末尾へ飛ばすと結果一覧の最下部が出て読み始めが見えないため、
@@ -203,18 +209,23 @@ const send = async (preset) => {
       // UI を経由していれば起きないエラー(forbidden 等)は error に集約する。
       const key = TEXT[data.error] ? data.error : res.status === 429 ? 'busy' : 'error'
       reply = { role: 'assistant', text: TEXT[key] }
-    } else if (!data.results?.length) {
-      reply = { role: 'assistant', text: TEXT.none }
     } else {
-      // 本文はサーバーから返さずに payload の一覧から videoId で引く
-      const items = data.results.map((r) => coffeeById.value.get(r.videoId)).filter(Boolean)
-      const nameHits = props.coffees.some((c) => nameMatches(c, query))
+      // サーバーは質問文のベクトルだけを返し、類似度の計算はブラウザで行う
+      const found = await searchCoffeesByVector(data.embedding, data.model)
 
-      reply = {
-        role: 'assistant',
-        text: data.top >= CONFIDENT_SCORE ? TEXT.confident : TEXT.vague,
-        items,
-        hint: nameHits && data.top < CONFIDENT_SCORE ? TEXT.nameHint : '',
+      if (!found.results.length) {
+        reply = { role: 'assistant', text: TEXT.none }
+      } else {
+        // 本文はサーバーから返さずに payload の一覧から videoId で引く
+        const items = found.results.map((r) => coffeeById.value.get(r.videoId)).filter(Boolean)
+        const nameHits = props.coffees.some((c) => nameMatches(c, query))
+
+        reply = {
+          role: 'assistant',
+          text: found.top >= CONFIDENT_SCORE ? TEXT.confident : TEXT.vague,
+          items,
+          hint: nameHits && found.top < CONFIDENT_SCORE ? TEXT.nameHint : '',
+        }
       }
     }
   } catch {
