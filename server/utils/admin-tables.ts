@@ -1,8 +1,8 @@
 // 管理画面が扱うテーブルの定義と、入力の検査。
 //
-// 検査の規則は utils/validation.ts にあり、画面 (pages/admin/**) と同じものを使う。
+// 検査の規則は shared/utils/validation.ts にあり、画面 (app/pages/admin/**) と同じものを使う。
 // 一部の規則は d1/schema.sql の CHECK 制約と同じ内容。重複の確認 (UNIQUE) は D1 だけが行う。
-import { type RuleResult, normalizeName, rules } from '~/utils/validation'
+import { type RuleResult, normalizeName, rules } from '#shared/utils/validation'
 
 export type AdminTableName = 'coffees' | 'lpItems' | 'links' | 'profiles' | 'events' | 'landingPage'
 

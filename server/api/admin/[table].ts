@@ -1,7 +1,7 @@
 // 管理画面 API: GET 一覧 / POST 追加
-import { resolveAdminTable } from '~/server/utils/admin-route'
-import { validateInput } from '~/server/utils/admin-tables'
-import { d1Rows, d1Run } from '~/server/utils/d1'
+import { resolveAdminTable } from '~~/server/utils/admin-route'
+import { validateInput } from '~~/server/utils/admin-tables'
+import { d1Rows, d1Run } from '~~/server/utils/d1'
 
 export default defineEventHandler(async (event) => {
   const def = resolveAdminTable(event)

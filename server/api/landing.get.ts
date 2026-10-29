@@ -1,5 +1,5 @@
 // トップページが読むデータ。ビルド時だけ呼ばれる。
-import { d1Rows } from '~/server/utils/d1'
+import { d1Rows } from '~~/server/utils/d1'
 
 export default defineEventHandler(async () => {
   // D1 の REST API は1回の呼び出しで1文しか実行できないため、lpItems は

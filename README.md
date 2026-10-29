@@ -6,7 +6,7 @@ VTuber理原ひなりさんの非公式ファンサイトです
 
 | フレームワーク | UI       | データベース  | 公開先           | 検索                  |
 | -------------- | -------- | ------------- | ---------------- | --------------------- |
-| Nuxt3          | Vuetify3 | Cloudflare D1 | Cloudflare Pages | Cloudflare Workers AI |
+| Nuxt4          | Vuetify3 | Cloudflare D1 | Cloudflare Pages | Cloudflare Workers AI |
 
 - D1 を読むのはビルド時だけ
 - 公開されるのは静的ファイルだけ
@@ -114,4 +114,4 @@ Cloudflare のビルドでは、毎回すべてのレビューコメントを埋
 | --------------------------- | -------------------------------------------------------- |
 | `scripts/build-vectors.mts` | レビューコメントを埋め込み、ベクトルを `coffee-vectors.bin` に保存する |
 | `functions/api/search.ts`   | 質問文を埋め込み、保存したベクトルとのコサイン類似度で検索する (Pages Functions) |
-| `pages/coffees.vue`         | 検索画面                                                 |
+| `app/pages/coffees.vue`     | 検索画面                                                 |

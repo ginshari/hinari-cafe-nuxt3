@@ -1,4 +1,4 @@
-// フォーム (pages/admin/**) とサーバー (server/utils/admin-tables.ts) で共通の入力規則。
+// フォーム (app/pages/admin/**) とサーバー (server/utils/admin-tables.ts) で共通の入力規則。
 // メッセージも共通にすることで、フォームで弾いた場合と API で弾いた場合の文言が揃う。
 import { hmsToSec } from './time'
 

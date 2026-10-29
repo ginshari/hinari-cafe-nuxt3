@@ -1,7 +1,7 @@
 // 管理画面 API: GET 単行 / PUT 更新 / DELETE 削除
-import { resolveAdminTable } from '~/server/utils/admin-route'
-import { validateInput } from '~/server/utils/admin-tables'
-import { d1Rows, d1Run } from '~/server/utils/d1'
+import { resolveAdminTable } from '~~/server/utils/admin-route'
+import { validateInput } from '~~/server/utils/admin-tables'
+import { d1Rows, d1Run } from '~~/server/utils/d1'
 
 export default defineEventHandler(async (event) => {
   const def = resolveAdminTable(event)

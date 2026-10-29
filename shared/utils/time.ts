@@ -14,12 +14,13 @@ export function hmsToSec(value: string): number | null {
     .map((x) => Number(x))
   if (parts.length < 2 || parts.length > 3) return null
   if (parts.some((n) => !Number.isInteger(n) || n < 0)) return null
+  // 要素数は上で確かめているため、タプルとして扱う (Nuxt 4 の noUncheckedIndexedAccess 対策)
   if (parts.length === 3) {
-    const [h, m, s] = parts
+    const [h, m, s] = parts as [number, number, number]
     if (m >= 60 || s >= 60) return null
     return h * 3600 + m * 60 + s
   }
-  const [m, s] = parts
+  const [m, s] = parts as [number, number]
   if (s >= 60) return null
   return m * 60 + s
 }

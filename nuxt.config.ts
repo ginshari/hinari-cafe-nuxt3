@@ -1,4 +1,4 @@
-import { createResolver } from '@nuxt/kit'
+import { createResolver } from 'nuxt/kit'
 import vuetify from 'vite-plugin-vuetify'
 
 const { resolve } = createResolver(import.meta.url)
@@ -14,7 +14,6 @@ export default defineNuxtConfig({
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         {
-          hid: 'description',
           name: 'description',
           content:
             "Hinari's CafeはVTuber理原ひなりさんの非公式ファンサイトです。オススメ動画の紹介のほか、今までのコーヒー配信を銘柄から逆引き検索できる機能を実装しております。",
@@ -106,9 +105,10 @@ export default defineNuxtConfig({
 
   // 管理画面を本番のビルドから除く。layouts と middleware は、使われていなくても
   // Nuxt がディレクトリ内の全ファイルを読み込むため、ファイル単位で指定する。
+  // パターンは srcDir (app/) ではなくプロジェクトのルートからの相対パスで書く。
   ignore:
     process.env.NODE_ENV === 'production'
-      ? ['pages/admin/**', 'server/api/admin/**', 'layouts/admin.vue', 'middleware/admin.ts']
+      ? ['app/pages/admin/**', 'server/api/admin/**', 'app/layouts/admin.vue', 'app/middleware/admin.ts']
       : [],
 
   vite: {
@@ -125,5 +125,5 @@ export default defineNuxtConfig({
     },
   },
 
-  compatibilityDate: '2025-06-27',
+  compatibilityDate: '2026-10-29',
 })

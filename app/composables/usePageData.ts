@@ -1,4 +1,4 @@
-import { useFetch, useNuxtApp, createError } from '#app'
+import { useFetch, createError } from '#app'
 
 interface ApiResponse {
   documents: any[]
@@ -16,10 +16,8 @@ export const usePageData = async (path: string, key: string) => {
     key,
     // クライアント遷移では payload / static のキャッシュを使う。
     // 完全静的配信なので /api/* はランタイムに存在しない。
-    getCachedData: (cacheKey) => {
-      const nuxtApp = useNuxtApp()
-      return nuxtApp.payload.data[cacheKey] || nuxtApp.static.data[cacheKey]
-    },
+    // Nuxt 4 では初回以外 (refresh など) にも呼ばれるため、useNuxtApp() ではなく引数の nuxtApp を使う。
+    getCachedData: (cacheKey, nuxtApp) => nuxtApp.payload.data[cacheKey] || nuxtApp.static.data[cacheKey],
   })
 
   if (error.value || !data.value?.documents) {

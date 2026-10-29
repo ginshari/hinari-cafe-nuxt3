@@ -1,6 +1,6 @@
 // works ページが読むデータ。
 // year / month は yyyymm から作る。works.vue は "2026" / "08" の文字列で受け取る。
-import { d1Rows } from '~/server/utils/d1'
+import { d1Rows } from '~~/server/utils/d1'
 
 export default defineEventHandler(async () => {
   const [links, profiles, events] = await Promise.all([
