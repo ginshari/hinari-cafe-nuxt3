@@ -8,8 +8,8 @@ VTuber理原ひなりさんの非公式ファンサイトです
 | -------------- | -------- | ------------- | ---------------- | --------------------- |
 | Nuxt4          | Vuetify3 | Cloudflare D1 | Cloudflare Pages | Cloudflare Workers AI |
 
-- D1 を読むのはビルド時だけ
-- 公開されるのは静的ファイルだけ
+- D1 を読むのはビルド時だけ。D1 のデータは静的ファイルとして公開する
+- サーバー側で動くのは、味・香りの検索の `/api/search` (Pages Functions) だけ
 
 ## 前提条件
 
@@ -56,9 +56,11 @@ npm run dev
 
 ### 管理画面
 
-http://localhost:3000/admin で D1 を直接読み書きできます (`coffees` / `lpItems` / `links` / `profiles` / `events` / `landingPage`)。
+http://localhost:3000/admin で、D1 のテーブル `coffees` / `lpItems` / `links` / `profiles` / `events` / `landingPage` を直接読み書きできます。
 
-**本番のビルドには入りません。** `npm run dev` の実行時だけ使えます。管理画面用のトークンが必要です。YouTube Data API のキーは無くても動きますが、動画の情報を取り込む機能だけ使えません。
+本番のビルドには入りません。`npm run dev` の実行時だけ使えます。
+
+管理画面用のトークンが必要です。YouTube Data API のキーは無くても動きますが、動画の情報を取り込む機能だけ使えません。
 
 ## 手元でのビルド
 
@@ -80,21 +82,23 @@ npx wrangler pages dev .output/public --ai AI --port 8788
 
 `git push` すると Cloudflare がビルドして公開します。Pages 側の設定は最初の一度だけ必要です。
 
-**ビルドコマンド**
+### ビルドコマンド
 
 ```
 npm run generate && npm run build:vectors
 ```
 
-Cloudflare のビルドでは、毎回すべてのレビューコメントを埋め込みます。
+Cloudflare のビルドでは毎回すべてのレビューコメントを埋め込みます。
 
-**ビルド時の環境変数**
+### ビルド時の環境変数
 
 | 変数                    | 内容                          |
 | ----------------------- | ----------------------------- |
 | `CLOUDFLARE_ACCOUNT_ID` | アカウントID                  |
-| `CLOUDFLARE_API_TOKEN`  | ビルド用のトークン            |
+| `CLOUDFLARE_API_TOKEN`  | ビルド用のトークン (D1: Read + Workers AI: Read) |
 | `D1_DATABASE_ID`        | D1 のデータベースID           |
+
+`CLOUDFLARE_DEVELOPER_TOKEN` (D1: Edit) はローカルの管理画面・シード専用です。**Pages のビルド時環境変数には設定しないでください。** ビルドは D1 を読むだけなので、書き込み権限のあるトークンをビルド環境に置く必要はありません。
 
 `functions/` について Pages 側の設定は要りません。
 
@@ -104,14 +108,15 @@ Cloudflare のビルドでは、毎回すべてのレビューコメントを埋
 
 コーヒー配信の検索は2種類あります。
 
-- **銘柄名の検索** — ブラウザの中で、銘柄名を大文字小文字を区別せずに部分一致で絞り込みます。通信は起きません
-- **味・香りの検索** — 埋め込みベクトルによる類似度検索です
+- 銘柄名の検索: ブラウザの中で、銘柄名が部分一致する配信に絞り込みます。大文字と小文字は区別しません。通信は発生しません
+- 味・香りの検索: 埋め込みベクトルによる類似度検索です
   1. ビルド時に、レビューコメントを Workers AI の埋め込みモデル (`@cf/pfnet/plamo-embedding-1b`) で 2048 次元のベクトルにし、int8 に量子化して静的ファイルとして置く
-  2. 検索時に、質問文を同じモデルでベクトルにし、全件とのコサイン類似度を計算する
+  2. 検索時に、`/api/search` が質問文を同じモデルでベクトルにして返し、ブラウザが全件とのコサイン類似度を計算する
   3. 類似度の高い順に上位5件の動画を返す。最も高い類似度が 0.6 未満なら該当なしとする
 
 | ファイル                    | 役割                                                     |
 | --------------------------- | -------------------------------------------------------- |
 | `scripts/build-vectors.mts` | レビューコメントを埋め込み、ベクトルを `coffee-vectors.bin` に保存する |
-| `functions/api/search.ts`   | 質問文を埋め込み、保存したベクトルとのコサイン類似度で検索する (Pages Functions) |
+| `functions/api/search.ts`   | 質問文を埋め込み、ベクトルを返す (Pages Functions)        |
+| `app/utils/vectorSearch.js` | `coffee-vectors.bin` を読み、質問文のベクトルとのコサイン類似度で上位5件を選ぶ (ブラウザ) |
 | `app/pages/coffees.vue`     | 検索画面                                                 |
