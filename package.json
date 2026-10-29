@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "hinari-cafe-nuxt3",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "scripts": {
     "lint-css": "stylelint \"**/*.vue\" \"**/*.css\" \"**/*.scss\"",
     "dev": "nuxi dev",
@@ -21,7 +21,7 @@
     "nuxt": "^3.16.2",
     "postcss-html": "^1.8.0",
     "prettier": "^3.6.2",
-    "rollup": "^4.39.0",
+    "rollup": "^4.66.0",
     "stylelint": "^16.26.1",
     "stylelint-config-recommended-scss": "^16.0.0",
     "stylelint-config-standard-scss": "^13.1.0",
