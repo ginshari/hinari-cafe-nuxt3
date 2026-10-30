@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "hinari-cafe-nuxt3",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "scripts": {
     "lint": "eslint .",
     "lint-css": "stylelint \"**/*.vue\" \"**/*.css\" \"**/*.scss\"",
@@ -36,7 +36,7 @@
     "sass": "^1.57.1",
     "sass-loader": "^16.0.5",
     "vite-plugin-vuetify": "^2.1.2",
-    "vuetify": "~3.11.6"
+    "vuetify": "~3.13.7"
   },
   "overrides": {
     "minimatch@9.0.3": "^9.0.7"
