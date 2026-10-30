@@ -1,4 +1,4 @@
-// フォーム (pages/admin/**) とサーバー (server/utils/admin-tables.ts) で共通の入力規則。
+// フォーム (app/pages/admin/**) とサーバー (server/utils/admin-tables.ts) で共通の入力規則。
 // メッセージも共通にすることで、フォームで弾いた場合と API で弾いた場合の文言が揃う。
 import { hmsToSec } from './time'
 
@@ -54,4 +54,4 @@ export const rules = {
 // SQLite の trim() は半角空白しか削らないため、CHECK (name = trim(name)) だけでは
 // 全角空白と連続空白を防げない。
 export const normalizeName = (raw: string): string =>
-  raw.replace(/　/g, ' ').replace(/ {2,}/g, ' ').trim()
+  raw.replace(/\u3000/g, ' ').replace(/ {2,}/g, ' ').trim()

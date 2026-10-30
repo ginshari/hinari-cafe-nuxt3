@@ -6,7 +6,7 @@ VTuber理原ひなりさんの非公式ファンサイトです
 
 | フレームワーク | UI       | データベース  | 公開先           | 検索                  |
 | -------------- | -------- | ------------- | ---------------- | --------------------- |
-| Nuxt3          | Vuetify3 | Cloudflare D1 | Cloudflare Pages | Cloudflare Workers AI |
+| Nuxt4          | Vuetify3 | Cloudflare D1 | Cloudflare Pages | Cloudflare Workers AI |
 
 - D1 を読むのはビルド時だけ。D1 のデータは静的ファイルとして公開する
 - サーバー側で動くのは、味・香りの検索の `/api/search` (Pages Functions) だけ
@@ -118,5 +118,5 @@ Cloudflare のビルドでは毎回すべてのレビューコメントを埋め
 | --------------------------- | -------------------------------------------------------- |
 | `scripts/build-vectors.mts` | レビューコメントを埋め込み、ベクトルを `coffee-vectors.bin` に保存する |
 | `functions/api/search.ts`   | 質問文を埋め込み、ベクトルを返す (Pages Functions)        |
-| `utils/vectorSearch.js`     | `coffee-vectors.bin` を読み、質問文のベクトルとのコサイン類似度で上位5件を選ぶ (ブラウザ) |
-| `pages/coffees.vue`         | 検索画面                                                 |
+| `app/utils/vectorSearch.js` | `coffee-vectors.bin` を読み、質問文のベクトルとのコサイン類似度で上位5件を選ぶ (ブラウザ) |
+| `app/pages/coffees.vue`     | 検索画面                                                 |

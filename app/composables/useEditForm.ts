@@ -1,3 +1,5 @@
+import type { AdminRow } from '~/composables/useAdminTable'
+
 // 管理画面の編集フォーム共通ロジック。listPath は保存後の遷移先。
 export function useEditForm(table: string, listPath?: string) {
   const route = useRoute()
@@ -8,17 +10,17 @@ export function useEditForm(table: string, listPath?: string) {
   const error = ref<string | null>(null)
 
   /** 編集時は既存行を取得して apply(row) でフォームへ反映する */
-  const load = async (apply: (row: Record<string, any>) => void) => {
+  const load = async (apply: (row: AdminRow) => void) => {
     if (!isEdit.value) return
     error.value = null
     try {
-      apply(await $fetch<Record<string, any>>(`/api/admin/${table}/${id.value}`))
-    } catch (e: any) {
+      apply(await $fetch<AdminRow>(`/api/admin/${table}/${id.value}`))
+    } catch (e) {
       error.value = apiErrorMessage(e)
     }
   }
 
-  const submit = async (body: Record<string, any>) => {
+  const submit = async (body: AdminRow) => {
     if (!valid.value) return
     saving.value = true
     error.value = null
@@ -29,7 +31,7 @@ export function useEditForm(table: string, listPath?: string) {
         await $fetch(`/api/admin/${table}`, { method: 'POST', body })
       }
       await navigateTo(listPath ?? `/admin/${table.toLowerCase()}`)
-    } catch (e: any) {
+    } catch (e) {
       error.value = apiErrorMessage(e)
     } finally {
       saving.value = false

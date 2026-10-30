@@ -1,7 +1,7 @@
 // 管理画面 API の入口の共通処理。
 // 本番のビルドからは nuxt.config の ignore で除いているが、ここでも本番なら 404 を返す。
 import type { H3Event } from 'h3'
-import { ADMIN_TABLES, type AdminTable, type AdminTableName } from '~/server/utils/admin-tables'
+import { ADMIN_TABLES, type AdminTable, type AdminTableName } from '~~/server/utils/admin-tables'
 
 export function resolveAdminTable(event: H3Event): AdminTable {
   if (!import.meta.dev) {

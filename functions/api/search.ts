@@ -3,7 +3,7 @@
 //   POST /api/search  { "query": "酸味が控えめ" }
 //   → { "model": "@cf/pfnet/plamo-embedding-1b", "embedding": [0.012, -0.034, ...] }
 //
-// レビューコメントとの類似度の計算はブラウザで行う (utils/vectorSearch.js)。
+// レビューコメントとの類似度の計算はブラウザで行う (app/utils/vectorSearch.js)。
 // ここで 344件 × 2048次元の計算をすると、Workers Free の CPU 時間 (1回 10ms) を超えるため。
 // AIには文章を生成させず質問文をベクトルに変換させるのみなので、出力に事実でない文章が混ざることがない。
 

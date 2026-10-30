@@ -50,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AdminHeader } from '~/composables/useAdminTable'
+import type { AdminHeader, AdminRow } from '~/composables/useAdminTable'
 
 const props = withDefaults(
   defineProps<{
@@ -58,14 +58,14 @@ const props = withDefaults(
     title?: string
     headers: AdminHeader[]
     editPath?: string
-    filter?: (item: Record<string, any>) => boolean
-    label?: (item: Record<string, any>) => string
+    filter?: (item: AdminRow) => boolean
+    label?: (item: AdminRow) => string
   }>(),
   {
     title: '',
     editPath: undefined,
     filter: () => true,
-    label: (item: Record<string, any>) => String(item.id),
+    label: (item: AdminRow) => String(item.id),
   },
 )
 
@@ -73,13 +73,13 @@ const { items, loading, error, remove } = useAdminTable(props.table)
 
 const search = ref('')
 const deleteDialog = ref(false)
-const deleteTarget = ref<Record<string, any> | null>(null)
+const deleteTarget = ref<AdminRow | null>(null)
 
 const editBase = computed(() => props.editPath ?? `/admin/${props.table}/edit`)
 const filteredItems = computed(() => items.value.filter(props.filter))
 const deleteLabel = computed(() => (deleteTarget.value ? props.label(deleteTarget.value) : ''))
 
-const confirmDelete = (item: Record<string, any>) => {
+const confirmDelete = (item: AdminRow) => {
   deleteTarget.value = item
   deleteDialog.value = true
 }
@@ -87,9 +87,9 @@ const confirmDelete = (item: Record<string, any>) => {
 const doDelete = async () => {
   if (!deleteTarget.value) return
   try {
-    await remove(deleteTarget.value.id)
+    await remove(Number(deleteTarget.value.id))
     deleteTarget.value = null
-  } catch (e: any) {
+  } catch (e) {
     error.value = apiErrorMessage(e)
   } finally {
     deleteDialog.value = false
