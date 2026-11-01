@@ -222,6 +222,8 @@ const gallery = ref([
 // スライドの向き。Vuetify は番号の大小で向きを決めるため、最後から最初へ「次へ」
 // 進むと左から入ってくる (最初から最後へ「前へ」戻るときはその逆)。
 // ドットを隠していて1つずつしか動かないので、1つ前の番号に移ったときだけ戻る向きにする。
+// Vuetify 4.3 で直っている (前へ・次へで動いた向きを使う)。4.3 以上に上げたら、この処理と
+// v-carousel-item の transition / reverse-transition の指定は消してよい。
 const galleryReverse = ref(false)
 watch(selectedGallery, (next, prev) => {
   const count = gallery.value.length
