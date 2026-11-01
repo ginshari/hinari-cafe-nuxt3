@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="d-flex align-center mb-4">
-      <h1 v-if="title" class="text-h5 mb-0">{{ title }}</h1>
+      <h1 v-if="title" class="text-headline-small mb-0">{{ title }}</h1>
       <v-spacer />
       <v-btn color="primary" :to="editBase" prepend-icon="mdi-plus">ADD</v-btn>
     </div>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-h4 mb-6">maintenance</h1>
+    <h1 class="text-headline-large mb-6">maintenance</h1>
     <v-list lines="two">
       <v-list-item
         v-for="link in links"

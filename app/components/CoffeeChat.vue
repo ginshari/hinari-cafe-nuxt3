@@ -1,5 +1,5 @@
 <template>
-  <v-btn class="chat-fab" color="#313131" icon elevation="4" size="large" @click="open = true">
+  <v-btn class="chat-fab" color="#313131" icon elevation="2" size="large" @click="open = true">
     <v-icon color="paper">mdi-coffee-outline</v-icon>
   </v-btn>
 

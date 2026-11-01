@@ -16,6 +16,10 @@ const myCustomLightTheme = {
 
 export default defineNuxtPlugin((nuxtApp) => {
   const vuetify = createVuetify({
+    // Vuetify 4 で狭くなったブレークポイントを v3 の値に戻す (settings.scss の $grid-breakpoints と合わせる)
+    display: {
+      thresholds: { md: 960, lg: 1280, xl: 1920, xxl: 2560 },
+    },
     theme: {
       defaultTheme: 'myCustomLightTheme',
       themes: {

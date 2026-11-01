@@ -1,4 +1,13 @@
 @forward 'vuetify/settings' with (
+  // Vuetify 4 で既定の値が変わったものは、v3 の見た目を保つため v3 の値に戻す
+  $grid-breakpoints: (
+    'md': 960px,
+    'lg': 1280px,
+    'xl': 1920px,
+    'xxl': 2560px,
+  ),
+  $button-text-transform: uppercase,
+  $button-text-letter-spacing: 0.0893em,
   $container-max-widths: (
     'md': 720px,
     'lg': 960px,

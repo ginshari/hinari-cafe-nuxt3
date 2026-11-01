@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-h5 mb-4">/landing</h1>
+    <h1 class="text-headline-small mb-4">/landing</h1>
 
     <v-alert v-if="error" type="error" closable class="mb-4" @click:close="error = null">{{ error }}</v-alert>
 

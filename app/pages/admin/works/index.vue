@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-h5 mb-4">/works</h1>
+    <h1 class="text-headline-small mb-4">/works</h1>
     <AdminTableSection
       table="links"
       title="links"
