@@ -51,7 +51,7 @@
         </v-col>
       </client-only>
     </v-row>
-    <v-row class="annotation" justify="center" no-gutters>
+    <v-row class="annotation justify-center" no-gutters>
       <v-card class="pa-4 py-md-8 px-md-16" color="paper" max-width="80vw">
         <p class="ma-0 ma-sm-4 ma-md-8 text-pen" v-text="landingPage.annotation" />
       </v-card>
@@ -72,7 +72,7 @@
               <span>お仕事</span>
             </div>
           </div>
-          <v-row class="py-8 contents" justify="start" no-gutters>
+          <v-row class="py-8 contents justify-start" no-gutters>
             <v-col v-for="work in works" :key="work.order" cols="12" sm="6" lg="4">
               <v-card class="px-16 px-sm-4 contents-card text-pen" flat>
                 <a :href="work.url" target="_blank" rel="noopener">
@@ -88,7 +88,7 @@
               </v-card>
             </v-col>
           </v-row>
-          <v-row justify="center" class="text-center">
+          <v-row class="text-center justify-center">
             <v-col cols="6" sm="4">
               <v-btn class="mb-16 btn-works text-pen rounded-pill" height="60px" color="#a8f3ff" to="/works" block
                 >もっと詳しく見る</v-btn
@@ -110,7 +110,7 @@
               <span>オススメ動画</span>
             </div>
           </div>
-          <v-row class="py-8 contents" justify="start" no-gutters>
+          <v-row class="py-8 contents justify-start" no-gutters>
             <v-col v-for="recommend in recommends" :key="recommend.order" cols="12" sm="6" lg="4">
               <v-card class="px-16 px-sm-4 contents-card text-pen" flat>
                 <a :href="recommend.url" target="_blank" rel="noopener">
@@ -120,7 +120,7 @@
               </v-card>
             </v-col>
           </v-row>
-          <v-row justify="center">
+          <v-row class="justify-center">
             <v-col cols="6" sm="4">
               <v-btn
                 class="mb-16 btn-recommends text-pen rounded-pill"
@@ -148,7 +148,7 @@
               <span>コーヒー配信</span>
             </div>
           </div>
-          <v-row class="py-8 contents" justify="start" no-gutters>
+          <v-row class="py-8 contents justify-start" no-gutters>
             <v-col v-for="coffee in coffees" :key="coffee.order" cols="12" sm="6" lg="4">
               <v-card class="px-16 px-sm-4 contents-card text-pen" flat>
                 <a :href="coffee.url" target="_blank" rel="noopener">
@@ -158,7 +158,7 @@
               </v-card>
             </v-col>
           </v-row>
-          <v-row justify="center">
+          <v-row class="justify-center">
             <v-col cols="6" sm="4">
               <v-btn class="mb-16 btn-coffees text-pen rounded-pill" height="60px" color="#7fff7f" to="/coffees" block
                 >もっと詳しく見る</v-btn

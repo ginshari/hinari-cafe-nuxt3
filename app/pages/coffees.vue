@@ -1,9 +1,9 @@
 <template>
   <div>
     <client-only>
-      <v-app-bar :elevation="2" color="#313131">
+      <v-app-bar :elevation="1" color="#313131">
         <v-container class="appbar-container">
-          <v-row no-gutters align-content="center">
+          <v-row class="align-content-center" no-gutters>
             <v-col cols="8">
               <v-text-field
                 v-model="search"

@@ -5,7 +5,7 @@ import prettier from 'eslint-config-prettier/flat'
 
 // 書式は Prettier に任せるため、stylistic は既定 (無効) のままにする
 export default createConfigForNuxt()
-  .append(vuetify.configs['flat/base'])
+  .append(vuetify.configs['flat/recommended-v4'])
   .append({
     rules: {
       'no-console': 'warn',

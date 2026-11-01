@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-h5 mb-4">/coffees</h1>
+    <h1 class="text-headline-small mb-4">/coffees</h1>
     <AdminTableList
       table="coffees"
       title="coffees"

@@ -1,7 +1,13 @@
+import { readFileSync } from 'node:fs'
+import { createRequire } from 'node:module'
 import { createResolver } from 'nuxt/kit'
 import vuetify from 'vite-plugin-vuetify'
 
 const { resolve } = createResolver(import.meta.url)
+
+// Vuetify 4 の CSS のレイヤーの順番。どの CSS より先に宣言しないと、先に読み込まれた
+// コンポーネントの CSS のレイヤーが一番弱くなり、リセットなどに負ける (dev で起きる)。
+const vuetifyLayers = readFileSync(createRequire(import.meta.url).resolve('vuetify/styles/layers'), 'utf8')
 
 export default defineNuxtConfig({
   app: {
@@ -37,6 +43,7 @@ export default defineNuxtConfig({
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous' },
       ],
+      style: [{ innerHTML: vuetifyLayers, tagPriority: 'critical' }],
     },
   },
 

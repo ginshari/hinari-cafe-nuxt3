@@ -1,6 +1,6 @@
 <template>
   <div class="my-4">
-    <h2 class="text-h6 mb-2">{{ title }}</h2>
+    <h2 class="text-title-large mb-2">{{ title }}</h2>
     <v-expansion-panels>
       <v-expansion-panel>
         <v-expansion-panel-title>TABLE</v-expansion-panel-title>

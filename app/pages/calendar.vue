@@ -2,7 +2,7 @@
   <div class="calendar-wrapper">
     <v-container>
       <v-card class="calendar-card" color="paper" flat>
-        <v-row align-content="center" no-gutters>
+        <v-row class="align-content-center" no-gutters>
           <v-col cols="12" class="text-center">
             <div class="py-8">
               <p class="mb-0 text-pen title-text">CALENDAR</p>

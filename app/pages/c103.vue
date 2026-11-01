@@ -16,7 +16,7 @@
     <!-- 注文/確認 -->
     <v-container v-if="step != 0">
       <v-sheet class="mx-auto my-8 pb-16" style="max-width: 1200px" rounded="lg" color="paper">
-        <v-row justify="center">
+        <v-row class="justify-center">
           <v-col cols="12" class="text-center">
             <h1 class="text-pen sheet-title mb-16">{{ steps[step] }}</h1>
           </v-col>

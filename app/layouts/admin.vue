@@ -2,7 +2,7 @@
   <v-app>
     <v-navigation-drawer permanent>
       <v-list>
-        <v-list-item title="Hinari's Cafe 管理" density="compact" class="text-subtitle-2 font-weight-bold" />
+        <v-list-item title="Hinari's Cafe 管理" density="compact" class="text-title-small font-weight-bold" />
         <v-divider class="my-2" />
         <v-list-item to="/admin" title="TOP" prepend-icon="mdi-home" />
         <v-list-item to="/admin/landing" title="landing" prepend-icon="mdi-text-box-outline" />

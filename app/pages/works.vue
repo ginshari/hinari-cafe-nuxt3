@@ -3,7 +3,7 @@
     <v-container>
       <v-card class="works-card" color="paper" flat>
         <!-- profile -->
-        <v-row align-content="center" no-gutters>
+        <v-row class="align-content-center" no-gutters>
           <v-col cols="12" sm="4" class="pt-0 text-center profile-left">
             <div class="pb-8">
               <p class="mb-0 pt-16 text-pen title-text">PROFILE</p>
@@ -30,7 +30,7 @@
               </div>
             </div>
           </v-col>
-          <v-col cols="12" sm="8" class="my-auto px-8 profile-right" align-self="center">
+          <v-col cols="12" sm="8" class="my-auto px-8 profile-right align-self-center">
             <div class="d-block text-pen mt-sm-16 py-8">
               <table class="mx-auto mx-lg-0">
                 <tbody>
@@ -81,7 +81,7 @@
               </v-col>
               <v-col cols="12" />
             </v-row>
-            <v-row no-gutters align-content="center">
+            <v-row class="align-content-center" no-gutters>
               <v-col v-if="smAndUp" cols="12" sm="4" class="text-center history-middle-left">
                 <p
                   v-if="event.isDisplayMonth"
