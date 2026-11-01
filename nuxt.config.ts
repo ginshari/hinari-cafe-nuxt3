@@ -94,6 +94,11 @@ export default defineNuxtConfig({
     ],
   ],
 
+  // 管理画面はデータをブラウザで読むため SSR は要らない。dev で SSR すると、
+  // ページを開くたびに Vuetify の SASS をサーバー側でもコンパイルして重くなる。
+  // 本番のビルドには管理画面が無いので、下の ignore と同じく dev のときだけ入れる。
+  routeRules: process.env.NODE_ENV === 'production' ? {} : { '/admin/**': { ssr: false } },
+
   router: {
     options: {
       strict: false,
