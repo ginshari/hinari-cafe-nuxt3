@@ -44,7 +44,12 @@
                     @click="props.onClick"
                   ></v-btn>
                 </template>
-                <v-carousel-item v-for="item in gallery" :key="item.imageName">
+                <v-carousel-item
+                  v-for="item in gallery"
+                  :key="item.imageName"
+                  :transition="galleryTransition"
+                  :reverse-transition="galleryTransition"
+                >
                   <div class="carousel-slide">
                     <div v-if="!imageLoaded[item.imageName]" class="gallery-skeleton">
                       <v-skeleton-loader type="image" height="550"></v-skeleton-loader>
@@ -213,6 +218,19 @@ const gallery = ref([
   { imageName: 'mizugi.png', alt: '三面図 - 水着' },
   { imageName: 'idol.png', alt: '三面図 - アイドル衣装' },
 ])
+
+// スライドの向き。Vuetify は番号の大小で向きを決めるため、最後から最初へ「次へ」
+// 進むと左から入ってくる (最初から最後へ「前へ」戻るときはその逆)。
+// ドットを隠していて1つずつしか動かないので、1つ前の番号に移ったときだけ戻る向きにする。
+const galleryReverse = ref(false)
+watch(selectedGallery, (next, prev) => {
+  const count = gallery.value.length
+  galleryReverse.value = next === (prev - 1 + count) % count
+})
+const galleryTransition = computed(() =>
+  galleryReverse.value ? 'v-window-x-reverse-transition' : 'v-window-x-transition',
+)
+
 const generateGalleryUrl = (imageName, params) => {
   return getImageUrl(`v1707753283/3menzu/${imageName}`, params || 'f_auto,q_auto')
 }
