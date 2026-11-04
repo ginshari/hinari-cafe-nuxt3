@@ -21,9 +21,15 @@ export const usePageData = async (path: string, key: string) => {
   })
 
   if (error.value || !data.value?.documents) {
+    // error.value.message は HTTP の応答の1行目から作られ、英数字以外 (日本語) が削られる。
+    // 応答の本文の statusMessage には日本語が残るので、あればそちらを使う
+    const bodyMessage = (error.value?.data as { statusMessage?: string } | undefined)?.statusMessage
+    const detail = bodyMessage
+      ? `[GET] "${path}": ${error.value?.statusCode} ${bodyMessage}`
+      : (error.value?.message ?? 'No documents found.')
     throw createError({
       statusCode: error.value?.statusCode ?? 404,
-      statusMessage: `${key}: ${error.value?.message ?? 'No documents found.'}`,
+      statusMessage: `${key}: ${detail}`,
       fatal: true,
     })
   }
