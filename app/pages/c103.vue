@@ -338,6 +338,7 @@ watch(
     font-size: min(calc(0.5vw + 20px), 32px);
     word-break: keep-all;
   }
+
   &-subtitle {
     font-size: min(calc(0.5vw + 16px), 28px);
   }

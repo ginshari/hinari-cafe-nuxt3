@@ -91,7 +91,7 @@ const calendarUrl = computed(() => {
   }
 }
 
-@media (max-width: 600px) {
+@media (width <= 600px) {
   .calendar-container iframe {
     min-height: 500px;
   }
