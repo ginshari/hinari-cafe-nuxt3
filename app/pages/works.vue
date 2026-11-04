@@ -123,6 +123,12 @@ import { usePageData } from '~/composables/usePageData'
 
 const { smAndUp } = useDisplay()
 
+usePageSeo({
+  path: '/works/',
+  title: 'お仕事履歴',
+  description: 'VTuber理原ひなりさんのプロフィールと、これまでのお仕事・トピックを年月順にまとめています。',
+})
+
 const documents = await usePageData('/api/works', 'worksPage')
 
 const worksPage = documents[0]
