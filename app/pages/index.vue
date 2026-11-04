@@ -209,21 +209,24 @@ const coffees = landingPage.coffees
   position: relative;
   z-index: 100;
   border-radius: 5vw;
-  box-shadow: 20px 20px 0 rgb(49 49 49 / 0.5) !important;
+  box-shadow: 20px 20px 0 rgb(49 49 49 / 50%) !important;
   left: 15%;
   top: 50px;
 
-  @media screen and (max-width: 959px) {
+  @media screen and (width <= 959px) {
     left: 0;
     top: 0;
   }
+
   p {
     font-size: calc(1vw + 8px);
     line-height: 2em;
     white-space: pre-wrap;
   }
+
   &-desktop {
     position: relative;
+
     &-image {
       position: absolute;
       bottom: 0;
@@ -240,13 +243,13 @@ const coffees = landingPage.coffees
   padding-top: 5vh;
   padding-bottom: 5vh;
   background-size: auto auto;
-  background-color: rgb(255 204 248 / 1);
+  background-color: rgb(255 204 248 / 100%);
   background-image: repeating-linear-gradient(
     135deg,
     transparent,
     transparent 100px,
-    rgb(228 184 230 / 1) 100px,
-    rgb(228 184 230 / 1) 140px
+    rgb(228 184 230 / 100%) 100px,
+    rgb(228 184 230 / 100%) 140px
   );
 
   .v-card {
@@ -254,10 +257,11 @@ const coffees = landingPage.coffees
     line-height: 2em;
     border-radius: 5vw;
     white-space: pre-wrap;
-    box-shadow: 15px 15px 0 rgb(49 49 49 / 0.5) !important;
+    box-shadow: 15px 15px 0 rgb(49 49 49 / 50%) !important;
     margin-top: 100px;
     margin-bottom: 100px;
-    @media screen and (max-width: 959px) {
+
+    @media screen and (width <= 959px) {
       margin-top: 0;
       margin-bottom: 0;
     }
@@ -272,7 +276,7 @@ const coffees = landingPage.coffees
 }
 
 .index-wrapper {
-  @media (min-width: 1920px) {
+  @media (width >= 1920px) {
     max-width: 1920px;
     margin: 0 auto;
   }
@@ -282,12 +286,15 @@ const coffees = landingPage.coffees
   &-works {
     @include subtitle(#a8f3ff, #0090ff);
   }
+
   &-recommends {
     @include subtitle(#ffccf0, #d87cbc);
   }
+
   &-coffees {
     position: relative;
     z-index: 0;
+
     @include subtitle(#7fff7f, #4bab4b);
   }
 }
@@ -297,15 +304,18 @@ const coffees = landingPage.coffees
     overflow: visible !important;
     background-color: transparent;
   }
+
   &-image {
     &:hover {
       transition-duration: 0.3s;
       transform: scale(1.1);
     }
   }
+
   p:first-of-type {
     font-size: calc(0.5vw + 28px);
   }
+
   p:last-of-type {
     font-size: calc(0.5vw + 16px);
   }
@@ -314,6 +324,7 @@ const coffees = landingPage.coffees
 @mixin btn-detail($color1) {
   box-shadow: 10px 10px 0 $color1;
   font-size: calc(0.5vw + 12px) !important;
+
   &:hover {
     transition-duration: 0.3s;
     transform: scale(1.1);
@@ -325,9 +336,11 @@ const coffees = landingPage.coffees
   &-works {
     @include btn-detail(#0090ff);
   }
+
   &-recommends {
     @include btn-detail(#d87cbc);
   }
+
   &-coffees {
     @include btn-detail(#4bab4b);
   }
