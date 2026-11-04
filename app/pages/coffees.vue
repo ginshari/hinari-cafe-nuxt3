@@ -112,6 +112,13 @@ import { usePageData } from '~/composables/usePageData'
 
 const { name } = useDisplay()
 
+usePageSeo({
+  path: '/coffees/',
+  title: 'コーヒーレビュー',
+  description:
+    'VTuber理原ひなりさんのコーヒー配信で紹介されたコーヒーの一覧です。銘柄名のほか、味や香りの言葉からも探せます。',
+})
+
 const documents = await usePageData('/api/coffees', 'coffeesPage')
 
 const coffeesPage = documents[0]

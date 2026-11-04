@@ -176,6 +176,43 @@ import { usePageData } from '~/composables/usePageData'
 
 const { mdAndUp } = useDisplay()
 
+usePageSeo({
+  path: '/',
+  description:
+    "Hinari's CafeはVTuber理原ひなりさんの非公式ファンサイトです。オススメ動画の紹介のほか、今までのコーヒー配信を銘柄から逆引き検索できる機能を実装しております。",
+})
+
+// 検索エンジンや AI に、サイトと人物の情報を伝える。別名には正しい表記だけを入れる
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@graph': [
+          {
+            '@type': 'WebSite',
+            '@id': 'https://hinaricafe.net/#website',
+            url: 'https://hinaricafe.net/',
+            name: "Hinari's Cafe",
+            description: 'VTuber 理原ひなりさんの非公式ファンサイト',
+            inLanguage: 'ja',
+            about: { '@id': 'https://hinaricafe.net/#hinari' },
+          },
+          {
+            '@type': 'Person',
+            '@id': 'https://hinaricafe.net/#hinari',
+            name: '理原ひなり',
+            alternateName: ['ことはら ひなり', 'Kotohara Hinari', 'Hinari Kotohara'],
+            description: 'VTuber',
+            sameAs: ['https://www.youtube.com/channel/UCZF1cUKuWlvo_wn--s-21kw', 'https://x.com/hinari_kotohara'],
+          },
+        ],
+      }),
+    },
+  ],
+})
+
 // Welcome画像を3種からランダム選択
 const welcomeImages = [
   'index/index_welcome_v2_a_owyqrq.png',

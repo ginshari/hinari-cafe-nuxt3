@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+# /api/search は POST だけを受ける Pages Functions。クローラーの GET は 405 になるだけなので除く
+Disallow: /api/
+
+Sitemap: https://hinaricafe.net/sitemap.xml
