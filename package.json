@@ -15,8 +15,9 @@
     "preview": "nuxi preview"
   },
   "devDependencies": {
+    "@fontsource/mochiy-pop-one": "^5.3.0",
     "@nuxt/eslint-config": "^1.17.0",
-    "@nuxtjs/google-fonts": "^3.0.0-1",
+    "@nuxt/fonts": "^1.0.1",
     "@types/node": "^26.2.0",
     "digest-fetch": "^3.1.1",
     "dotenv": "^17.2.3",
