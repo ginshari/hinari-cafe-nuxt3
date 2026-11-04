@@ -15,7 +15,7 @@
     </v-navigation-drawer>
     <v-main class="bg-grey-lighten-3">
       <v-container fluid class="pa-6">
-        <nuxt-page />
+        <slot />
       </v-container>
     </v-main>
   </v-app>
