@@ -54,7 +54,7 @@ export default defineNuxtConfig({
     transpile: ['vuetify'],
   },
 
-  css: ['vuetify/lib/styles/main.sass', '@mdi/font/css/materialdesignicons.min.css', '@/assets/main.scss'],
+  css: ['vuetify/lib/styles/main.sass', '@/assets/main.scss'],
 
   experimental: {
     payloadExtraction: true,

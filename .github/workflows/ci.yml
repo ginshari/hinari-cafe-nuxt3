@@ -1,0 +1,31 @@
+# PR と main への push で、lint・型チェック・テストを回す。
+# ビルド (npm run generate) は D1 を読むので回さない。実際の D1 でのビルドは Cloudflare Pages のプレビューで確かめる。
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run lint-css
+      - run: npm run typecheck
+      - run: npm test
