@@ -241,7 +241,7 @@ const lyrics = {
   font-size: clamp(2.5rem, 4vw, 4rem);
   margin: 0 0 12px;
   color: #3c3c32;
-  text-shadow: 4px 4px 0 rgba(60, 60, 50, 0.3);
+  text-shadow: 4px 4px 0 rgb(60 60 50 / 30%);
   letter-spacing: 0.1em;
 }
 
@@ -284,9 +284,10 @@ const lyrics = {
 
 .special-tab-content :deep(.wall-card) {
   border: none;
-  border-radius: 0 16px 16px 16px;
+  border-radius: 0 16px 16px;
   box-shadow: none;
 }
+
 .special-wall {
   display: grid;
   gap: 20px;
@@ -295,10 +296,10 @@ const lyrics = {
 
 .wall-card {
   background: #f4f5f7;
-  border: 2px solid rgba(60, 60, 50, 0.25);
+  border: 2px solid rgb(60 60 50 / 25%);
   padding: 16px;
   position: relative;
-  box-shadow: 4px 4px 0 rgba(60, 60, 50, 0.15);
+  box-shadow: 4px 4px 0 rgb(60 60 50 / 15%);
   border-radius: 16px;
 }
 
@@ -349,7 +350,7 @@ const lyrics = {
 
 .wall-media {
   display: block;
-  border: 1px solid rgba(60, 60, 50, 0.25);
+  border: 1px solid rgb(60 60 50 / 25%);
   background: #fff;
   padding: 8px;
   border-radius: 12px;
@@ -437,7 +438,7 @@ const lyrics = {
   max-width: 100%;
   max-height: 550px;
   height: auto;
-  border: 1px solid rgba(60, 60, 50, 0.25);
+  border: 1px solid rgb(60 60 50 / 25%);
   border-radius: 12px;
   object-fit: contain;
   display: block;
@@ -445,14 +446,14 @@ const lyrics = {
 
 .gallery-grid img {
   width: 100%;
-  border: 1px solid rgba(60, 60, 50, 0.25);
+  border: 1px solid rgb(60 60 50 / 25%);
   border-radius: 12px;
   height: auto;
   object-fit: contain;
   display: block;
 }
 
-@media (min-width: 720px) {
+@media (width >= 720px) {
   .special-page {
     padding: 48px 20px 80px;
   }

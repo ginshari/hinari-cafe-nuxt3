@@ -1,4 +1,14 @@
-import { createVuetify } from 'vuetify'
+import { h } from 'vue'
+import { createVuetify, type IconProps, type IconSet } from 'vuetify'
+import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
+import { mdiIcons } from '~/utils/icons'
+
+// テンプレートの "mdi-xxx" を app/utils/icons.ts の SVG で描く。表に無い名前は何も描かない。
+const mdiSvg: IconSet = {
+  component: (props: IconProps) =>
+    h(mdi.component, { ...props, icon: typeof props.icon === 'string' ? mdiIcons[props.icon] : undefined }),
+}
+
 const myCustomLightTheme = {
   dark: false,
   colors: {
@@ -19,6 +29,12 @@ export default defineNuxtPlugin((nuxtApp) => {
     // Vuetify 4 で狭くなったブレークポイントを v3 の値に戻す (settings.scss の $grid-breakpoints と合わせる)
     display: {
       thresholds: { md: 960, lg: 1280, xl: 1920, xxl: 2560 },
+    },
+    // Vuetify の部品の中のアイコン ($close など) も SVG にする
+    icons: {
+      defaultSet: 'mdi',
+      aliases,
+      sets: { mdi: mdiSvg },
     },
     theme: {
       defaultTheme: 'myCustomLightTheme',

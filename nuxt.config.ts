@@ -38,11 +38,7 @@ export default defineNuxtConfig({
         },
         { property: 'og:image', content: 'https://hinaricafe.net/ogp.jpg' },
       ],
-      link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous' },
-      ],
+      link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
       style: [{ innerHTML: vuetifyLayers, tagPriority: 'critical' }],
     },
   },
@@ -54,7 +50,7 @@ export default defineNuxtConfig({
     transpile: ['vuetify'],
   },
 
-  css: ['vuetify/lib/styles/main.sass', '@mdi/font/css/materialdesignicons.min.css', '@/assets/main.scss'],
+  css: ['vuetify/lib/styles/main.sass', '@/assets/main.scss'],
 
   experimental: {
     payloadExtraction: true,
@@ -88,18 +84,23 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: [
-    [
-      '@nuxtjs/google-fonts',
-      {
-        download: false,
-        useStylesheet: true,
-        families: {
-          'Mochiy+Pop+One': true,
-        },
-      },
-    ],
-  ],
+  // Mochiy Pop One を @fontsource/mochiy-pop-one (node_modules) から取り、サイトから配る。
+  // Google Fonts の CSS を待って表示が止まることが無くなる。フォントのファイルはビルドの
+  // 出力にだけ入り、リポジトリには入らない。ほかのフォントを外から取ってこないよう、
+  // npm 以外の取り先は使わない。
+  fonts: {
+    families: [{ name: 'Mochiy Pop One', provider: 'npm', weights: [400] }],
+    providers: {
+      adobe: false,
+      bunny: false,
+      fontshare: false,
+      fontsource: false,
+      google: false,
+      googleicons: false,
+    },
+  },
+
+  modules: ['@nuxt/fonts'],
 
   // 管理画面はデータをブラウザで読むため SSR は要らない。dev で SSR すると、
   // ページを開くたびに Vuetify の SASS をサーバー側でもコンパイルして重くなる。
