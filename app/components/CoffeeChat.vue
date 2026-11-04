@@ -267,7 +267,7 @@ const send = async (preset) => {
     -apple-system,
     'Hiragino Sans',
     'Noto Sans JP',
-    'Meiryo',
+    Meiryo,
     sans-serif;
   font-size: 12px;
   line-height: 1.8;

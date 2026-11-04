@@ -206,13 +206,13 @@ watch(
 </script>
 <style lang="scss" scoped>
 .appbar-container {
-  @media (min-width: 2560px) {
+  @media (width >= 2560px) {
     max-width: 1920px;
   }
 }
 
 .coffees-wrapper {
-  @media (min-width: 1920px) {
+  @media (width >= 1920px) {
     max-width: 1920px;
     margin: 0 auto;
   }
@@ -220,9 +220,11 @@ watch(
 
 .coffee-card {
   flex-grow: 1;
+
   &-title {
     font-size: calc(0.5vw + 12px);
   }
+
   &-subtitle {
     font-size: 12px;
   }
