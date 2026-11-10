@@ -9,6 +9,11 @@ updates:
     directory: '/' # Location of package manifests
     schedule:
       interval: 'weekly'
+    # 公開から 7 日たった版だけを PR にする (既定は 3 日)。出たばかりの版は、
+    # 直後に修正版が出ることがある (nuxt 4.6.4 には @nuxt/cli 4.0.2 以降が要った)。
+    # セキュリティの更新には効かない。
+    cooldown:
+      default-days: 7
     ignore:
       - dependency-name: '*'
         update-types: ['version-update:semver-major']
