@@ -17,6 +17,7 @@
                 hide-details
                 density="compact"
                 @keydown.enter="doSearch()"
+                @click:clear="clearSearch()"
               >
               </v-text-field>
             </v-col>
@@ -175,6 +176,12 @@ const doSearch = () => {
     filterdCoffees.value = coffees.filter((coffee) => nameMatches(coffee, search.value))
   }
   page.value = 1
+}
+
+// 検索語を消したら全件に戻す (Enter を押さなくても戻るように)
+const clearSearch = () => {
+  search.value = ''
+  doSearch()
 }
 
 // 並び順変更
