@@ -18,11 +18,16 @@ async function d1Query(sql: string, params: unknown[] = []): Promise<D1RawResult
   const databaseId = process.env.D1_DATABASE_ID
   const token = process.env.CLOUDFLARE_DEVELOPER_TOKEN || process.env.CLOUDFLARE_API_TOKEN
 
-  if (!accountId || !databaseId || !token) {
+  // 足りない変数だけを挙げる。トークンはどちらか一方があればよい
+  const missing = [
+    !accountId && 'CLOUDFLARE_ACCOUNT_ID',
+    !databaseId && 'D1_DATABASE_ID',
+    !token && 'CLOUDFLARE_DEVELOPER_TOKEN or CLOUDFLARE_API_TOKEN',
+  ].filter(Boolean)
+  if (missing.length) {
     throw createError({
       statusCode: 500,
-      statusMessage:
-        'D1 の環境変数が未設定です (CLOUDFLARE_ACCOUNT_ID / D1_DATABASE_ID / CLOUDFLARE_DEVELOPER_TOKEN)',
+      statusMessage: `D1 の環境変数が未設定です: ${missing.join(', ')}`,
     })
   }
 
