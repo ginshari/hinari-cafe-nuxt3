@@ -29,6 +29,7 @@
                 <template #prev="{ props }">
                   <v-btn
                     icon="mdi-chevron-left"
+                    aria-label="前の三面図"
                     color="pen"
                     variant="elevated"
                     size="large"
@@ -38,6 +39,7 @@
                 <template #next="{ props }">
                   <v-btn
                     icon="mdi-chevron-right"
+                    aria-label="次の三面図"
                     color="pen"
                     variant="elevated"
                     size="large"
@@ -192,6 +194,13 @@
 import { useDisplay } from 'vuetify'
 
 const { smAndUp } = useDisplay()
+
+usePageSeo({
+  path: '/special/',
+  title: 'スペシャル',
+  description:
+    'VTuber理原ひなりさんの三面図 (通常衣装・水着・アイドル衣装) と歌詞カードを掲載しています。ファンアートやSkeb依頼などにご活用ください。',
+})
 const tab = ref('gallery')
 const selectedGallery = ref(0)
 

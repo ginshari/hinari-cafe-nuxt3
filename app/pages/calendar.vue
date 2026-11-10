@@ -30,6 +30,12 @@
 </template>
 
 <script setup lang="ts">
+usePageSeo({
+  path: '/calendar/',
+  title: 'カレンダー',
+  description: 'VTuber理原ひなりさんの配信やイベントの予定を、カレンダーで確認できます。',
+})
+
 // Googleカレンダー
 const calendarId = '2605bfe732849dc0a9258ad781669980304293878b85aebdae3d3873485cdb32@group.calendar.google.com'
 

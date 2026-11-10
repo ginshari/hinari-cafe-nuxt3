@@ -1,5 +1,13 @@
 <template>
-  <v-btn class="chat-fab" color="#313131" icon elevation="2" size="large" @click="open = true">
+  <v-btn
+    class="chat-fab"
+    color="#313131"
+    icon
+    elevation="2"
+    size="large"
+    aria-label="味や香りで探す"
+    @click="open = true"
+  >
     <v-icon color="paper">mdi-coffee-outline</v-icon>
   </v-btn>
 
@@ -99,7 +107,7 @@
           @keydown.enter="send()"
         >
           <template #append-inner>
-            <v-btn icon variant="text" density="comfortable" :disabled="loading" @click="send()">
+            <v-btn icon variant="text" density="comfortable" aria-label="送信" :disabled="loading" @click="send()">
               <v-icon>mdi-send</v-icon>
             </v-btn>
           </template>
