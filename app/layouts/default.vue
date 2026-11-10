@@ -35,9 +35,11 @@ const visibleLinks = computed(() => allLinks.filter((link) => link.path !== rout
   background-size: 1920px;
   background-repeat: repeat;
 }
+
 .v-footer {
   display: block;
 }
+
 .pages a {
   color: #f4f5f7;
   font-size: calc(0.5vw + 16px);
@@ -46,6 +48,7 @@ const visibleLinks = computed(() => allLinks.filter((link) => link.path !== rout
   text-decoration-skip-ink: none;
   white-space: nowrap;
 }
+
 .imprint {
   color: #f4f5f7;
   line-height: 1.5rem;

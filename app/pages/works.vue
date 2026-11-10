@@ -155,7 +155,7 @@ const filterdEvents = computed(() => {
 
 <style lang="scss" scoped>
 .works-wrapper {
-  @media (min-width: 1920px) {
+  @media (width >= 1920px) {
     max-width: 1920px;
     margin: 0 auto;
   }
@@ -179,12 +179,15 @@ const filterdEvents = computed(() => {
 .history-middle {
   &-left {
     background-color: #a8f3ff;
+
     .year {
       font-size: calc(0.5vw + 20px);
     }
+
     .month {
       font-size: calc(0.5vw + 12px);
     }
+
     &-mobile {
       background-color: var(--v-paper-base);
     }
@@ -192,14 +195,17 @@ const filterdEvents = computed(() => {
 
   &-right {
     font-size: calc(0.5vw + 12px);
+
     a {
       text-decoration: none;
+
       &:visited,
       &:hover {
         text-decoration: underline;
         text-decoration-skip-ink: none;
       }
     }
+
     &-mobile p::before {
       content: '・';
     }
@@ -208,17 +214,22 @@ const filterdEvents = computed(() => {
 
 .profile-left {
   background-color: #a8f3ff;
+
   .name {
     font-size: calc(0.5vw + 28px);
   }
+
   .sub-name {
     font-size: calc(0.5vw + 12px);
   }
+
   .links {
     font-size: calc(0.5vw + 12px);
+
     a {
       text-decoration: underline;
       text-decoration-skip-ink: none;
+
       &:visited,
       &:hover {
         color: inherit;
@@ -229,11 +240,14 @@ const filterdEvents = computed(() => {
 
 .profile-right {
   font-size: calc(0.5vw + 12px);
+
   table {
     border-collapse: separate;
     border-spacing: 1em;
+
     td {
       vertical-align: top;
+
       &:first-child {
         white-space: nowrap;
       }
@@ -241,24 +255,8 @@ const filterdEvents = computed(() => {
   }
 }
 
-.gallery-left {
-  background-color: #a8f3ff;
-  .description {
-    font-size: calc(0.5vw + 12px);
-    word-break: auto-phrase;
-  }
-  a {
-    text-decoration: underline;
-    text-decoration-skip-ink: none;
-    &:visited,
-    &:hover {
-      color: inherit;
-    }
-  }
-}
-
 .gallery-carousel {
-  @media (max-width: 599px) {
+  @media (width <= 599px) {
     height: 250px !important;
 
     :deep(.v-img) {
@@ -266,7 +264,7 @@ const filterdEvents = computed(() => {
     }
   }
 
-  @media (min-width: 600px) and (max-width: 959px) {
+  @media (width >= 600px) and (width <= 959px) {
     height: 350px !important;
 
     :deep(.v-img) {

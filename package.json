@@ -6,6 +6,9 @@
   "scripts": {
     "lint": "eslint .",
     "lint-css": "stylelint \"**/*.vue\" \"**/*.css\" \"**/*.scss\"",
+    "lint-css:fix": "stylelint \"**/*.vue\" \"**/*.css\" \"**/*.scss\" --fix",
+    "typecheck": "node scripts/typecheck.mjs",
+    "test": "vitest run",
     "dev": "nuxi dev",
     "generate": "nuxi generate",
     "build:vectors": "tsx scripts/build-vectors.mts",
@@ -33,7 +36,9 @@
     "stylelint-config-standard-vue": "^2.0.0",
     "tsx": "^4.21.0",
     "typescript": "~5.9.3",
-    "vite": "^8.3.5"
+    "vite": "^8.3.5",
+    "vitest": "^5.0.5",
+    "vue-tsc": "^3.3.14"
   },
   "dependencies": {
     "@mdi/font": "^7.1.96",
